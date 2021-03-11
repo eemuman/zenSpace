@@ -1,33 +1,45 @@
 package fi.tuni.tamk.tiko.tiko2a;
 
-import com.badlogic.gdx.ApplicationAdapter;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class zenSpace extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+public class zenSpace extends Game {
+	private SpriteBatch batch;
+	private OrthographicCamera cam;
+	private OrthographicCamera textCam;
+	private BitmapFont font;
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void create() {
+		batch = new SpriteBatch();
+		cam = new OrthographicCamera();
+		textCam = new OrthographicCamera();
+		textCam.setToOrtho(false, 800, 480);
+		cam.setToOrtho(true, 15, 10);
+		font = new BitmapFont(Gdx.files.internal("fontti.fnt"), false);
+		font.getData().setScale(0.25f);
+		setScreen(new MainMenu(this));
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
+
+	public SpriteBatch getBatch() {
+		return batch;
 	}
+
+	public OrthographicCamera getCam() {
+		return cam;
+	}
+
+
+	public BitmapFont getFont() {
+		return font;
+	}
+	public OrthographicCamera getTextCam() {
+		return textCam;
+	}
+
 }

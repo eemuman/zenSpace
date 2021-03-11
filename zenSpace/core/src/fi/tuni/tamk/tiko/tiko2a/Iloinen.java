@@ -45,7 +45,7 @@ public class Iloinen implements Screen, InputProcessor {
         font = game.getFont();
         map = new Pixmap(800, 480, Pixmap.Format.RGBA8888);
         map.setColor(Color.WHITE);
-        clickableTexts.add(new ClickableText("CLEARSCREEN", 125, 460, font));
+        clickableTexts.add(new ClickableText("CLEARSCREEN", 25, 460, font));
         Gdx.input.setInputProcessor(this);
     }
     @Override

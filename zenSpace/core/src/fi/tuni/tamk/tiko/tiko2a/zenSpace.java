@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Pelin pohjaluokka, täällä luodaan kaikki asiat, mitä käytetään muissa luokissa
@@ -21,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class zenSpace extends Game {
 	private SpriteBatch batch;
+	private ScreenViewport scrnView;
 	private OrthographicCamera cam;
 	private OrthographicCamera textCam;
 	private BitmapFont font;
@@ -36,10 +38,11 @@ public class zenSpace extends Game {
 		cam = new OrthographicCamera();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
+		scrnView = new ScreenViewport(textCam);
 		cam.setToOrtho(true, 15, 10);
 		font = new BitmapFont(Gdx.files.internal("fontti.fnt"), false); //Tässä luodaan fontti, helppo muuttaa, voin näyttää halutessa
 		font.getData().setScale(0.15f); //Pikku trikki, jolla saadaan tekstistä vähän sulavempaa on luoda suuri fontti jota downscaletaan pienemmäksi.
-		setScreen(new MainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
+		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
 
 	/**
@@ -49,12 +52,12 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-
 	public OrthographicCamera getCam() {
 		return cam;
 	}
-
-
+	public ScreenViewport getScrnView() {
+		return scrnView;
+	}
 	public BitmapFont getFont() {
 		return font;
 	}

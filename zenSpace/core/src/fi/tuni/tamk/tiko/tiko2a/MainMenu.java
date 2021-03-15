@@ -32,6 +32,7 @@ public class MainMenu implements Screen {
     private String suru = "SURULLINEN";
 
 
+
     List<ClickableText> clickableTexts = new ArrayList<>();
 
     /**

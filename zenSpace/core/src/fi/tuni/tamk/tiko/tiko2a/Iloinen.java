@@ -17,16 +17,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import sun.awt.image.PixelConverter;
 
 /**
  * Iloinen näyttö, käyttää inputadapteria,
@@ -46,10 +40,12 @@ public class Iloinen extends InputAdapter implements Screen {
     private float newX;
     private float newY;
     private int wWidth = 640;
-    private int wHeight = 320;
+    private int wHeight = 480;
     private boolean touched = false;
     private boolean moved = false;
     private boolean isEmpty = true;
+
+    private float sep = 0.5f;
 
     private String clr = "CLEARSCREEN";
 
@@ -148,7 +144,11 @@ public class Iloinen extends InputAdapter implements Screen {
                 } //Jos touched ja moved ovat kummatkin true, mennään tänne. Toisinsanoen pitää tapahtua jotain liikettä, ennenkuin lähdetään piirtämään.
 
                 //Piirretään viiva startX ja pelialueekorkeus - startY koordinaateista newX ja pelialueenkorkeus - newY koordinaatteihin
-                map.drawLine((int) startX, (int) (wHeight - startY), (int) newX, (int) (wHeight - newY)); //Y koordinatti pitää muuttaa koska fuck logic, pixmapin 0,0 koordinaatti on vasen ylänurkka, kun taas kameran 0,0 vasen alanurkka.
+
+                //Y koordinatti pitää muuttaa koska fuck logic, pixmapin 0,0 koordinaatti on vasen ylänurkka, kun taas kameran 0,0 vasen alanurkka.
+                map.drawLine((int) (startX - sep), (int) ((wHeight - startY) - sep), (int) (newX - sep), (int) ((wHeight - newY) - sep));
+                map.drawLine((int) startX, (int) (wHeight - startY), (int) newX, (int) (wHeight - newY));
+                map.drawLine((int) (startX + sep), (int) ((wHeight - startY) + sep), (int) (newX + sep), (int) ((wHeight - newY) + sep));
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
                 if(pixText!=null) { //Jos meillä on jo tekstuuri piirrossa, niin poistetaan tämä vanha.

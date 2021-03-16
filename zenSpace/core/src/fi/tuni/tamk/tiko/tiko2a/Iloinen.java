@@ -19,11 +19,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import sun.awt.image.PixelConverter;
 
 /**
  * Iloinen näyttö, käyttää inputadapteria,
@@ -47,9 +50,6 @@ public class Iloinen extends InputAdapter implements Screen {
     private boolean touched = false;
     private boolean moved = false;
     private boolean isEmpty = true;
-    private Array<Vector2> list;
-    private Vector2 [] items;
-    private float minDistanceSq = 1;
 
     private String clr = "CLEARSCREEN";
 
@@ -72,8 +72,6 @@ public class Iloinen extends InputAdapter implements Screen {
         map.setColor(Color.WHITE);
         clickableTexts.add(new ClickableText(clr, 25, 315, font));
         Gdx.input.setInputProcessor(this);
-        list = new Array<Vector2>();
-
     }
     @Override
     public void show() {
@@ -110,24 +108,6 @@ public class Iloinen extends InputAdapter implements Screen {
         }
     }
 
-    public void captureInput(Vector2 point) {
-        items = list.items;
-        list.size = Math.min(list.size + 1, items.length);
-        for (int i = list.size; i > 0; i--) {
-            items[i] = items[i-1];
-        }
-        items[0] = point;
-    }
-
-    public boolean simplifyInput(Vector2 inputPoint, Vector2 lastPoint) {
-        Vector2 tmpVec = new Vector2(0, 0);
-        float lenSq = tmpVec.set(inputPoint).sub(lastPoint).len2();
-        Gdx.app.log("simplifyInput", String.valueOf(lenSq));
-        if(lenSq >= minDistanceSq) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -137,8 +117,6 @@ public class Iloinen extends InputAdapter implements Screen {
         touched = true; //Touched trueksi
         startX = vec.x; //Tallennetaan nämä muunnellut X ja Y koordinaatit startX ja startY floatteihin
         startY = vec.y;
-        Vector2 firstPoint = new Vector2(startX, startY);
-        captureInput(firstPoint);
 
         return false;
     }
@@ -157,10 +135,6 @@ public class Iloinen extends InputAdapter implements Screen {
 
         newX = vec.x; //Tallennetaan nämä newX ja newY floatteihin
         newY = vec.y;
-        Vector2 subsPoint = new Vector2(newX,newY);
-        if(simplifyInput(subsPoint,items[0])) {
-            captureInput(subsPoint);
-        }
         moved = true; //muutetaan moved trueksi
 
         return false;

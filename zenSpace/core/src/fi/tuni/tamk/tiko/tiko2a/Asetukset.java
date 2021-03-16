@@ -9,7 +9,6 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,54 +18,52 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-
-
-public class newMainMenu implements Screen {
+public class Asetukset implements Screen {
 
     private Stage stg;
 
     private ExtendViewport scrnView;
     private Skin skin;
 
-    private TextButton btnPela;
-    private TextButton btnAsetukset;
-    private TextButton btnExit;
+    private TextButton btnTakaisin;
     private Table tbl;
+
+
+    private Slider volSlider;
 
     private zenSpace gme;
 
-
     private Image headerImg;
 
-    public newMainMenu(zenSpace game) {
+    private Label lbl;
 
+    public Asetukset(zenSpace game) {
         gme = game;
 
         headerImg = new Image(new Texture("zenSpace.png"));
 
-
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-
 
         tbl = new Table();
 
+        lbl = new Label("VOLYYMI", skin);
 
-        btnPela = new TextButton("Pelaa", skin);
-        btnAsetukset = new TextButton("Asetukset", skin);
-        btnExit = new TextButton("Sammuta Peli", skin);
+        btnTakaisin = new TextButton("Takaisin", skin);
+        volSlider = new Slider(0, 1, 0.05f,false, skin);
+
         tbl.add(headerImg).expand();
         tbl.row();
-        tbl.add(btnPela).width(600).height(125).bottom().padBottom(75);
+        tbl.add(lbl).width(600).height(150).center();
         tbl.row();
-        tbl.add(btnAsetukset).width(600).height(125).bottom().padBottom(75);
+        tbl.add(volSlider).width(600).height(75).padBottom(75);
         tbl.row();
-        tbl.add(btnExit).width(600).height(125).bottom().padBottom(75);
+        tbl.add(btnTakaisin).width(600).height(125).padBottom(75);
 
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
@@ -74,27 +71,15 @@ public class newMainMenu implements Screen {
         tbl.setFillParent(true);
         stg.addActor(tbl);
 
-
-        btnPela.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-            }
-        });
-        btnExit.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
-
-        btnAsetukset.addListener(new ChangeListener() {
+        btnTakaisin.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                gme.setScreen(new Asetukset(gme));
+                gme.setScreen(new newMainMenu(gme));
             }
         });
     }
+
 
     @Override
     public void show() {

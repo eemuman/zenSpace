@@ -44,7 +44,7 @@ public class MainMenu implements Screen {
         this.game = game;
         this.batch = game.getBatch();
         cam = game.getCam();
-        font = game.getFont();
+       // font = game.getFont();
         textCam = game.getTextCam();
 //Tehdään pari klikattavaa tekstiä
         clickableTexts.add(new ClickableText(ilo, 100, 200, font));

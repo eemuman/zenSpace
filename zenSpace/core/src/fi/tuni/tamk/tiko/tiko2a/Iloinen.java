@@ -33,7 +33,6 @@ public class Iloinen extends InputAdapter implements Screen {
     zenSpace game;
     private OrthographicCamera textCam;
     private SpriteBatch batch;
-    private BitmapFont font;
     private Pixmap map;
     private OrthographicCamera cam;
     private float startX;
@@ -62,10 +61,9 @@ public class Iloinen extends InputAdapter implements Screen {
         textCam = game.getTextCam();
         cam = game.getCam();
         batch = game.getBatch();
-        font = game.getFont();
         map = new Pixmap(wWidth, wHeight, Pixmap.Format.RGBA8888);
         map.setColor(Color.WHITE);
-        clickableTexts.add(new ClickableText(clr, 25, 315, font));
+    //    clickableTexts.add(new ClickableText(clr, 25, 315, font));
         Gdx.input.setInputProcessor(this);
     }
     @Override
@@ -91,8 +89,8 @@ public class Iloinen extends InputAdapter implements Screen {
                 clearScreen();//Jos on, niin tyhjätään näyttö
             }
         } //Piirretään muut tekstit
-        font.draw(batch, "ILOINEN", 275,275);
-        font.draw(batch, "Piirra hymynaama hopso :)", 200, 250);
+        //font.draw(batch, "ILOINEN", 275,275);
+        //font.draw(batch, "Piirra hymynaama hopso :)", 200, 250);
         if(!isEmpty) { //Jos pixText tekstuuri ei ole tyhjä, niin piirretään se seuraavaksi
             batch.draw(pixText, 0, 0);
         }

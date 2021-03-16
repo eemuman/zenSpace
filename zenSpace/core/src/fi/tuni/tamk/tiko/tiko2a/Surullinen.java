@@ -61,7 +61,7 @@ public class Surullinen extends InputAdapter implements Screen {
         textCam = game.getTextCam();
         cam = game.getCam();
         batch = game.getBatch();
-        font = game.getFont();
+    //    font = game.getFont();
         map = new Pixmap(wWidth, wHeight, Pixmap.Format.RGBA8888);
         clickableTexts.add(new ClickableText(clr, 25, 315, font));
         map.setColor(Color.WHITE);

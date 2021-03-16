@@ -52,18 +52,18 @@ public class Asetukset implements Screen {
 
         tbl = new Table();
 
-        lbl = new Label("VOLYYMI", skin);
+        lbl = new Label("VOLYYMI:", skin);
 
         btnTakaisin = new TextButton("Takaisin", skin);
         volSlider = new Slider(0, 1, 0.05f,false, skin);
 
-        tbl.add(headerImg).expand();
+        tbl.add(headerImg).expandX();
         tbl.row();
-        tbl.add(lbl).width(600).height(150).center();
+        tbl.add(lbl).width(600).height(150).center().expandX();
         tbl.row();
         tbl.add(volSlider).width(600).height(75).padBottom(75);
         tbl.row();
-        tbl.add(btnTakaisin).width(600).height(125).padBottom(75);
+        tbl.add(btnTakaisin).width(600).height(125).padBottom(75).bottom().expandY();
 
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);

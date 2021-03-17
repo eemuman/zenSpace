@@ -105,11 +105,14 @@ public class Iloinen extends InputAdapter implements Screen {
         } //Piirretään muut tekstit
         font.draw(batch, "ILOINEN", 275,275);
         font.draw(batch, "Piirra hymynaama hopso :)", 200, 250);
+        /*
         if(!isEmpty) { //Jos pixText tekstuuri ei ole tyhjä, niin piirretään se seuraavaksi
             batch.draw(pixText, 0, 0);
         }
-        batch.end();
 
+         */
+        batch.end();
+        sr.setProjectionMatrix(textCam.combined);
         sr.begin(ShapeRenderer.ShapeType.Line);
         Gdx.app.log("points.size", String.valueOf(points.size()));
         // Piiretään viiva kaikkien Vector2 ArrayListissä olevien Vector2 pisteiden välille
@@ -193,6 +196,7 @@ public class Iloinen extends InputAdapter implements Screen {
         map.setColor(Color.CLEAR); //laitetaan pixmapin väri läpinäkyväksi
         map.fill(); //Täytetään pixmap läpinäkyvällä värillä
         map.setColor(Color.WHITE); //vaihdetaan väri takaisin valkoiseksi
+        points.clear();
         isEmpty = true; //Lopetetaan vanhan tekstuurin renderöinti
     }
 

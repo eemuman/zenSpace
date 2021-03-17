@@ -8,6 +8,7 @@
 package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -17,9 +18,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,18 +44,24 @@ public class Iloinen extends InputAdapter implements Screen {
     private float newX;
     private float newY;
     private int wWidth = 640;
-    private int wHeight = 480;
+    private int wHeight = 320;
     private boolean touched = false;
     private boolean moved = false;
     private boolean isEmpty = true;
 
-    private float sep = 0.5f;
+    private Vector2 inputPoint;
+    private Vector2 lastPoint;
+    private Vector2 firstPoint;
+
+    private ShapeRenderer sr;
 
     private String clr = "CLEARSCREEN";
 
     private Texture pixText;
 
     List<ClickableText> clickableTexts = new ArrayList<>();
+
+    List<Vector2> points = new ArrayList<>();
 
 
     /**
@@ -68,6 +78,7 @@ public class Iloinen extends InputAdapter implements Screen {
         map.setColor(Color.WHITE);
         clickableTexts.add(new ClickableText(clr, 25, 315, font));
         Gdx.input.setInputProcessor(this);
+        sr = new ShapeRenderer();
     }
     @Override
     public void show() {
@@ -99,8 +110,16 @@ public class Iloinen extends InputAdapter implements Screen {
         }
         batch.end();
 
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        Gdx.app.log("points.size", String.valueOf(points.size()));
+        // Piiretään viiva kaikkien Vector2 ArrayListissä olevien Vector2 pisteiden välille
+        for (int i = 0; i < points.size() - 1; i++) {
+            sr.line(points.get(i), points.get(i+1));
+        }
+        sr.end();
+
         if(Gdx.input.isTouched()) { //Jos jotain inputtia on painettu, ajetaan update metodi
-            update();
+                update();
         }
     }
 
@@ -113,6 +132,9 @@ public class Iloinen extends InputAdapter implements Screen {
         touched = true; //Touched trueksi
         startX = vec.x; //Tallennetaan nämä muunnellut X ja Y koordinaatit startX ja startY floatteihin
         startY = vec.y;
+        // Tallenetaan aloituspiste Vector2 ja lisätään se points ArrayListiin
+        firstPoint = new Vector2(startX, startY);
+        points.add(firstPoint);
 
         return false;
     }
@@ -131,6 +153,9 @@ public class Iloinen extends InputAdapter implements Screen {
 
         newX = vec.x; //Tallennetaan nämä newX ja newY floatteihin
         newY = vec.y;
+        // Tallenetaan aina seuraava piste Vector2 ja lisätään se piirto-ArrayListiin eli points
+        inputPoint = new Vector2(newX, newY);
+        points.add(inputPoint);
         moved = true; //muutetaan moved trueksi
 
         return false;
@@ -146,9 +171,13 @@ public class Iloinen extends InputAdapter implements Screen {
                 //Piirretään viiva startX ja pelialueekorkeus - startY koordinaateista newX ja pelialueenkorkeus - newY koordinaatteihin
 
                 //Y koordinatti pitää muuttaa koska fuck logic, pixmapin 0,0 koordinaatti on vasen ylänurkka, kun taas kameran 0,0 vasen alanurkka.
-                map.drawLine((int) (startX - sep), (int) ((wHeight - startY) - sep), (int) (newX - sep), (int) ((wHeight - newY) - sep));
-                map.drawLine((int) startX, (int) (wHeight - startY), (int) newX, (int) (wHeight - newY));
-                map.drawLine((int) (startX + sep), (int) ((wHeight - startY) + sep), (int) (newX + sep), (int) ((wHeight - newY) + sep));
+                /*for(int i = 0; i < 3; i++) {
+                    map.drawLine((int) (startX - sep), (int) ((wHeight - startY) - sep), (int) (newX - sep), (int) ((wHeight - newY) - sep));
+                    map.drawLine((int) startX, (int) (wHeight - startY), (int) newX, (int) (wHeight - newY));
+                    map.drawLine((int) (startX + sep), (int) ((wHeight - startY) + sep), (int) (newX + sep), (int) ((wHeight - newY) + sep));
+                }
+                map.fillCircle((int) startX, (int)(wHeight - startY), 5);
+                 */
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
                 if(pixText!=null) { //Jos meillä on jo tekstuuri piirrossa, niin poistetaan tämä vanha.

@@ -164,10 +164,6 @@ public class Iloinen extends InputAdapter implements Screen {
         touched = false; //Kun sormi/hiirennapin nostetaan, laitetaan booleanit falseksi
         moved = false;
         Gdx.app.log("points.size", String.valueOf(points.size()));
-        Vector2 [] v = points.toArray(new Vector2 [0]);
-        for (int i = 0; i < v.length; i++) {
-            array2D[tracker][i] = v[i];
-        }
         tracker++;
         points.clear();
         firstShape = false;
@@ -183,6 +179,10 @@ public class Iloinen extends InputAdapter implements Screen {
         newY = vec.y;
         // Tallenetaan aina seuraava piste Vector2
         inputPoint = new Vector2(newX, newY);
+        Vector2 [] v = points.toArray(new Vector2 [0]);
+        for (int i = 0; i < v.length; i++) {
+            array2D[tracker][i] = v[i];
+        }
         moved = true; //muutetaan moved trueksi
 
         return false;
@@ -216,7 +216,7 @@ public class Iloinen extends InputAdapter implements Screen {
         map.setColor(Color.CLEAR); //laitetaan pixmapin väri läpinäkyväksi
         map.fill(); //Täytetään pixmap läpinäkyvällä värillä
         map.setColor(Color.WHITE); //vaihdetaan väri takaisin valkoiseksi
-        points.clear();
+        clearArray();
         isEmpty = true; //Lopetetaan vanhan tekstuurin renderöinti
     }
 
@@ -243,5 +243,14 @@ public class Iloinen extends InputAdapter implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void clearArray() {
+        for (int i = 0; i < array2D.length - 1; i++) {
+            for (int j = 0; j < array2D[i].length - 1; j++) {
+                if(array2D[i][j] != null && array2D[i][j+1] != null)
+                    array2D[i][j] = null;
+            }
+        }
     }
 }

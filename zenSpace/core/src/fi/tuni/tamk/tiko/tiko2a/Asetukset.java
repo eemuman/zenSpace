@@ -46,9 +46,9 @@ public class Asetukset implements Screen {
     public Asetukset(zenSpace game) {
         gme = game;
 
-        headerImg = new Image(new Texture("zenSpace.png"));
+        headerImg = gme.getHeaderImg();
 
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        this.skin = gme.getSkin();
 
         tbl = new Table();
 

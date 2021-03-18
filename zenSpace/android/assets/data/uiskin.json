@@ -133,6 +133,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: default-font
 		fontColor: white
 		disabledFontColor: gray
+		checked: default-round-down
 	}
 	toggle: {
 		parent: default

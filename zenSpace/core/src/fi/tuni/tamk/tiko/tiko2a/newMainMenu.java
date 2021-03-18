@@ -44,19 +44,16 @@ public class newMainMenu implements Screen {
 
     private Image headerImg;
 
-    public newMainMenu(zenSpace game) {
+    public newMainMenu(final zenSpace game) {
 
         gme = game;
 
-        headerImg = new Image(new Texture("zenSpace.png"));
 
 
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-
+        headerImg = gme.getHeaderImg();
+        skin = gme.getSkin();
 
         tbl = new Table();
-
-
         btnPela = new TextButton("Pelaa", skin);
         btnAsetukset = new TextButton("Asetukset", skin);
         btnExit = new TextButton("Sammuta Peli", skin);
@@ -78,6 +75,8 @@ public class newMainMenu implements Screen {
         btnPela.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                gme.setScreen(new Pelaa1(gme));
             }
         });
         btnExit.addListener(new ChangeListener() {

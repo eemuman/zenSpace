@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -48,9 +49,9 @@ public class Iloinen extends InputAdapter implements Screen {
     private boolean touched = false;
     private boolean moved = false;
     private boolean isEmpty = true;
+    private boolean firstShape = true;
 
     private Vector2 inputPoint;
-    private Vector2 lastPoint;
     private Vector2 firstPoint;
 
     private ShapeRenderer sr;
@@ -59,10 +60,13 @@ public class Iloinen extends InputAdapter implements Screen {
 
     private Texture pixText;
 
+    private int tracker = 0;
+
     List<ClickableText> clickableTexts = new ArrayList<>();
 
     List<Vector2> points = new ArrayList<>();
 
+    Vector2 [][] array2D = new Vector2 [200][3000];
 
     /**
      * Luodaan klikattavateksti, jolla voi sitten tyhjätä näytön ja käynnistetään inputprosessori
@@ -112,13 +116,25 @@ public class Iloinen extends InputAdapter implements Screen {
 
          */
         batch.end();
+        // Aloitetaan ShapeRenderer ja asetetaan sen projectionMatrix
         sr.setProjectionMatrix(textCam.combined);
-        sr.begin(ShapeRenderer.ShapeType.Line);
-        Gdx.app.log("points.size", String.valueOf(points.size()));
+        sr.begin(ShapeRenderer.ShapeType.Filled);
         // Piiretään viiva kaikkien Vector2 ArrayListissä olevien Vector2 pisteiden välille
-        for (int i = 0; i < points.size() - 1; i++) {
-            sr.line(points.get(i), points.get(i+1));
+        // Viivan paksuutta voi säätää widthistä
+        
+        if(firstShape) {
+            for (int i = 0; i < points.size() - 1; i++) {
+                sr.rectLine(points.get(i), points.get(i+1), 1.5f);
+            }
+        } else {
+            for (int i = 0; i < array2D.length - 1; i++) {
+                for (int j = 0; j < array2D[i].length - 1; j++) {
+                    if(array2D[i][j] != null && array2D[i][j+1] != null)
+                    sr.rectLine(array2D[i][j], array2D[i][j+1], 1.5f);
+                }
+            }
         }
+
         sr.end();
 
         if(Gdx.input.isTouched()) { //Jos jotain inputtia on painettu, ajetaan update metodi
@@ -138,6 +154,7 @@ public class Iloinen extends InputAdapter implements Screen {
         // Tallenetaan aloituspiste Vector2 ja lisätään se points ArrayListiin
         firstPoint = new Vector2(startX, startY);
         points.add(firstPoint);
+        Gdx.app.log("points.size", String.valueOf(points.size()));
 
         return false;
     }
@@ -146,6 +163,14 @@ public class Iloinen extends InputAdapter implements Screen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         touched = false; //Kun sormi/hiirennapin nostetaan, laitetaan booleanit falseksi
         moved = false;
+        Gdx.app.log("points.size", String.valueOf(points.size()));
+        Vector2 [] v = points.toArray(new Vector2 [0]);
+        for (int i = 0; i < v.length; i++) {
+            array2D[tracker][i] = v[i];
+        }
+        tracker++;
+        points.clear();
+        firstShape = false;
         return false;
     }
 
@@ -156,9 +181,8 @@ public class Iloinen extends InputAdapter implements Screen {
 
         newX = vec.x; //Tallennetaan nämä newX ja newY floatteihin
         newY = vec.y;
-        // Tallenetaan aina seuraava piste Vector2 ja lisätään se piirto-ArrayListiin eli points
+        // Tallenetaan aina seuraava piste Vector2
         inputPoint = new Vector2(newX, newY);
-        points.add(inputPoint);
         moved = true; //muutetaan moved trueksi
 
         return false;
@@ -169,24 +193,20 @@ public class Iloinen extends InputAdapter implements Screen {
             if (moved) {
                 if(isEmpty) { //Jos tämä on ensimmäinen kerta täällä, laitetaan isEmpty falseksi.
                     isEmpty = false;
-                } //Jos touched ja moved ovat kummatkin true, mennään tänne. Toisinsanoen pitää tapahtua jotain liikettä, ennenkuin lähdetään piirtämään.
-
-                //Piirretään viiva startX ja pelialueekorkeus - startY koordinaateista newX ja pelialueenkorkeus - newY koordinaatteihin
-
-                //Y koordinatti pitää muuttaa koska fuck logic, pixmapin 0,0 koordinaatti on vasen ylänurkka, kun taas kameran 0,0 vasen alanurkka.
-                /*for(int i = 0; i < 3; i++) {
-                    map.drawLine((int) (startX - sep), (int) ((wHeight - startY) - sep), (int) (newX - sep), (int) ((wHeight - newY) - sep));
-                    map.drawLine((int) startX, (int) (wHeight - startY), (int) newX, (int) (wHeight - newY));
-                    map.drawLine((int) (startX + sep), (int) ((wHeight - startY) + sep), (int) (newX + sep), (int) ((wHeight - newY) + sep));
                 }
-                map.fillCircle((int) startX, (int)(wHeight - startY), 5);
-                 */
+                //Jos touched ja moved ovat kummatkin true, mennään tänne. Toisinsanoen pitää tapahtua jotain liikettä, ennenkuin lähdetään piirtämään.
+                // Lisätään Vector2 inputPoint piirto-ArrayListiin
+                points.add(inputPoint);
+
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
+                /*
                 if(pixText!=null) { //Jos meillä on jo tekstuuri piirrossa, niin poistetaan tämä vanha.
                     pixText.dispose();
                 }
                 pixText = new Texture(map); //ja luodaan uusi
+
+                 */
             }
 
         }

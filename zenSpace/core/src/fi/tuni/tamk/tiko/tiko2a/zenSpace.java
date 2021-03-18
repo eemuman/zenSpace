@@ -11,8 +11,13 @@ package fi.tuni.tamk.tiko.tiko2a;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Pelin pohjaluokka, täällä luodaan kaikki asiat, mitä käytetään muissa luokissa
@@ -21,11 +26,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class zenSpace extends Game {
 	private SpriteBatch batch;
+	private ExtendViewport scrnView;
 	private OrthographicCamera cam;
 	private OrthographicCamera textCam;
-	private BitmapFont font;
-	private int wWidth = 640;
-	private int wHeight = 320;
+	private int wHeight = 480;
+	private int wWidth = 800;
+	private Skin skin;
+	private Image headerImg;
+
+	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyelta", "Raskaalta", "Kuplivalta", "Rennolta", "Jaykalta", "Neutraalilta"};
+	private String[] secondStrings = {"Vihainen", "Ylpea", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Havettaa", "Inhottaa"};
+
+
+
+
 
 	/**
 	 * Täällä initializetaan kaikki yllä luodut.
@@ -36,10 +50,18 @@ public class zenSpace extends Game {
 		cam = new OrthographicCamera();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
+		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
-		font = new BitmapFont(Gdx.files.internal("fontti.fnt"), false); //Tässä luodaan fontti, helppo muuttaa, voin näyttää halutessa
-		font.getData().setScale(0.15f); //Pikku trikki, jolla saadaan tekstistä vähän sulavempaa on luoda suuri fontti jota downscaletaan pienemmäksi.
-		setScreen(new MainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
+		headerImg = new Image(new Texture("zenSpace.png"));
+		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		skin.getFont("default-font").getData().setScale(0.65f);
+
+
+		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
+	}
+
+	public void render () {
+		super.render();
 	}
 
 	/**
@@ -49,17 +71,28 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-
 	public OrthographicCamera getCam() {
 		return cam;
 	}
-
-
-	public BitmapFont getFont() {
-		return font;
+	public ExtendViewport getScrnView() {
+		return scrnView;
 	}
 	public OrthographicCamera getTextCam() {
 		return textCam;
 	}
-
+	public Skin getSkin() {
+		return skin;
+	}
+	public Image getHeaderImg() {
+		return headerImg;
+	}
+	public int getwWidth() {
+		return wWidth;
+	}
+	public String[] getFirstStrings() {
+		return firstStrings;
+	}
+	public String[] getSecondStrings() {
+		return secondStrings;
+	}
 }

@@ -12,7 +12,7 @@
         <activity
             android:name="fi.tuni.tamk.tiko.tiko2a.AndroidLauncher"
             android:label="@string/app_name" 
-            android:screenOrientation="portrait"
+            android:screenOrientation="sensorPortrait"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

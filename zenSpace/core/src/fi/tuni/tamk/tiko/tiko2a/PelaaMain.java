@@ -62,6 +62,14 @@ public class PelaaMain implements Screen {
             }
         });
 
+        btnEtu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                gme.setScreen(new Piirto(gme));
+            }
+        });
+
 
         tbl = new Table();
 

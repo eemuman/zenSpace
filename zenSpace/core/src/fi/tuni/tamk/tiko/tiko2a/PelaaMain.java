@@ -49,10 +49,10 @@ public class PelaaMain implements Screen {
 
 
 
-        header = new Label(firstPart + firstChoice + "\n" + secondPart + secondChoice +"\nOletko tyytyvainen valintoihisi?", skin);
+        header = new Label(firstPart + "\n" + firstChoice + "\n" + secondPart  + "\n" +  secondChoice +"\nAloitetaanko?", skin);
         header.setWrap(true);
-        btnTaka = new TextButton("En\nAloitetaan alusta", skin);
-        btnEtu = new TextButton("Kylla!", skin);
+        btnTaka = new TextButton("Ei", skin);
+        btnEtu = new TextButton("Kyllä!", skin);
 
         btnTaka.addListener(new ChangeListener() {
             @Override
@@ -73,10 +73,10 @@ public class PelaaMain implements Screen {
 
         tbl = new Table();
 
-        tbl.add(header).center().left().expand().padLeft(50);
+        tbl.add(header).expand();
         tbl.row();
-        tbl.add(btnTaka).left().bottom().height(150);
-        tbl.add(btnEtu).right().bottom().height(150).width(300);
+        tbl.add(btnTaka).left().bottom().height(75).width(200);
+        tbl.add(btnEtu).right().bottom().height(75).width(200);
         tbl.setFillParent(true);
 
         stg.addActor(tbl);

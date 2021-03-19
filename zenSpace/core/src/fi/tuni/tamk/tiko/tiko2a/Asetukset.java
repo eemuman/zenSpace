@@ -59,11 +59,11 @@ public class Asetukset implements Screen {
 
         tbl.add(headerImg).expandX();
         tbl.row();
-        tbl.add(lbl).width(600).height(150).center().expandX();
+        tbl.add(lbl).width(400).height(150).center().expandX();
         tbl.row();
-        tbl.add(volSlider).width(600).height(75).padBottom(75);
+        tbl.add(volSlider).width(400).height(75).padBottom(75);
         tbl.row();
-        tbl.add(btnTakaisin).width(600).height(125).padBottom(75).bottom().expandY();
+        tbl.add(btnTakaisin).width(400).height(100).padBottom(75).bottom().expandY();
 
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);

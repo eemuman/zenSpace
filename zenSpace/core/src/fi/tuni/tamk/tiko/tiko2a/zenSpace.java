@@ -29,13 +29,13 @@ public class zenSpace extends Game {
 	private ExtendViewport scrnView;
 	private OrthographicCamera cam;
 	private OrthographicCamera textCam;
-	private int wHeight = 480;
-	private int wWidth = 800;
+	private int wWidth = 480;
+	private int wHeight = 800;
 	private Skin skin;
 	private Image headerImg;
 
-	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyelta", "Raskaalta", "Kuplivalta", "Rennolta", "Jaykalta", "Neutraalilta"};
-	private String[] secondStrings = {"Vihainen", "Ylpea", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Havettaa", "Inhottaa"};
+	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyeltä", "Raskaalta", "Kuplivalta", "Rennolta", "Jäykältä", "Neutraalilta"};
+	private String[] secondStrings = {"Vihainen", "Ylpeä", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Hävettää", "Inhottaa"};
 
 
 
@@ -54,7 +54,7 @@ public class zenSpace extends Game {
 		cam.setToOrtho(true, 15, 10);
 		headerImg = new Image(new Texture("zenSpace.png"));
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		skin.getFont("default-font").getData().setScale(0.65f);
+		skin.getFont("new").getData().setScale(0.3f);
 
 
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...

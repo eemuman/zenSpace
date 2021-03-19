@@ -78,7 +78,7 @@ public class Piirto extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
 
-        reset = new TextButton("CLEARSCREEN", skin);
+        reset = new TextButton("CLEARSCREEN", skin, "TextButtonSmall");
         reset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -90,7 +90,7 @@ public class Piirto extends InputAdapter implements Screen {
                 }
             }
         });
-        back = new TextButton("MAINMENU", skin);
+        back = new TextButton("MAINMENU", skin, "TextButtonSmall");
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -98,8 +98,8 @@ public class Piirto extends InputAdapter implements Screen {
                 gme.setScreen(new newMainMenu(gme));
             }
         });
-        tbl.add(back).expand().top().left().width(350).height(125);
-        tbl.add(reset).expand().top().right().width(350).height(125);
+        tbl.add(back).expand().top().left().width(225).height(100);
+        tbl.add(reset).expand().top().right().width(225).height(100);
         stg.addActor(tbl);
     }
 

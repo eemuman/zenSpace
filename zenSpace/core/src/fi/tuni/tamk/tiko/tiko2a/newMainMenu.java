@@ -59,11 +59,11 @@ public class newMainMenu implements Screen {
         btnExit = new TextButton("Sammuta Peli", skin);
         tbl.add(headerImg).expand();
         tbl.row();
-        tbl.add(btnPela).width(600).height(125).bottom().padBottom(75);
+        tbl.add(btnPela).width(325).height(100).bottom().padBottom(75);
         tbl.row();
-        tbl.add(btnAsetukset).width(600).height(125).bottom().padBottom(75);
+        tbl.add(btnAsetukset).width(325).height(100).bottom().padBottom(75);
         tbl.row();
-        tbl.add(btnExit).width(600).height(125).bottom().padBottom(75);
+        tbl.add(btnExit).width(325).height(100).bottom().padBottom(75);
 
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);

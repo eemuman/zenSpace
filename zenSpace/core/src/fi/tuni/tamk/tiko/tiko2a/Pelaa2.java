@@ -49,7 +49,7 @@ public class Pelaa2 implements Screen {
         Gdx.input.setInputProcessor(stg);
         firstChoice = first;
         createBtns();
-        header = new Label("MIKA FIILIS", skin);
+        header = new Label("MIKÄ FIILIS", skin);
         btnTaka = new TextButton("Takaisin", skin);
         btnEte = new TextButton("Seuraava", skin);
 
@@ -73,9 +73,9 @@ public class Pelaa2 implements Screen {
 
         tbl = new Table();
         tblBottom = new Table();
-        tbl.add(header).expand();
+        tbl.add(header).expand().padBottom(25).padTop(75);
         addBtnsTable();
-        tblBottom.defaults().height(100);
+        tblBottom.defaults().height(75);
         tblBottom.add(btnTaka).left().bottom().expand();
         tblBottom.add(btnEte).right().bottom().expand();
         tbl.setFillParent(true);
@@ -131,7 +131,7 @@ public class Pelaa2 implements Screen {
 
     private void createBtns() {
         for (int i = 0; i < btns.length; i++) {
-            btns[i] = new TextButton(textStrings[i], skin);
+            btns[i] = new TextButton(textStrings[i], skin, "toggle");
         }
     }
 
@@ -139,9 +139,9 @@ public class Pelaa2 implements Screen {
         for (int i = 0; i < btns.length; i++) {
             tbl.row();
             if(i == btns.length -1) {
-                tbl.add(btns[i]).width(gme.getwWidth()).height(100).padBottom(175);
+                tbl.add(btns[i]).width(gme.getwWidth()).height(75).padBottom(175);
             } else {
-                tbl.add(btns[i]).width(gme.getwWidth()).height(100);
+                tbl.add(btns[i]).width(gme.getwWidth()).height(75);
             }
         }
     }

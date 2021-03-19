@@ -53,6 +53,7 @@ public class Pelaa2 implements Screen {
         btnTaka = new TextButton("Takaisin", skin);
         btnEte = new TextButton("Seuraava", skin);
 
+
         btnTaka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -100,7 +101,7 @@ public class Pelaa2 implements Screen {
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
 
-        Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
+        //Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
     }
 
     @Override

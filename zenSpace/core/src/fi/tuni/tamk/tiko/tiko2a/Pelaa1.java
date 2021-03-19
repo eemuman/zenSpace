@@ -98,7 +98,7 @@ public class Pelaa1 implements Screen {
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
 
-        Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
+        //Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
     }
 
     @Override

@@ -90,6 +90,7 @@ public class Piirto extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
 
+
         reset = new TextButton("CLEARSCREEN", skin, "TextButtonSmall");
         reset.addListener(new ChangeListener() {
             @Override
@@ -133,6 +134,7 @@ public class Piirto extends InputAdapter implements Screen {
         drawLines();
         sr.end();
         update();
+        gme.setScreen(new Este(gme)); // Este testailua
 
     }
 

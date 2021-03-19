@@ -166,8 +166,6 @@ public class Piirto extends InputAdapter implements Screen {
         if(firstShape) {
             for (int i = 0; i < points.size() - 1; i++) {
                 sr.rectLine(points.get(i), points.get(i+1), 5f);
-                Gdx.app.log("points.size", String.valueOf(points.size()));
-                Gdx.app.log("2D array:", String.valueOf(array2D[0][1]));
             }
         } else {
             for (int i = 0; i < array2D.length - 1; i++) {

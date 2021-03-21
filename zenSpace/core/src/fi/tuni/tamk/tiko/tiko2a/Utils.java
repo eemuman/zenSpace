@@ -37,6 +37,21 @@ public class Utils {
     }
 
     /**
+     * Scale a Rectangle object to wanted size
+     * @param r rectangle to be scaled
+     * @param scale the desired scale
+     * @return scaled rectangle
+     */
+    public static Rectangle scaleRectangle(Rectangle r, float scale) {
+        Rectangle rec = new Rectangle();
+        rec.x = r.x * scale;
+        rec.y = r.y * scale;
+        rec.width = r.width * scale;
+        rec.height = r.height * scale;
+        return rec;
+    }
+
+    /**
      * Transform 2D TextureRegionArray to 1D TextureRegionArray
      * @param arr 2D array to be transformed
      * @param ROWS number of rows in 2D array
@@ -53,21 +68,6 @@ public class Utils {
             }
         }
         return currentFrames;
-    }
-
-    /**
-     * Scale a Rectangle object to wanted size
-     * @param r rectangle to be scaled
-     * @param scale the desired scale
-     * @return scaled rectangle
-     */
-    public static Rectangle scaleRectangle(Rectangle r, float scale) {
-        Rectangle rec = new Rectangle();
-        rec.x = r.x * scale;
-        rec.y = r.y * scale;
-        rec.width = r.width * scale;
-        rec.height = r.height * scale;
-        return rec;
     }
 
     public static TextureRegion [][] setRegionArray(Texture t, int ROWS, int COLS) {

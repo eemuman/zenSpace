@@ -45,8 +45,8 @@ public class Este implements Screen{
     private SpriteBatch batch;
     private ExtendViewport scrnView;
 
-    private float playerWidth = 400f;
-    private float playerHeight = 600f;
+    private float playerWidth = 400f /2.5f;
+    private float playerHeight = 600f /1.25f;
 
     /**
      * Helper variable for counting the current frame.
@@ -61,17 +61,20 @@ public class Este implements Screen{
         renderer = new Box2DDebugRenderer();
         cam = g.getTextCam();
         cam.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        createPlayer(playerWidth/2.5f, playerHeight/1.25f);
+        createPlayer(playerWidth, playerHeight);
     }
 
     private void createPlayer(float width, float height) {
+        // Lisätään texturesheet
         runTexture = new Texture("spritesheet.png");
 
-        // Create animations
+        // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
+        // mut jätin näin koska on selkeämpi aluks.)
         textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
         textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
         runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
 
+        // Luodaan pelaajan box2dbody
         myBodyDef = new BodyDef();
         myBodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -96,6 +99,8 @@ public class Este implements Screen{
     void draw(SpriteBatch batch) {
         batch.begin();
         batch.draw(currentPlayerFrame,
+                // Nää on kämäsesti koska en osannu laittaa pelaajaa tuohon keskelle muuten
+                // eli vaatii säätöä.
                 b.getPosition().x - 40f,
                 b.getPosition().y -325f,
                 currentPlayerFrame.getRegionWidth()/2f,

@@ -71,9 +71,7 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-	public OrthographicCamera getCam() {
-		return cam;
-	}
+	public int getwHeight() { return wHeight;}
 	public ExtendViewport getScrnView() {
 		return scrnView;
 	}

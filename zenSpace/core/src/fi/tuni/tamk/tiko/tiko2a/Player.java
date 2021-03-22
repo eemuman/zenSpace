@@ -26,8 +26,8 @@ public class Player {
     private Animation<TextureRegion> runAnimation;
     private BodyDef myBodyDef;
     private FixtureDef myFixtureDef;
-    private float playerWidth = 400f /2.5f;
-    private float playerHeight = 600f /1.25f;
+    private float playerWidth = 80f;
+    private float playerHeight = 240f;
 
 
     public Player(int ROWS, int COLS, int WORLD_WIDTH, int WORLD_HEIGHT, World world) {
@@ -55,16 +55,33 @@ public class Player {
         myFixtureDef.friction = 0.5f;
 
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(playerWidth / 2f, playerHeight / 2f);
+        polygonShape.setAsBox(playerWidth, playerHeight);
 
         myFixtureDef.shape = polygonShape;
         b.createFixture(myFixtureDef);
+    }
+
+    public Player(int ROWS, int COLS) {
+        runTexture = new Texture("spritesheet.png");
+
+        // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
+        // mut jätin näin koska on selkeämpi aluks.)
+        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
+        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
+        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
     }
 
     public Animation<TextureRegion> getRunAnimation() {
         return runAnimation;
     }
 
+    public float getPlayerWidth() {
+        return playerWidth;
+    }
+
+    public float getPlayerHeight() {
+        return playerHeight;
+    }
     public Body getB() {
         return b;
     }

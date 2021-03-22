@@ -10,6 +10,7 @@ package fi.tuni.tamk.tiko.tiko2a;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -66,7 +67,8 @@ public class PelaaMain implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                gme.setScreen(new Piirto(gme));
+                HUD hud = new HUD(gme);
+                gme.setScreen(new Transition(gme, new Texture("Viljapelto.png"), hud));
             }
         });
 

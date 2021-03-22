@@ -8,8 +8,10 @@
 
 package fi.tuni.tamk.tiko.tiko2a;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -28,6 +30,7 @@ public class Player {
     private FixtureDef myFixtureDef;
     private float playerWidth = 80f;
     private float playerHeight = 240f;
+    private TextureAtlas textureAtlas;
 
 
     public Player(int ROWS, int COLS, int WORLD_WIDTH, int WORLD_HEIGHT, World world) {
@@ -62,13 +65,16 @@ public class Player {
     }
 
     public Player(int ROWS, int COLS) {
-        runTexture = new Texture("spritesheet.png");
+        textureAtlas = new TextureAtlas("test.txt");
+        //runTexture = new Texture("test.png");
 
         // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
         // mut jätin näin koska on selkeämpi aluks.)
-        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
-        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
-        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
+       // textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
+       // textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
+     //   runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
+
+        runAnimation = new Animation<TextureRegion>(1f/15f,textureAtlas.getRegions(), Animation.PlayMode.LOOP);
     }
 
     public Animation<TextureRegion> getRunAnimation() {

@@ -70,7 +70,7 @@ public class Transition implements Screen {
         }
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
+        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
         batch.end();
         hud.render(delta);
         checkPlayerPos();

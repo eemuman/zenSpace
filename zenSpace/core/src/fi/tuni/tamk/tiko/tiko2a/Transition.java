@@ -45,7 +45,7 @@ public class Transition implements Screen {
         scrnView = game.getScrnView();
         this.bgTexture = bgTexture;
         batch = game.getBatch();
-        player = new Player(1, 10);
+        player = new Player(1, 9);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Transition implements Screen {
         }
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 5, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
+        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
         batch.end();
         hud.render(delta);
         checkPlayerPos();

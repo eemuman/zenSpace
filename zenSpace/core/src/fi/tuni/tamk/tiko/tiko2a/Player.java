@@ -1,6 +1,7 @@
 /*
  * This file was created by:
- * @Eemil V.
+ * @Petr Halinen
+ * Edited to its own class by Eemil V.
  *
  * Copyright (c) 2021.
  */

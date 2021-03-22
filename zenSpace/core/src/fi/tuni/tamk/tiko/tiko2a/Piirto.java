@@ -134,7 +134,7 @@ public class Piirto extends InputAdapter implements Screen {
         drawLines();
         sr.end();
         update();
-        gme.setScreen(new Este(gme)); // Este testailua
+      //  gme.setScreen(new Este(gme)); // Este testailua
 
     }
 

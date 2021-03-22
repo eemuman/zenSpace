@@ -15,8 +15,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -38,15 +40,18 @@ public class Este implements Screen{
     private SpriteBatch batch;
     private Player player;
 
+    private final float TIME_STEP = 1/60f;
+
     /**
      * Helper variable for counting the current frame.
      */
     private float stateTime = 0.0f;
+    private double accumulator = 0;
 
     public Este(zenSpace game) {
         g = game;
         batch = new SpriteBatch();
-        world = new World(new Vector2(0, 0), true);
+        world = new World(new Vector2(0, -9.8f), true);
         player = new Player(ROWS, COLS, WORLD_WIDTH, WORLD_HEIGHT, world);
         renderer = new Box2DDebugRenderer();
         cam = g.getTextCam();
@@ -55,12 +60,11 @@ public class Este implements Screen{
 
 
     void draw(SpriteBatch batch) {
-        batch.begin();
         batch.draw(currentPlayerFrame,
                 // Nää on kämäsesti koska en osannu laittaa pelaajaa tuohon keskelle muuten
                 // eli vaatii säätöä.
-                player.getB().getPosition().x - 40f,
-                player.getB().getPosition().y -325f,
+                player.getB().getPosition().x,
+                player.getB().getPosition().y,
                 currentPlayerFrame.getRegionWidth()/2f,
                 currentPlayerFrame.getRegionHeight()/2f,
                 currentPlayerFrame.getRegionWidth()/2.5f,
@@ -68,7 +72,7 @@ public class Este implements Screen{
                 1.0f,
                 1.0f,
                 0f);
-        batch.end();
+
 
     }
     @Override
@@ -83,8 +87,22 @@ public class Este implements Screen{
         renderer.render(world, cam.combined);
         stateTime += delta;
         currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
+        doPhysicsStep(delta);
+        batch.begin();
         draw(batch);
+        batch.end();
+    }
 
+    private void doPhysicsStep(float deltaTime) {
+        float frameTime = deltaTime;
+        if(deltaTime > 1/4f) {
+            frameTime = 1/4f;
+        }
+        accumulator += frameTime;
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 8, 3);
+            accumulator -= TIME_STEP;
+        }
     }
 
     @Override

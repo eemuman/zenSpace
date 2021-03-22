@@ -34,19 +34,9 @@ public class Este implements Screen{
     private int ROWS = 1, COLS = 10;
     private Box2DDebugRenderer renderer;
     private OrthographicCamera cam;
-    private Body b;
-    private Texture runTexture;
-    private TextureRegion[][] textureRegion2D;
-    private TextureRegion[] textureRegionArray;
-    private Animation<TextureRegion> runAnimation;
     private TextureRegion currentPlayerFrame;
-    private BodyDef myBodyDef;
-    private FixtureDef myFixtureDef;
     private SpriteBatch batch;
-    private ExtendViewport scrnView;
-
-    private float playerWidth = 400f /2.5f;
-    private float playerHeight = 600f /1.25f;
+    private Player player;
 
     /**
      * Helper variable for counting the current frame.
@@ -57,52 +47,20 @@ public class Este implements Screen{
         g = game;
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), true);
-        scrnView = g.getScrnView();
+        player = new Player(ROWS, COLS, WORLD_WIDTH, WORLD_HEIGHT, world);
         renderer = new Box2DDebugRenderer();
         cam = g.getTextCam();
         cam.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        createPlayer(playerWidth, playerHeight);
     }
 
-    private void createPlayer(float width, float height) {
-        // Lisätään texturesheet
-        runTexture = new Texture("spritesheet.png");
-
-        // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
-        // mut jätin näin koska on selkeämpi aluks.)
-        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
-        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
-        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
-
-        // Luodaan pelaajan box2dbody
-        myBodyDef = new BodyDef();
-        myBodyDef.type = BodyDef.BodyType.DynamicBody;
-
-        myBodyDef.position.set(WORLD_WIDTH/2f, WORLD_HEIGHT/2f);
-        myBodyDef.fixedRotation = true;
-
-        b = world.createBody(myBodyDef);
-        b.setUserData(runTexture);
-
-        myFixtureDef = new FixtureDef();
-        myFixtureDef.density = 2;
-        myFixtureDef.restitution = 0.01f;
-        myFixtureDef.friction = 0.5f;
-
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(width / 2f, height / 2f);
-
-        myFixtureDef.shape = polygonShape;
-        b.createFixture(myFixtureDef);
-    }
 
     void draw(SpriteBatch batch) {
         batch.begin();
         batch.draw(currentPlayerFrame,
                 // Nää on kämäsesti koska en osannu laittaa pelaajaa tuohon keskelle muuten
                 // eli vaatii säätöä.
-                b.getPosition().x - 40f,
-                b.getPosition().y -325f,
+                player.getB().getPosition().x - 40f,
+                player.getB().getPosition().y -325f,
                 currentPlayerFrame.getRegionWidth()/2f,
                 currentPlayerFrame.getRegionHeight()/2f,
                 currentPlayerFrame.getRegionWidth()/2.5f,
@@ -124,7 +82,7 @@ public class Este implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render(world, cam.combined);
         stateTime += delta;
-        currentPlayerFrame = runAnimation.getKeyFrame(stateTime, true);
+        currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
         draw(batch);
 
     }

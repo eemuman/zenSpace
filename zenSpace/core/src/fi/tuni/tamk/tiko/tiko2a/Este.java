@@ -38,15 +38,18 @@ public class Este implements Screen{
     private SpriteBatch batch;
     private Player player;
 
+    private final float TIME_STEP = 1/60f;
+
     /**
      * Helper variable for counting the current frame.
      */
     private float stateTime = 0.0f;
+    private double accumulator = 0;
 
     public Este(zenSpace game) {
         g = game;
         batch = new SpriteBatch();
-        world = new World(new Vector2(0, 0), true);
+        world = new World(new Vector2(0, -9.8f), true);
         player = new Player(ROWS, COLS, WORLD_WIDTH, WORLD_HEIGHT, world);
         renderer = new Box2DDebugRenderer();
         cam = g.getTextCam();
@@ -84,7 +87,20 @@ public class Este implements Screen{
         stateTime += delta;
         currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
         draw(batch);
+        doPhysicsStep(delta);
 
+    }
+
+    private void doPhysicsStep(float deltaTime) {
+        float frameTime = deltaTime;
+        if(deltaTime > 1/4f) {
+            frameTime = 1/4f;
+        }
+        accumulator += frameTime;
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 8, 3);
+            accumulator -= TIME_STEP;
+        }
     }
 
     @Override

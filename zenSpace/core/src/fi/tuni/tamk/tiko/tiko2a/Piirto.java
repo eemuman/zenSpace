@@ -48,17 +48,29 @@ public class Piirto extends InputAdapter implements Screen {
     private boolean moved = false;
     private boolean firstShape = true;
 
-    private Vector2 inputPoint;
     private Vector2 firstPoint;
+    private Vector2 inputPoint;
 
     private InputMultiplexer inputMultiplexer;
 
     private ShapeRenderer sr;
 
+    /**
+     * Tracker jolla tallennettava "points" piirros
+     * laitetaan aina seuraavaan Arrayhyn
+     */
     private int tracker = 0;
 
+    /**
+     * ArrayList johon kerätään aina yhden piirtokerran
+     * eli touchDown ja touchUp välissä sijoitetut Vector2 pisteet
+     */
     List<Vector2> points = new ArrayList<>();
 
+    /**
+     * 2D Vector2 Array johon yhden piirtokerran arraylist "points"
+     * tallennetaan aina touchUpin tapahtuessa
+     */
     Vector2 [][] array2D = new Vector2 [200][3000];
 
     public Piirto(zenSpace game) {
@@ -78,7 +90,8 @@ public class Piirto extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
 
-        reset = new TextButton("CLEARSCREEN", skin);
+
+        reset = new TextButton("CLEARSCREEN", skin, "TextButtonSmall");
         reset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -88,9 +101,11 @@ public class Piirto extends InputAdapter implements Screen {
                             array2D[i][j] = null;
                     }
                 }
+                tracker = 0;
+                firstShape = true;
             }
         });
-        back = new TextButton("MAINMENU", skin);
+        back = new TextButton("MAINMENU", skin, "TextButtonSmall");
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -98,8 +113,8 @@ public class Piirto extends InputAdapter implements Screen {
                 gme.setScreen(new newMainMenu(gme));
             }
         });
-        tbl.add(back).expand().top().left().width(350).height(125);
-        tbl.add(reset).expand().top().right().width(350).height(125);
+        tbl.add(back).expand().top().left().width(225).height(100);
+        tbl.add(reset).expand().top().right().width(225).height(100);
         stg.addActor(tbl);
     }
 
@@ -119,6 +134,7 @@ public class Piirto extends InputAdapter implements Screen {
         drawLines();
         sr.end();
         update();
+        gme.setScreen(new Este(gme)); // Este testailua
 
     }
 
@@ -174,7 +190,6 @@ public class Piirto extends InputAdapter implements Screen {
         // Tallenetaan aloituspiste Vector2 ja lisätään se points ArrayListiin
         firstPoint = new Vector2(startX, startY);
         points.add(firstPoint);
-        Gdx.app.log("points.size", String.valueOf(points.size()));
 
         return false;
     }
@@ -183,7 +198,6 @@ public class Piirto extends InputAdapter implements Screen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         touched = false; //Kun sormi/hiirennapin nostetaan, laitetaan booleanit falseksi
         moved = false;
-        Gdx.app.log("points.size", String.valueOf(points.size()));
         tracker++;
         points.clear();
         firstShape = false;
@@ -216,3 +230,4 @@ public class Piirto extends InputAdapter implements Screen {
         }
     }
 }
+//End of file

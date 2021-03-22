@@ -1,10 +1,10 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	default: {
-		file: new.fnt
+	new: {
+		file: test.fnt
 	}
-	default-font: {
-		file: new.fnt
+	newsmall: {
+		file: newsmall.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -65,19 +65,19 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: {
 		checkboxOn: check-on
 		checkboxOff: check-off
-		font: default-font
+		font: new
 		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: default-font
-		fontColor: white
+		font: new
+		fontColor: black
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
-		font: default-font
+		font: new
 		fontColorSelected: white
 		fontColorUnselected: white
 		selection: selection
@@ -104,7 +104,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: default-font
+		font: new
 		fontColor: white
 		background: default-select
 		scrollStyle: default
@@ -130,20 +130,27 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		parent: default
-		font: default-font
+		font: new
 		fontColor: white
 		disabledFontColor: gray
-		checked: default-round-down
 	}
 	toggle: {
 		parent: default
+		font: new
 		downFontColor: red
+		checkedFontColor: red
 		checked: default-round-down
+	}
+	TextButtonSmall: {
+		parent: default
+		font: newsmall
+		fontColor: white
+		disabledFontColor: gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: default-font
+		font: new
 		fontColor: white
 		background: textfield
 		cursor: cursor
@@ -173,7 +180,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: default-window
-		titleFont: default-font
+		titleFont: new
 		titleFontColor: white
 	}
 	dialog: {

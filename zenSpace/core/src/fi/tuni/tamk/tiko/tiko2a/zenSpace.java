@@ -14,10 +14,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import javax.xml.soap.Text;
 
 /**
  * Pelin pohjaluokka, täällä luodaan kaikki asiat, mitä käytetään muissa luokissa
@@ -33,6 +36,8 @@ public class zenSpace extends Game {
 	private int wHeight = 800;
 	private Skin skin;
 	private Image headerImg;
+
+	private TextureAtlas textureAtlas;
 
 	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyeltä", "Raskaalta", "Kuplivalta", "Rennolta", "Jäykältä", "Neutraalilta"};
 	private String[] secondStrings = {"Vihainen", "Ylpeä", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Hävettää", "Inhottaa"};
@@ -53,6 +58,7 @@ public class zenSpace extends Game {
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
 		headerImg = new Image(new Texture("zenSpace.png"));
+		textureAtlas = new TextureAtlas("data/uiskin.atlas");
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		skin.getFont("new").getData().setScale(0.3f);
 
@@ -71,7 +77,7 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-	public int getwHeight() { return wHeight;}
+	public TextureAtlas getTextureAtlas() {return textureAtlas;}
 	public ExtendViewport getScrnView() {
 		return scrnView;
 	}

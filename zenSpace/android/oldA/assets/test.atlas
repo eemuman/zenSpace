@@ -6,49 +6,49 @@ repeat: none
 Walk_smaller0000
   rotate: false
   xy: 998, 1
-  size: 411, 940
+  size: 331, 960
   orig: 1080, 1920
   offset: 368, 169
   index: -1
 Walk_smaller0001
   rotate: false
   xy: 616, 1
-  size: 380, 960
+  size: 331, 960
   orig: 1080, 1920
   offset: 376, 174
   index: -1
 Walk_smaller0002
   rotate: false
   xy: 282, 1
-  size: 332, 985
+  size: 331, 960
   orig: 1080, 1920
   offset: 399, 181
   index: -1
 Walk_smaller0003
   rotate: false
   xy: 554, 988
-  size: 288, 980
+  size: 331, 960
   orig: 1080, 1920
   offset: 415, 171
   index: -1
 Walk_smaller0004
   rotate: false
   xy: 1, 1001
-  size: 222, 991
+  size: 331, 960
   orig: 1080, 1920
   offset: 459, 176
   index: -1
 Walk_smaller0005
   rotate: false
   xy: 1, 1
-  size: 279, 998
+  size: 331, 960
   orig: 1080, 1920
   offset: 442, 167
   index: -1
 Walk_smaller0006
   rotate: false
   xy: 225, 1001
-  size: 327, 988
+  size: 331, 960
   orig: 1080, 1920
   offset: 423, 178
   index: -1

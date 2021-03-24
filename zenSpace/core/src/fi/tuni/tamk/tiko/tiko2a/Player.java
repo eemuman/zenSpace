@@ -30,7 +30,7 @@ public class Player {
     private FixtureDef myFixtureDef;
     private float playerWidth = 80f;
     private float playerHeight = 240f;
-    private TextureAtlas textureAtlas;
+    private float frameDuration = 5f;
 
 
     public Player(int ROWS, int COLS, int WORLD_WIDTH, int WORLD_HEIGHT, World world) {
@@ -65,16 +65,13 @@ public class Player {
     }
 
     public Player(int ROWS, int COLS) {
-        textureAtlas = new TextureAtlas("test.txt");
-        //runTexture = new Texture("test.png");
+        runTexture = new Texture("sprites.png");
 
         // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
         // mut jätin näin koska on selkeämpi aluks.)
-       // textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
-       // textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
-     //   runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
-
-        runAnimation = new Animation<TextureRegion>(1f/15f,textureAtlas.getRegions(), Animation.PlayMode.LOOP);
+        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
+        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
+        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, frameDuration);
     }
 
     public Animation<TextureRegion> getRunAnimation() {

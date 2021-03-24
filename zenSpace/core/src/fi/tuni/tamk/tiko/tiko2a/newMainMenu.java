@@ -22,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -43,33 +45,47 @@ public class newMainMenu implements Screen {
 
 
     private Image headerImg;
+    private Image sunImg;
+    private Image flagImg;
 
     public newMainMenu(final zenSpace game) {
 
         gme = game;
+        scrnView = gme.getScrnView();
 
 
 
-        headerImg = gme.getHeaderImg();
+        headerImg = new Image(gme.getTextureAtlas().findRegion("Cloud_logohdpi"));
+        sunImg = new Image(gme.getTextureAtlas().findRegion("Sunhdpi"));
+        flagImg = new Image(gme.getTextureAtlas().findRegion("Cloud_finnishhdpi"));
         skin = gme.getSkin();
 
         tbl = new Table();
+
+
         btnPela = new TextButton("Pelaa", skin);
         btnAsetukset = new TextButton("Asetukset", skin);
         btnExit = new TextButton("Sammuta Peli", skin);
-        tbl.add(headerImg).expand();
+        tbl.add(headerImg).expandY().height(225).width(350).top().padTop(15).padBottom(-20);
         tbl.row();
-        tbl.add(btnPela).width(325).height(100).bottom().padBottom(75);
+        tbl.defaults().expandY();
+        tbl.add(btnPela).width(325).height(100).top().padBottom(-20);
         tbl.row();
-        tbl.add(btnAsetukset).width(325).height(100).bottom().padBottom(75);
+        tbl.add(btnAsetukset).width(325).height(100).top().padBottom(-20);
         tbl.row();
-        tbl.add(btnExit).width(325).height(100).bottom().padBottom(75);
+        tbl.add(btnExit).width(325).height(100).top().padBottom(-400);
+        tbl.row();
+        tbl.add(sunImg).width(325).height(300).bottom().padBottom(-225);
+        tbl.row();
+        tbl.add(flagImg).width(125).height(100).top().right().padTop(-80).padRight(-35);
 
-        scrnView = gme.getScrnView();
+
+
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
         tbl.setFillParent(true);
         stg.addActor(tbl);
+     //   stg.setDebugAll(true);
 
 
 

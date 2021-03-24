@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Transition implements Screen {
 
     private zenSpace game;
-    private int movementSpeed  = 35;
+    private int movementSpeed  = 50;
 
     private float currentX;
 
@@ -35,6 +35,7 @@ public class Transition implements Screen {
     private HUD hud;
 
     private float stateTime = 0.0f;
+    private float oldStateTime = stateTime;
 
     private zenSpace gme;
 
@@ -62,7 +63,8 @@ public class Transition implements Screen {
         if(!hud.isPaused()) {
             stateTime += delta;
             currentX += delta * movementSpeed;
-            currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
+                currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
+                oldStateTime = stateTime;
         }
         if(hud.isBackMenu()) {
             dispose();
@@ -70,7 +72,7 @@ public class Transition implements Screen {
         }
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
+        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
         batch.end();
         hud.render(delta);
         checkPlayerPos();

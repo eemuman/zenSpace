@@ -52,14 +52,21 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
-		up: Button2_smallhdpi
-		down: Button1_smallhdpi
+		up: default-round
+		down: default-round-down
+		disabled: default-round
 	}
 	toggle: {
 		parent: default
-		up: Button2_smallhdpi
-		down: Button1_smallhdpi
-		checked: Button1_smallhdpi
+		checked: default-round-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: check-on
+		checkboxOff: check-off
+		font: new
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
@@ -83,11 +90,16 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	}
 	default-vertical: {
 		background: default-slider
+		knob: default-round-large
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
 		background: default-rect
+		hScroll: default-scroll
+		hScrollKnob: default-round-large
+		vScroll: default-scroll
+		vScrollKnob: default-round-large
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
@@ -120,21 +132,19 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		parent: default
 		font: new
 		fontColor: white
-		downFontColor: black
 		disabledFontColor: gray
 	}
 	toggle: {
 		parent: default
 		font: new
-		downFontColor: black
-		checkedFontColor: black
-		checked: Button1_smallhdpi
+		downFontColor: red
+		checkedFontColor: red
+		checked: default-round-down
 	}
 	TextButtonSmall: {
 		parent: default
 		font: newsmall
 		fontColor: white
-		downFontColor: black
 		disabledFontColor: gray
 	}
 }
@@ -157,6 +167,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: {
 		background: default-pane
+		knob: default-round-large
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {

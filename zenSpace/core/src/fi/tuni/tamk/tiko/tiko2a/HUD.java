@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class HUD implements Screen {
@@ -26,11 +27,13 @@ public class HUD implements Screen {
     private Table tbl;
     private boolean paused = false;
     private boolean backMenu = false;
-
+    private BundleHandler bundle;
     private Window pause;
 
     public HUD(zenSpace game) {
-        skin = game.getSkin();
+        bundle = game.getBundle();
+
+        skin = bundle.getUiSkin();
         tButton = new TextButton("Menu", skin);
         tButton.addListener(new ChangeListener() {
             @Override

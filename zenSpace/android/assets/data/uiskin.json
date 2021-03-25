@@ -1,23 +1,32 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	new: {
-		file: test.fnt
-	}
-	newsmall: {
-		file: newsmall.fnt
+	Myriad: {
+		file: Myriad.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	Fonttivariu: {
+		r: 0.2
+		g: 0.4
+		b: 0.6
+		a: 1
+	}
+	gray: {
+		r: 0.8
+		g: 0.8
+		b: 0.8
+		a: 1
+	}
 	green: {
 		r: 0
 		g: 1
 		b: 0
-		a: 1
-	}
-	white: {
-		r: 1
-		g: 1
-		b: 1
 		a: 1
 	}
 	red: {
@@ -26,16 +35,10 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
-	black: {
-		r: 0
-		g: 0
-		b: 0
-		a: 1
-	}
-	gray: {
-		r: 0.8
-		g: 0.8
-		b: 0.8
+	white: {
+		r: 1
+		g: 1
+		b: 1
 		a: 1
 	}
 }
@@ -61,19 +64,23 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: Button1_smallhdpi
 		checked: Button1_smallhdpi
 	}
+	Play: {
+		up: Button1_smallhdpi
+		down: Button1_smallhdpi
+	}
+	FlagbuttonFI: {
+		up: Cloud_finnishhdpi
+		down: Cloud_finnishhdpi
+	}
+	FlagbuttonEN: {
+		up: Cloud_englishhdpi
+		down: Cloud_englishhdpi
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: new
-		fontColor: black
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	default: {
-		font: new
-		fontColorSelected: white
-		fontColorUnselected: white
-		selection: selection
+		font: Myriad
+		fontColor: Fonttivariu
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -88,15 +95,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
 		background: default-rect
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
-	default: {
-		font: new
-		fontColor: white
-		background: default-select
-		scrollStyle: default
-		listStyle: default
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
@@ -118,30 +116,37 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		parent: default
-		font: new
-		fontColor: white
-		downFontColor: black
+		font: Myriad
+		fontColor: Fonttivariu
+		downFontColor: Fonttivariu
 		disabledFontColor: gray
 	}
 	toggle: {
 		parent: default
-		font: new
-		downFontColor: black
-		checkedFontColor: black
+		fontColor: Fonttivariu
+		downFontColor: Fonttivariu
+		checkedFontColor: Fonttivariu
 		checked: Button1_smallhdpi
 	}
 	TextButtonSmall: {
 		parent: default
-		font: newsmall
-		fontColor: white
-		downFontColor: black
+		font: Myriad
+		fontColor: Fonttivariu
+		downFontColor: Fonttivariu
+		disabledFontColor: gray
+	}
+	Play: {
+		parent: Play
+		font: Myriad
+		fontColor: Fonttivariu
+		downFontColor: Fonttivariu
 		disabledFontColor: gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: new
-		fontColor: white
+		font: Myriad
+		fontColor: Fonttivariu
 		background: textfield
 		cursor: cursor
 		selection: selection
@@ -169,8 +174,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: default-window
-		titleFont: new
-		titleFontColor: white
+		titleFont: Myriad
+		titleFontColor: Fonttivariu
 	}
 	dialog: {
 		parent: default

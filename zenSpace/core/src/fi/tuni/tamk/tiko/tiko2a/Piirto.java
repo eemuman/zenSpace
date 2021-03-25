@@ -50,6 +50,7 @@ public class Piirto extends InputAdapter implements Screen {
 
     private Vector2 firstPoint;
     private Vector2 inputPoint;
+    private BundleHandler bundle;
 
     private InputMultiplexer inputMultiplexer;
 
@@ -76,9 +77,10 @@ public class Piirto extends InputAdapter implements Screen {
     public Piirto(zenSpace game) {
 
         gme = game;
+        bundle = gme.getBundle();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
-        skin = gme.getSkin();
+        skin = bundle.getUiSkin();
         sr = new ShapeRenderer();
         tbl = new Table();
         tbl.setFillParent(true);

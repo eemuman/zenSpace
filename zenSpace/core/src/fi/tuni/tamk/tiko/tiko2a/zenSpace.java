@@ -10,17 +10,21 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
+import com.badlogic.gdx.assets.AssetErrorListener;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import javax.xml.soap.Text;
+import java.util.Locale;
+
 
 /**
  * Pelin pohjaluokka, täällä luodaan kaikki asiat, mitä käytetään muissa luokissa
@@ -34,15 +38,9 @@ public class zenSpace extends Game {
 	private OrthographicCamera textCam;
 	private int wWidth = 480;
 	private int wHeight = 800;
-	private Skin skin;
-	private Image headerImg;
+	private BundleHandler bundle;
 
-	private TextureAtlas textureAtlas;
-
-	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyeltä", "Raskaalta", "Kuplivalta", "Rennolta", "Jäykältä", "Neutraalilta"};
-	private String[] secondStrings = {"Vihainen", "Ylpeä", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Hävettää", "Inhottaa"};
-
-
+	private boolean fin = true;
 
 
 
@@ -51,16 +49,14 @@ public class zenSpace extends Game {
 	 */
 	@Override
 	public void create() {
+		bundle = new BundleHandler();
+		bundle.loadAssets();
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
-		headerImg = new Image(new Texture("zenSpace.png"));
-		textureAtlas = new TextureAtlas("data/uiskin.atlas");
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		skin.getFont("new").getData().setScale(0.3f);
 
 
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
@@ -77,26 +73,23 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-	public TextureAtlas getTextureAtlas() {return textureAtlas;}
 	public ExtendViewport getScrnView() {
 		return scrnView;
 	}
 	public OrthographicCamera getTextCam() {
 		return textCam;
 	}
-	public Skin getSkin() {
-		return skin;
-	}
-	public Image getHeaderImg() {
-		return headerImg;
-	}
 	public int getwWidth() {
 		return wWidth;
 	}
-	public String[] getFirstStrings() {
-		return firstStrings;
+	public boolean isFin() {
+		return fin;
 	}
-	public String[] getSecondStrings() {
-		return secondStrings;
+	public void setFin() {
+		fin = !fin;
+	}
+
+	public BundleHandler getBundle() {
+		return bundle;
 	}
 }

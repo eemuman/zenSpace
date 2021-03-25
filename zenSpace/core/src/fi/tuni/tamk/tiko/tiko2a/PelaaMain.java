@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class PelaaMain implements Screen {
@@ -30,20 +31,23 @@ public class PelaaMain implements Screen {
     private Stage stg;
     private Table tbl;
     private TextButton btnTaka, btnEtu;
-
+    private BundleHandler bundle;
+    private I18NBundle curLangBundle;
     private String[] firstStrings, secondStrings;
 
     public PelaaMain(final zenSpace game, int first, int second) {
         gme = game;
+        bundle = gme.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
 
-        firstStrings = gme.getFirstStrings();
-        secondStrings = gme.getSecondStrings();
+        firstStrings = curLangBundle.get("firstStrings").split(",");
+        secondStrings = curLangBundle.get("secondStrings").split(",");
         firstChoice = firstStrings[first];
         secondChoice = secondStrings[second];
         selectParts(first, second);
 
 
-        skin = gme.getSkin();
+        skin = bundle.getUiSkin();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
@@ -52,8 +56,8 @@ public class PelaaMain implements Screen {
 
         header = new Label(firstPart + "\n" + firstChoice + "\n" + secondPart  + "\n" +  secondChoice +"\nAloitetaanko?", skin);
         header.setWrap(true);
-        btnTaka = new TextButton("Ei", skin);
-        btnEtu = new TextButton("Kyllä!", skin);
+        btnTaka = new TextButton(curLangBundle.get("ei"), skin);
+        btnEtu = new TextButton(curLangBundle.get("Kylla"), skin);
 
         btnTaka.addListener(new ChangeListener() {
             @Override
@@ -68,7 +72,7 @@ public class PelaaMain implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
                 HUD hud = new HUD(gme);
-                gme.setScreen(new Transition(gme, new Texture("Viljapelto.png"), hud));
+                gme.setScreen(new Transition(gme, bundle.getBackground("Viljapelto"), hud));
             }
         });
 
@@ -126,14 +130,14 @@ public class PelaaMain implements Screen {
 
     private void selectParts(int first, int second) {
         if(first > 2) {
-            firstPart = "Sinusta tuntuu ";
+            firstPart = curLangBundle.get("firstPart1");
         } else {
-            firstPart = "Sinua ";
+            firstPart = curLangBundle.get("firstPart2");
         }
         if(second > 3) {
-            secondPart = "Sinua ";
+            secondPart = curLangBundle.get("secondPart1");
         } else {
-            secondPart = "Olet ";
+            secondPart = curLangBundle.get("secondPart2");
         }
     }
 }

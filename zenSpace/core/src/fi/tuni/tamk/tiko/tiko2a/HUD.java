@@ -23,7 +23,7 @@ public class HUD implements Screen {
 
     private Skin skin;
     private TextButton tButton, tButtonJatka, tButtonMenu;
-    private Stage stg;
+    Stage stg;
     private Table tbl;
     private boolean paused = false;
     private boolean backMenu = false;
@@ -63,9 +63,9 @@ public class HUD implements Screen {
 
         pause = new Window("", skin);
         pause.setMovable(false);
-        pause.add(tButtonJatka).expand().center();
+        pause.add(tButtonJatka).expand().center().height(115);
         pause.row();
-        pause.add(tButtonMenu).expand().center();
+        pause.add(tButtonMenu).expand().center().height(115);
         pause.pack();
         pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 300);
         pause.setVisible(false);
@@ -75,12 +75,11 @@ public class HUD implements Screen {
 
 
         tbl = new Table();
-        tbl.add(tButton).top().left().expand();
+        tbl.add(tButton).top().left().expand().height(115);
         tbl.setFillParent(true);
 
         stg.addActor(tbl);
         stg.addActor(pause);
-        Gdx.input.setInputProcessor(stg);
     }
 
     @Override

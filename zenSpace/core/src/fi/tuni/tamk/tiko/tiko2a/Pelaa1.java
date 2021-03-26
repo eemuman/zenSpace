@@ -53,8 +53,8 @@ public class Pelaa1 implements Screen {
 
         createBtns();
         header = new Label(curLangBundle.get("miltatuntuu"), skin);
-        btnTaka = new TextButton(curLangBundle.get("takaisin"), skin);
-        btnEte = new TextButton(curLangBundle.get("seuraava"), skin);
+        btnTaka = new TextButton(curLangBundle.get("takaisin"), skin, "TextButtonSmall");
+        btnEte = new TextButton(curLangBundle.get("seuraava"), skin, "TextButtonSmall");
 
         btnTaka.addListener(new ChangeListener() {
             @Override

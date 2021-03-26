@@ -39,7 +39,6 @@ public class PelaaMain implements Screen {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
-
         firstStrings = curLangBundle.get("firstStrings").split(",");
         secondStrings = curLangBundle.get("secondStrings").split(",");
         firstChoice = firstStrings[first];
@@ -56,8 +55,8 @@ public class PelaaMain implements Screen {
 
         header = new Label(firstPart + "\n" + firstChoice + "\n" + secondPart  + "\n" +  secondChoice +"\nAloitetaanko?", skin);
         header.setWrap(true);
-        btnTaka = new TextButton(curLangBundle.get("ei"), skin);
-        btnEtu = new TextButton(curLangBundle.get("Kylla"), skin);
+        btnTaka = new TextButton(curLangBundle.get("ei"), skin, "TextButtonSmall");
+        btnEtu = new TextButton(curLangBundle.get("Kylla"), skin, "TextButtonSmall");
 
         btnTaka.addListener(new ChangeListener() {
             @Override
@@ -71,8 +70,8 @@ public class PelaaMain implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                HUD hud = new HUD(gme);
-                gme.setScreen(new Transition(gme, bundle.getBackground("Viljapelto"), hud));
+                selectBackGround();
+                gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
             }
         });
 
@@ -125,9 +124,11 @@ public class PelaaMain implements Screen {
 
     @Override
     public void dispose() {
-
+        stg.dispose();
     }
-
+    private void selectBackGround() {
+        gme.setCurBackground(0);
+    }
     private void selectParts(int first, int second) {
         if(first > 2) {
             firstPart = curLangBundle.get("firstPart1");

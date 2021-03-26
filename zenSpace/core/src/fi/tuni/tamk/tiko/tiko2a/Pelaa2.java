@@ -55,8 +55,8 @@ public class Pelaa2 implements Screen {
         firstChoice = first;
         createBtns();
         header = new Label(curLangBundle.get("fiilis"), skin);
-        btnTaka = new TextButton(curLangBundle.get("takaisin"), skin);
-        btnEte = new TextButton(curLangBundle.get("seuraava"), skin);
+        btnTaka = new TextButton(curLangBundle.get("takaisin"), skin, "TextButtonSmall");
+        btnEte = new TextButton(curLangBundle.get("seuraava"), skin, "TextButtonSmall");
 
 
         btnTaka.addListener(new ChangeListener() {

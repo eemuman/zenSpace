@@ -55,9 +55,9 @@ public class BundleHandler {
         return manager.get("data/uiskin.json", Skin.class);
     }
 
-    public Texture getBackground(String name) {
-        manager.load(name+".png", Texture.class);
+    public TextureAtlas getBackground(String name) {
+        manager.load(name, TextureAtlas.class);
         manager.finishLoading();
-        return manager.get(name+".png", Texture.class);
+        return manager.get(name, TextureAtlas.class);
     }
 }

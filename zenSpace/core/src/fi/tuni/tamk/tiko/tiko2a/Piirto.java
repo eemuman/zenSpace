@@ -54,6 +54,7 @@ public class Piirto extends InputAdapter implements Screen {
 
     private InputMultiplexer inputMultiplexer;
 
+
     private ShapeRenderer sr;
 
     /**
@@ -107,12 +108,18 @@ public class Piirto extends InputAdapter implements Screen {
                 firstShape = true;
             }
         });
-        back = new TextButton("MAINMENU", skin, "TextButtonSmall");
+        back = new TextButton("SEURAAVA", skin, "TextButtonSmall");
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new newMainMenu(gme));
+                if(gme.getCurLevel()==3) {
+                    dispose();
+                    gme.setScreen(new Goal(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                } else {
+                    gme.setCurLevelInt(gme.getCurLevel() + 1);
+                    dispose();
+                    gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                }
             }
         });
         tbl.add(back).expand().top().left().width(225).height(100);
@@ -163,7 +170,7 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-
+        stg.dispose();
     }
 
     private void drawLines() {

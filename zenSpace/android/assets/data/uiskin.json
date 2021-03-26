@@ -1,7 +1,10 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	Myriad: {
-		file: Myriad.fnt
+	Roboto-Bold: {
+		file: Roboto-Bold.fnt
+	}
+	Roboto-Bold-Small: {
+		file: Roboto-Bold-Small.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -60,9 +63,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	}
 	toggle: {
 		parent: default
-		up: Button2_smallhdpi
-		down: Button1_smallhdpi
-		checked: Button1_smallhdpi
 	}
 	Play: {
 		up: Button1_smallhdpi
@@ -79,7 +79,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: Myriad
+		font: Roboto-Bold
 		fontColor: Fonttivariu
 	}
 }
@@ -116,28 +116,33 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		parent: default
-		font: Myriad
+		font: Roboto-Bold
 		fontColor: Fonttivariu
 		downFontColor: Fonttivariu
 		disabledFontColor: gray
 	}
 	toggle: {
-		parent: default
+		parent: toggle
+		font: Roboto-Bold-Small
 		fontColor: Fonttivariu
 		downFontColor: Fonttivariu
 		checkedFontColor: Fonttivariu
-		checked: Button1_smallhdpi
+		up: Button2_31x40hdpi
+		down: Button1_31x40hdpi
+		checked: Button1_31x40hdpi
 	}
 	TextButtonSmall: {
 		parent: default
-		font: Myriad
+		font: Roboto-Bold-Small
 		fontColor: Fonttivariu
 		downFontColor: Fonttivariu
 		disabledFontColor: gray
+		up: Button2_31x40hdpi
+		down: Button1_31x40hdpi
 	}
 	Play: {
 		parent: Play
-		font: Myriad
+		font: Roboto-Bold
 		fontColor: Fonttivariu
 		downFontColor: Fonttivariu
 		disabledFontColor: gray
@@ -145,7 +150,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: Myriad
+		font: Roboto-Bold
 		fontColor: Fonttivariu
 		background: textfield
 		cursor: cursor
@@ -174,7 +179,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: default-window
-		titleFont: Myriad
+		titleFont: Roboto-Bold
 		titleFontColor: Fonttivariu
 	}
 	dialog: {

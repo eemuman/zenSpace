@@ -1,0 +1,33 @@
+anger.png
+size: 1026, 1820
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+goal
+  rotate: false
+  xy: 1, 1
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st1
+  rotate: false
+  xy: 1, 911
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st2
+  rotate: false
+  xy: 514, 1
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st3
+  rotate: false
+  xy: 514, 911
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1

@@ -39,16 +39,22 @@ public class zenSpace extends Game {
 	private int wWidth = 480;
 	private int wHeight = 800;
 	private BundleHandler bundle;
+	private int curLevelInt;
+	private int curBackground;
+	private HUD hud;
+
+
+	private String[] backGrounds = {"anger.atlas"};
 
 	private boolean fin = true;
-
-
-
 	/**
 	 * Täällä initializetaan kaikki yllä luodut.
 	 */
 	@Override
 	public void create() {
+
+		curLevelInt = 1;
+		curBackground = 0;
 		bundle = new BundleHandler();
 		bundle.loadAssets();
 		batch = new SpriteBatch();
@@ -57,7 +63,7 @@ public class zenSpace extends Game {
 		textCam.setToOrtho(false, wWidth, wHeight);
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
-
+		hud = new HUD(this);
 
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
@@ -88,6 +94,29 @@ public class zenSpace extends Game {
 	public void setFin() {
 		fin = !fin;
 	}
+	public int getCurLevel() {
+		return curLevelInt;
+	}
+	public void setCurLevelInt(int curLevelInt){
+		this.curLevelInt = curLevelInt;
+	}
+	public String[] getBackGrounds() {
+		return backGrounds;
+	}
+	public int getCurBackground() {
+		return curBackground;
+	}
+
+	public HUD getHud() {
+		return hud;
+	}
+
+	public void setCurBackground(int curBackground) {
+		this.curBackground = curBackground;
+	}
+
+
+
 
 	public BundleHandler getBundle() {
 		return bundle;

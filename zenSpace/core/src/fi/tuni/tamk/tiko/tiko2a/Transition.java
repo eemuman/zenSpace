@@ -12,6 +12,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,31 +21,31 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Transition implements Screen {
 
-    private zenSpace game;
     private int movementSpeed  = 50;
 
     private float currentX;
 
     private TextureRegion currentPlayerFrame;
-    private Texture bgTexture;
+    private TextureAtlas.AtlasRegion bgTexture;
     private ExtendViewport scrnView;
     private SpriteBatch batch;
 
     private Player player;
-
-    private HUD hud;
+    private String curLevel;
+    HUD hud;
 
     private float stateTime = 0.0f;
     private float oldStateTime = stateTime;
 
     private zenSpace gme;
 
-    public Transition(zenSpace game, Texture bgTexture, HUD hud) {
+    public Transition(zenSpace game, TextureAtlas bgTexture) {
         gme = game;
-        this.hud = hud;
-        this.game = game;
+        hud = gme.getHud();
+        Gdx.input.setInputProcessor(hud.stg);
         scrnView = game.getScrnView();
-        this.bgTexture = bgTexture;
+        this.curLevel = "st" + game.getCurLevel();
+        this.bgTexture = bgTexture.findRegion(curLevel);
         batch = game.getBatch();
         player = new Player(1, 9);
     }
@@ -67,6 +68,7 @@ public class Transition implements Screen {
                 oldStateTime = stateTime;
         }
         if(hud.isBackMenu()) {
+            gme.setCurLevelInt(1);
             dispose();
             gme.setScreen(new newMainMenu(gme));
         }

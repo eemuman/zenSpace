@@ -79,18 +79,18 @@ public class newMainMenu implements Screen {
         btnPela = new TextButton(curLangBundle.get("pelaa"), skin, "Play");
         btnAsetukset = new TextButton(curLangBundle.get("asetukset"), skin);
         btnExit = new TextButton(curLangBundle.get("sammuta"), skin);
-        tbl.add(headerImg).expandY().height(225).width(350).top().padTop(15).padBottom(-5);
+        tbl.add(headerImg).expandY().height(250).width(350).top().padTop(15).padBottom(-5);
         tbl.row();
-        tbl.defaults().expandY();
-        tbl.add(btnPela).width(325).height(100).top().padBottom(20);
+        tbl.defaults().expandY().width(325).height(115).top();
+        tbl.add(btnPela).padBottom(20);
         tbl.row();
-        tbl.add(btnAsetukset).width(325).height(100).top().padBottom(-20);
+        tbl.add(btnAsetukset).padBottom(-20);
         tbl.row();
-        tbl.add(btnExit).width(325).height(100).top().padBottom(-40);
+        tbl.add(btnExit).padBottom(-40);
         tbl.row();
-        tbl.add(sunImg).width(325).height(300).bottom().padBottom(-225);
+        tbl.add(sunImg).width(425).height(425).bottom().padBottom(-250);
         tbl.row();
-        tbl.add(flagStack).width(125).height(100).top().right().padTop(-80).padRight(-35);
+        tbl.add(flagStack).width(145).height(115).top().right().padTop(-155).padRight(-15);
 
 
 

@@ -34,6 +34,7 @@ public class PelaaMain implements Screen {
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
     private String[] firstStrings, secondStrings;
+    private int backGroundChoice;
 
     public PelaaMain(final zenSpace game, int first, int second) {
         gme = game;
@@ -42,6 +43,7 @@ public class PelaaMain implements Screen {
         firstStrings = curLangBundle.get("firstStrings").split(",");
         secondStrings = curLangBundle.get("secondStrings").split(",");
         firstChoice = firstStrings[first];
+        backGroundChoice = second;
         secondChoice = secondStrings[second];
         selectParts(first, second);
 
@@ -127,7 +129,12 @@ public class PelaaMain implements Screen {
         stg.dispose();
     }
     private void selectBackGround() {
-        gme.setCurBackground(0);
+
+        if(backGroundChoice <= 2) {
+            gme.setCurBackground(0);
+        } else if(backGroundChoice >2 && backGroundChoice <=5) {
+            gme.setCurBackground(1);
+        }
     }
     private void selectParts(int first, int second) {
         if(first > 2) {

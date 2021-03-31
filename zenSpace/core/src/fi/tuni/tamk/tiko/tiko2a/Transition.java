@@ -35,7 +35,6 @@ public class Transition implements Screen {
     HUD hud;
 
     private float stateTime = 0.0f;
-    private float oldStateTime = stateTime;
 
     private zenSpace gme;
 
@@ -65,16 +64,19 @@ public class Transition implements Screen {
             stateTime += delta;
             currentX += delta * movementSpeed;
                 currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
-                oldStateTime = stateTime;
         }
         if(hud.isBackMenu()) {
             gme.setCurLevelInt(1);
+            Gdx.app.log("HERE", "Here??????");
             dispose();
+            hud.setBackMenu();
             gme.setScreen(new newMainMenu(gme));
         }
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
+        if(currentPlayerFrame !=null) {
+            batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
+        }
         batch.end();
         hud.render(delta);
         checkPlayerPos();

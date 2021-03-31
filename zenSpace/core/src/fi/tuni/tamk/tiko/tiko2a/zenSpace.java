@@ -44,7 +44,7 @@ public class zenSpace extends Game {
 	private HUD hud;
 
 
-	private String[] backGrounds = {"anger.atlas"};
+	private String[] backGrounds = {"anger.atlas", "fear.atlas"};
 
 	private boolean fin = true;
 	/**

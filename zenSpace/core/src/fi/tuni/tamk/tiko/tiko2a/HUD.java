@@ -126,4 +126,11 @@ public class HUD implements Screen {
     public boolean isBackMenu() {
         return backMenu;
     }
+
+    public void setBackMenu() {
+        backMenu = false;
+        tButton.setVisible(true);
+        pause.setVisible(false);
+        paused = false;
+    }
 }

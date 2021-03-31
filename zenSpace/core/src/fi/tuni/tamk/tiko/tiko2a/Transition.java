@@ -67,7 +67,6 @@ public class Transition implements Screen {
         }
         if(hud.isBackMenu()) {
             gme.setCurLevelInt(1);
-            Gdx.app.log("HERE", "Here??????");
             dispose();
             hud.setBackMenu();
             gme.setScreen(new newMainMenu(gme));

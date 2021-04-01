@@ -13,6 +13,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -51,6 +52,7 @@ public class Piirto extends InputAdapter implements Screen {
     private Vector2 firstPoint;
     private Vector2 inputPoint;
     private BundleHandler bundle;
+    private AtlasRegion tst;
 
     private InputMultiplexer inputMultiplexer;
 
@@ -75,8 +77,8 @@ public class Piirto extends InputAdapter implements Screen {
      */
     Vector2 [][] array2D = new Vector2 [200][3000];
 
-    public Piirto(zenSpace game) {
-
+    public Piirto(zenSpace game, final AtlasRegion bgTexture) {
+        tst = bgTexture;
         gme = game;
         bundle = gme.getBundle();
         scrnView = gme.getScrnView();
@@ -112,6 +114,7 @@ public class Piirto extends InputAdapter implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                /*
                 if(gme.getCurLevel()==3) {
                     dispose();
                     gme.setScreen(new Goal(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
@@ -120,6 +123,10 @@ public class Piirto extends InputAdapter implements Screen {
                     dispose();
                     gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                 }
+                 */
+                dispose();
+                gme.getEste().setBooleans(false,false,true);
+                gme.setScreen(new Resultscreen(gme, bgTexture));
             }
         });
         tbl.add(back).expand().top().left().width(225).height(100);
@@ -136,6 +143,10 @@ public class Piirto extends InputAdapter implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        gme.getBatch().begin();
+        gme.getBatch().draw(tst,0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+        gme.getBatch().draw(gme.getEste().getTexture(), 0, 0,scrnView.getCamera().viewportWidth , scrnView.getCamera().viewportHeight);
+        gme.getBatch().end();
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
         sr.setProjectionMatrix(scrnView.getCamera().combined);
@@ -143,8 +154,6 @@ public class Piirto extends InputAdapter implements Screen {
         drawLines();
         sr.end();
         update();
-      //  gme.setScreen(new Este(gme)); // Este testailua
-
     }
 
     @Override

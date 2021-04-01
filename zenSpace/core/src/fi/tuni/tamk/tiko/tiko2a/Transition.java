@@ -10,13 +10,10 @@ package fi.tuni.tamk.tiko.tiko2a;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Transition implements Screen {
@@ -26,7 +23,8 @@ public class Transition implements Screen {
     private float currentX;
 
     private TextureRegion currentPlayerFrame;
-    private TextureAtlas.AtlasRegion bgTexture;
+
+    private AtlasRegion bgTexture;
     private ExtendViewport scrnView;
     private SpriteBatch batch;
 
@@ -73,8 +71,9 @@ public class Transition implements Screen {
         }
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+        batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
         if(currentPlayerFrame !=null) {
-            batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 2.5f, scrnView.getCamera().viewportHeight / 2.5f);
+            batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
         }
         batch.end();
         hud.render(delta);
@@ -91,7 +90,8 @@ public class Transition implements Screen {
     private void checkPlayerPos() {
         if(currentX >= scrnView.getCamera().viewportWidth / 1.8f) {
             dispose();
-            gme.setScreen(new Piirto(gme));
+            gme.getEste().setBooleans(false,true,false);
+            gme.setScreen(new Piirto(gme, bgTexture));
         }
     }
 

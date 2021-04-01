@@ -46,6 +46,7 @@ public class Goal implements Screen {
         if(hud.isBackMenu()) {
             gme.setCurLevelInt(1);
             dispose();
+            hud.setBackMenu();
             gme.setScreen(new newMainMenu(gme));
         }
         batch.begin();

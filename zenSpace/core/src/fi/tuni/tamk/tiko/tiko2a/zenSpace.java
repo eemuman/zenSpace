@@ -42,6 +42,7 @@ public class zenSpace extends Game {
 	private int curLevelInt;
 	private int curBackground;
 	private HUD hud;
+	private Este este;
 
 
 	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas"};
@@ -64,7 +65,7 @@ public class zenSpace extends Game {
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
 		hud = new HUD(this);
-
+		este = new Este(this);
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
 
@@ -106,11 +107,10 @@ public class zenSpace extends Game {
 	public int getCurBackground() {
 		return curBackground;
 	}
-
 	public HUD getHud() {
 		return hud;
 	}
-
+	public Este getEste() {return este;}
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
 	}

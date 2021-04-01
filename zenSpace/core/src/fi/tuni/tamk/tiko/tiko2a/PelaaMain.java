@@ -73,6 +73,7 @@ public class PelaaMain implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
                 selectBackGround();
+                gme.getEste().randomizeEste();
                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
             }
         });

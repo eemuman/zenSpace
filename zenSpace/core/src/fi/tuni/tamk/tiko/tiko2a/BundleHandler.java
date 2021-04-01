@@ -9,7 +9,7 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -56,8 +56,20 @@ public class BundleHandler {
     }
 
     public TextureAtlas getBackground(String name) {
+        if(manager.isLoaded(name, TextureAtlas.class)) {
+            return manager.get(name, TextureAtlas.class);
+        }
         manager.load(name, TextureAtlas.class);
         manager.finishLoading();
         return manager.get(name, TextureAtlas.class);
     }
+    public Texture getPlayerSkin() {
+        if(manager.isLoaded("sprites.png", Texture.class)) {
+            return manager.get("sprites.png", Texture.class);
+        }
+        manager.load("sprites.png", Texture.class);
+        manager.finishLoading();
+        return manager.get("sprites.png", Texture.class);
+    }
+
 }

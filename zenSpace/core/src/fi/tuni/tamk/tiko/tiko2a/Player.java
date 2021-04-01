@@ -64,8 +64,8 @@ public class Player {
         b.createFixture(myFixtureDef);
     }
 
-    public Player(int ROWS, int COLS) {
-        runTexture = new Texture("sprites.png");
+    public Player(int ROWS, int COLS, BundleHandler bundle) {
+        runTexture = bundle.getPlayerSkin();
 
         // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
         // mut jätin näin koska on selkeämpi aluks.)

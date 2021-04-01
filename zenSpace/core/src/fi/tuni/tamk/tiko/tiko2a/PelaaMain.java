@@ -134,6 +134,8 @@ public class PelaaMain implements Screen {
             gme.setCurBackground(0);
         } else if(backGroundChoice >2 && backGroundChoice <=5) {
             gme.setCurBackground(1);
+        } else if(backGroundChoice > 5) {
+            gme.setCurBackground(2);
         }
     }
     private void selectParts(int first, int second) {

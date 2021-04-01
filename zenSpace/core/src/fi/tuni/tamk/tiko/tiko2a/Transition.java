@@ -46,7 +46,7 @@ public class Transition implements Screen {
         this.curLevel = "st" + game.getCurLevel();
         this.bgTexture = bgTexture.findRegion(curLevel);
         batch = game.getBatch();
-        player = new Player(1, 9);
+        player = new Player(1, 9, gme.getBundle());
     }
 
     @Override

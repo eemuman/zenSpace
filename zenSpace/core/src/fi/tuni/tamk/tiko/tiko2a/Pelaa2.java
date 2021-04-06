@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
@@ -36,22 +37,26 @@ public class Pelaa2 implements Screen {
     private ButtonGroup buttons;
     private String[] textStrings;
     private TextButton[] btns;
+    private BundleHandler bundle;
+    private I18NBundle curLangBundle;
 
 
 
     public Pelaa2(zenSpace game, int first) {
         gme = game;
-        textStrings = gme.getSecondStrings();
+        bundle = gme.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
+        textStrings = curLangBundle.get("secondStrings").split(",");
         btns = new TextButton[textStrings.length];
-        skin = gme.getSkin();
+        skin = bundle.getUiSkin();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
         firstChoice = first;
         createBtns();
-        header = new Label("MIKÄ FIILIS", skin);
-        btnTaka = new TextButton("Takaisin", skin);
-        btnEte = new TextButton("Seuraava", skin);
+        header = new Label(curLangBundle.get("fiilis"), skin);
+        btnTaka = new TextButton(curLangBundle.get("takaisin"), skin, "TextButtonSmall");
+        btnEte = new TextButton(curLangBundle.get("seuraava"), skin, "TextButtonSmall");
 
 
         btnTaka.addListener(new ChangeListener() {
@@ -140,9 +145,9 @@ public class Pelaa2 implements Screen {
         for (int i = 0; i < btns.length; i++) {
             tbl.row();
             if(i == btns.length -1) {
-                tbl.add(btns[i]).width(gme.getwWidth()).height(75).padBottom(175);
+                tbl.add(btns[i]).width(gme.getwWidth() - 15f).height(75).padBottom(175);
             } else {
-                tbl.add(btns[i]).width(gme.getwWidth()).height(75);
+                tbl.add(btns[i]).width(gme.getwWidth() - 15f).height(75).padBottom(10);
             }
         }
     }

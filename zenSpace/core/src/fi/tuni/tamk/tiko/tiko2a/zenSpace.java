@@ -10,14 +10,21 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
+import com.badlogic.gdx.assets.AssetErrorListener;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.Locale;
+
 
 /**
  * Pelin pohjaluokka, täällä luodaan kaikki asiat, mitä käytetään muissa luokissa
@@ -31,32 +38,34 @@ public class zenSpace extends Game {
 	private OrthographicCamera textCam;
 	private int wWidth = 480;
 	private int wHeight = 800;
-	private Skin skin;
-	private Image headerImg;
-
-	private String[] firstStrings = {"Polttaa", "Puristaa", "Vapisuttaa", "Kevyeltä", "Raskaalta", "Kuplivalta", "Rennolta", "Jäykältä", "Neutraalilta"};
-	private String[] secondStrings = {"Vihainen", "Ylpeä", "Iloinen", "Surullinen", "Ahdistaa", "Masentaa", "Pelottaa", "Hävettää", "Inhottaa"};
-
-
+	private BundleHandler bundle;
+	private int curLevelInt;
+	private int curBackground;
+	private HUD hud;
+	private Este este;
 
 
+	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas"};
 
+	private boolean fin = true;
 	/**
 	 * Täällä initializetaan kaikki yllä luodut.
 	 */
 	@Override
 	public void create() {
+
+		curLevelInt = 1;
+		curBackground = 0;
+		bundle = new BundleHandler();
+		bundle.loadAssets();
 		batch = new SpriteBatch();
 		cam = new OrthographicCamera();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
-		headerImg = new Image(new Texture("zenSpace.png"));
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		skin.getFont("new").getData().setScale(0.3f);
-
-
+		hud = new HUD(this);
+		este = new Este(this);
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
 
@@ -71,28 +80,49 @@ public class zenSpace extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-	public OrthographicCamera getCam() {
-		return cam;
-	}
 	public ExtendViewport getScrnView() {
 		return scrnView;
 	}
 	public OrthographicCamera getTextCam() {
 		return textCam;
 	}
-	public Skin getSkin() {
-		return skin;
-	}
-	public Image getHeaderImg() {
-		return headerImg;
-	}
 	public int getwWidth() {
 		return wWidth;
 	}
-	public String[] getFirstStrings() {
-		return firstStrings;
+	public boolean isFin() {
+		return fin;
 	}
-	public String[] getSecondStrings() {
-		return secondStrings;
+	public void setFin() {
+		fin = !fin;
+	}
+	public int getCurLevel() {
+		return curLevelInt;
+	}
+	public void setCurLevelInt(int curLevelInt){
+		this.curLevelInt = curLevelInt;
+	}
+	public String[] getBackGrounds() {
+		return backGrounds;
+	}
+	public int getCurBackground() {
+		return curBackground;
+	}
+	public HUD getHud() {
+		return hud;
+	}
+	public Este getEste() {return este;}
+	public void setCurBackground(int curBackground) {
+		this.curBackground = curBackground;
+	}
+
+
+
+
+	public BundleHandler getBundle() {
+		return bundle;
+	}
+
+	public int getwHeight() {
+		return wHeight;
 	}
 }

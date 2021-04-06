@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Asetukset implements Screen {
@@ -34,10 +35,12 @@ public class Asetukset implements Screen {
     private TextButton btnTakaisin;
     private Table tbl;
 
-
     private Slider volSlider;
 
     private zenSpace gme;
+
+    private BundleHandler bundle;
+    private I18NBundle curLangBundle;
 
     private Image headerImg;
 
@@ -45,16 +48,19 @@ public class Asetukset implements Screen {
 
     public Asetukset(zenSpace game) {
         gme = game;
+        bundle = gme.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
 
-        headerImg = gme.getHeaderImg();
 
-        this.skin = gme.getSkin();
+        headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
+
+        this.skin = bundle.getUiSkin();
 
         tbl = new Table();
 
-        lbl = new Label("VOLYYMI:", skin);
+        lbl = new Label(curLangBundle.get("volyymi"), skin);
 
-        btnTakaisin = new TextButton("Takaisin", skin);
+        btnTakaisin = new TextButton(curLangBundle.get("takaisin"), skin);
         volSlider = new Slider(0, 1, 0.05f,false, skin);
 
         tbl.add(headerImg).expandX();

@@ -1,35 +1,23 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	Roboto-Bold: {
-		file: Roboto-Bold.fnt
+	new: {
+		file: test.fnt
 	}
-	Roboto-Bold-Small: {
-		file: Roboto-Bold-Small.fnt
+	newsmall: {
+		file: newsmall.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
-	black: {
-		r: 0
-		g: 0
-		b: 0
-		a: 1
-	}
-	Fonttivariu: {
-		r: 0.2
-		g: 0.4
-		b: 0.6
-		a: 1
-	}
-	gray: {
-		r: 0.8
-		g: 0.8
-		b: 0.8
-		a: 1
-	}
 	green: {
 		r: 0
 		g: 1
 		b: 0
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
 		a: 1
 	}
 	red: {
@@ -38,10 +26,16 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
-	white: {
-		r: 1
-		g: 1
-		b: 1
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	gray: {
+		r: 0.8
+		g: 0.8
+		b: 0.8
 		a: 1
 	}
 }
@@ -58,29 +52,35 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
-		up: Button2_smallhdpi
-		down: Button1_smallhdpi
+		up: default-round
+		down: default-round-down
+		disabled: default-round
 	}
 	toggle: {
 		parent: default
+		checked: default-round-down
 	}
-	Play: {
-		up: Button1_smallhdpi
-		down: Button1_smallhdpi
-	}
-	FlagbuttonFI: {
-		up: Cloud_finnishhdpi
-		down: Cloud_finnishhdpi
-	}
-	FlagbuttonEN: {
-		up: Cloud_englishhdpi
-		down: Cloud_englishhdpi
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: check-on
+		checkboxOff: check-off
+		font: new
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: Roboto-Bold
-		fontColor: Fonttivariu
+		font: new
+		fontColor: black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: new
+		fontColorSelected: white
+		fontColorUnselected: white
+		selection: selection
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -90,11 +90,25 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	}
 	default-vertical: {
 		background: default-slider
+		knob: default-round-large
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
 		background: default-rect
+		hScroll: default-scroll
+		hScrollKnob: default-round-large
+		vScroll: default-scroll
+		vScrollKnob: default-round-large
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: new
+		fontColor: white
+		background: default-select
+		scrollStyle: default
+		listStyle: default
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
@@ -116,42 +130,28 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		parent: default
-		font: Roboto-Bold
-		fontColor: Fonttivariu
-		downFontColor: Fonttivariu
+		font: new
+		fontColor: white
 		disabledFontColor: gray
 	}
 	toggle: {
-		parent: toggle
-		font: Roboto-Bold-Small
-		fontColor: Fonttivariu
-		downFontColor: Fonttivariu
-		checkedFontColor: Fonttivariu
-		up: Button2_31x40hdpi
-		down: Button1_31x40hdpi
-		checked: Button1_31x40hdpi
+		parent: default
+		font: new
+		downFontColor: red
+		checkedFontColor: red
+		checked: default-round-down
 	}
 	TextButtonSmall: {
 		parent: default
-		font: Roboto-Bold-Small
-		fontColor: Fonttivariu
-		downFontColor: Fonttivariu
-		disabledFontColor: gray
-		up: Button2_31x40hdpi
-		down: Button1_31x40hdpi
-	}
-	Play: {
-		parent: Play
-		font: Roboto-Bold
-		fontColor: Fonttivariu
-		downFontColor: Fonttivariu
+		font: newsmall
+		fontColor: white
 		disabledFontColor: gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: Roboto-Bold
-		fontColor: Fonttivariu
+		font: new
+		fontColor: white
 		background: textfield
 		cursor: cursor
 		selection: selection
@@ -167,6 +167,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: {
 		background: default-pane
+		knob: default-round-large
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
@@ -179,8 +180,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: default-window
-		titleFont: Roboto-Bold
-		titleFontColor: Fonttivariu
+		titleFont: new
+		titleFontColor: white
 	}
 	dialog: {
 		parent: default

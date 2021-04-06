@@ -16,13 +16,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
@@ -41,36 +46,60 @@ public class newMainMenu implements Screen {
 
     private zenSpace gme;
 
+    private BundleHandler bundle;
+    private I18NBundle curLangBundle;
+
 
     private Image headerImg;
+    private Image sunImg;
+    private Button flagBtnFI;
+    private Button flagBtnEN;
+    private Stack flagStack;
 
     public newMainMenu(final zenSpace game) {
-
         gme = game;
+        scrnView = gme.getScrnView();
+        bundle = gme.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
 
 
 
-        headerImg = gme.getHeaderImg();
-        skin = gme.getSkin();
+        headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
+        sunImg = new Image(bundle.getUiAtlas().findRegion("Sunhdpi"));
+        skin = bundle.getUiSkin();
 
         tbl = new Table();
-        btnPela = new TextButton("Pelaa", skin);
-        btnAsetukset = new TextButton("Asetukset", skin);
-        btnExit = new TextButton("Sammuta Peli", skin);
-        tbl.add(headerImg).expand();
-        tbl.row();
-        tbl.add(btnPela).width(325).height(100).bottom().padBottom(75);
-        tbl.row();
-        tbl.add(btnAsetukset).width(325).height(100).bottom().padBottom(75);
-        tbl.row();
-        tbl.add(btnExit).width(325).height(100).bottom().padBottom(75);
 
-        scrnView = gme.getScrnView();
+        flagBtnFI = new Button(skin, "FlagbuttonFI");
+        flagBtnEN = new Button(skin, "FlagbuttonEN");
+        flagStack = new Stack();
+        flagStack.add(flagBtnFI);
+        flagStack.add(flagBtnEN);
+
+        btnPela = new TextButton(curLangBundle.get("pelaa"), skin, "Play");
+        btnAsetukset = new TextButton(curLangBundle.get("asetukset"), skin);
+        btnExit = new TextButton(curLangBundle.get("sammuta"), skin);
+        tbl.add(headerImg).expandY().height(250).width(350).top().padTop(15).padBottom(-5);
+        tbl.row();
+        tbl.defaults().expandY().width(325).height(115).top();
+        tbl.add(btnPela).padBottom(20);
+        tbl.row();
+        tbl.add(btnAsetukset).padBottom(-20);
+        tbl.row();
+        tbl.add(btnExit).padBottom(-40);
+        tbl.row();
+        tbl.add(sunImg).width(425).height(425).bottom().padBottom(-250);
+        tbl.row();
+        tbl.add(flagStack).width(145).height(115).top().right().padTop(-155).padRight(-15);
+
+
+
+
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
         tbl.setFillParent(true);
         stg.addActor(tbl);
-
+        updateButtons();
 
 
         btnPela.addListener(new ChangeListener() {
@@ -94,6 +123,42 @@ public class newMainMenu implements Screen {
                 gme.setScreen(new Asetukset(gme));
             }
         });
+
+        flagBtnFI.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateTexts();
+                updateButtons();
+            }
+        });
+        flagBtnEN.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateTexts();
+                updateButtons();
+            }
+        });
+
+    }
+
+
+    public void updateButtons() {
+        if(gme.isFin()) {
+            flagBtnEN.setVisible(true);
+            flagBtnFI.setVisible(false);
+        } else {
+            flagBtnFI.setVisible(true);
+            flagBtnEN.setVisible(false);
+        }
+
+    }
+
+    public void updateTexts() {
+        gme.setFin();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
+        btnPela.setText(curLangBundle.get("pelaa"));
+        btnAsetukset.setText(curLangBundle.get("asetukset"));
+        btnExit.setText(curLangBundle.get("sammuta"));
     }
 
     @Override

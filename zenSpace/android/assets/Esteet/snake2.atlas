@@ -1,0 +1,26 @@
+snake2.png
+size: 1634, 709
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+drawhdpi
+  rotate: false
+  xy: 0, 0
+  size: 690, 709
+  orig: 690, 709
+  offset: 0, 0
+  index: -1
+resulthdpi
+  rotate: false
+  xy: 690, 0
+  size: 703, 560
+  orig: 703, 560
+  offset: 0, 0
+  index: -1
+sthdpi
+  rotate: false
+  xy: 1393, 0
+  size: 241, 314
+  orig: 241, 314
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,26 @@
+butterfly.png
+size: 1371, 908
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+drawhdpi
+  rotate: false
+  xy: 0, 0
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+resulthdpi
+  rotate: false
+  xy: 511, 0
+  size: 583, 699
+  orig: 583, 699
+  offset: 0, 0
+  index: -1
+sthdpi
+  rotate: false
+  xy: 1094, 0
+  size: 277, 372
+  orig: 277, 372
+  offset: 0, 0
+  index: -1

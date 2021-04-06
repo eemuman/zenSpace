@@ -73,6 +73,7 @@ public class Piirto extends InputAdapter implements Screen {
     Array<Vector2> mapPointObjects;
     Array<Polygon> polygonArray;
     Array<Vector2> winPoints;
+    Array<Vector2> backUpArray;
 
     AtlasRegion bgTexture;
 
@@ -115,10 +116,14 @@ public class Piirto extends InputAdapter implements Screen {
         mapPointObjects = new Array<>();
         polygonArray = new Array<>();
         winPoints = new Array<>();
+        backUpArray = new Array<>();
 
         tiledMapPointsToArray("PiirtoPisteet" , mapPointObjects);
         tiledMapPointsToArray("VoittoPisteet" , winPoints);
-
+        // Backup array täytetään winpointseilla
+        for (int i = 0; i < winPoints.size; i++) {
+            Gdx.app.log("winpointinCreate", String.valueOf(winPoints.get(i) + Integer.toString(i)));
+        }
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
@@ -325,6 +330,9 @@ public class Piirto extends InputAdapter implements Screen {
             for (int i = 0; i < vectors.length; i++) {
                 array2D[tracker][i] = vectors[i];
             }
+            for (int i = 0; i < winPoints.size; i++) {
+                Gdx.app.log("winpointDistanceOK", String.valueOf(winPoints.get(i) + Integer.toString(i)));
+            }
         } else {
             points.clear();
             for (int i = 0; i < array2D.length - 1; i++) {
@@ -335,6 +343,10 @@ public class Piirto extends InputAdapter implements Screen {
             }
             tracker = 0;
             firstShape = true;
+            tiledMapPointsToArray("VoittoPisteet" , winPoints);
+            for (int i = 0; i < winPoints.size; i++) {
+                Gdx.app.log("winpointWhenMiss", String.valueOf(winPoints.get(i) + Integer.toString(i)));
+            }
         }
 
         return false;

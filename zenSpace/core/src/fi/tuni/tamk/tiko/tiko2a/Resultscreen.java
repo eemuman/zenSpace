@@ -24,6 +24,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     private SpriteBatch batch;
     private InputMultiplexer inputMultiplexer;
     private AtlasRegion bgText;
+    private boolean touched = false;
 
     public Resultscreen(zenSpace game, AtlasRegion bgTexture) {
         bgText = bgTexture;
@@ -90,15 +91,23 @@ public class Resultscreen extends InputAdapter implements Screen {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(gme.getCurLevel()==3) {
-            dispose();
-            gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-        } else {
-            gme.setCurLevelInt(gme.getCurLevel() + 1);
-            gme.getEste().randomizeEste();
-            dispose();
-            gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+        if(touched) {
+            if (gme.getCurLevel() == 3) {
+                dispose();
+                gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+            } else {
+                gme.setCurLevelInt(gme.getCurLevel() + 1);
+                gme.getEste().randomizeEste();
+                dispose();
+                gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+            }
         }
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        touched = true;
         return false;
     }
 }

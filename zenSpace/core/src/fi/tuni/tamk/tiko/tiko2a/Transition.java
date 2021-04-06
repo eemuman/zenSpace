@@ -90,7 +90,7 @@ public class Transition implements Screen {
     private void checkPlayerPos() {
         if(currentX >= scrnView.getCamera().viewportWidth / 1.8f) {
             dispose();
-            gme.getEste().setBooleans(false,true,false);
+            gme.getEste().setBooleans(false,false);
             gme.setScreen(new Piirto(gme, bgTexture));
         }
     }

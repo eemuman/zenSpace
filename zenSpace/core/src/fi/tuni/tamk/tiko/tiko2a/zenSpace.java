@@ -121,4 +121,8 @@ public class zenSpace extends Game {
 	public BundleHandler getBundle() {
 		return bundle;
 	}
+
+	public int getwHeight() {
+		return wHeight;
+	}
 }

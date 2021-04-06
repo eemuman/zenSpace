@@ -17,25 +17,25 @@ public class Este {
     private BundleHandler bundle;
     private TextureAtlas esteTextures;
     private AtlasRegion currentDraw;
-    private boolean transition = false, piirto = false, result = false;
-    private String[] esteet = {"bat.atlas", "butterfly.atlas", "dragon.atlas", "snake1.atlas", "snake2.atlas", "snake3.atlas", "wall.atlas"};
+    private int randEste;
+    private boolean transition = false, result = false;
+    //private String[] esteet = {"bat", "butterfly", "dragon", "snake1", "snake2", "snake3", "wall"};
+    private String[] esteet = {"wall"};
 
     public Este(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
-      //  randomizeEste();
     }
 
 
     public void randomizeEste() {
-        int randEste = (int) MathUtils.random(0, esteet.length -1);
-        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste]);
-        setBooleans(true, false, false);
+        randEste = MathUtils.random(0, esteet.length -1);
+        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste]+".atlas");
+        setBooleans(true,  false);
     }
 
-    public void setBooleans(boolean transition, boolean piirto, boolean result) {
+    public void setBooleans(boolean transition, boolean result) {
         this.transition = transition;
-        this.piirto = piirto;
         this.result = result;
         setTexture();
     }
@@ -43,14 +43,17 @@ public class Este {
     private void setTexture() {
         if(transition) {
             currentDraw = esteTextures.findRegion("sthdpi");
-        } else if(piirto) {
-            currentDraw = esteTextures.findRegion("drawhdpi");
-    } else if(result) {
+        }
+     else if(result) {
             currentDraw = esteTextures.findRegion("resulthdpi");
         }
 }
     public AtlasRegion getTexture() {
         return currentDraw;
+    }
+
+    public String getEste() {
+        return esteet[randEste];
     }
 }
 

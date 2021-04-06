@@ -13,6 +13,8 @@ package fi.tuni.tamk.tiko.tiko2a;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 
@@ -72,4 +74,10 @@ public class BundleHandler {
         return manager.get("sprites.png", Texture.class);
     }
 
+    public TiledMap getTiledMap(String name) {
+        manager.setLoader(TiledMap.class, new TmxMapLoader());
+        manager.load("Esteet/"+name+".tmx", TiledMap.class);
+        manager.finishLoading();
+        return manager.get("Esteet/"+name+".tmx", TiledMap.class);
+    }
 }

@@ -1,18 +1,18 @@
 dragon.png
-size: 705, 1640
+size: 774, 1829
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 drawhdpi
   rotate: false
   xy: 294, 0
-  size: 311, 611
-  orig: 311, 611
+  size: 480, 800
+  orig: 480, 800
   offset: 0, 0
   index: -1
 resulthdpi
   rotate: false
-  xy: 0, 611
+  xy: 0, 800
   size: 705, 1029
   orig: 705, 1029
   offset: 0, 0

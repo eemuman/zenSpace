@@ -12,6 +12,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -59,8 +60,13 @@ public class Pelaa1 implements Screen {
         btnTaka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new newMainMenu(gme));
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                   //     dispose();
+                        gme.setScreen(new newMainMenu(gme));
+                    }
+                })));
             }
         });
 
@@ -68,8 +74,13 @@ public class Pelaa1 implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(buttons.getChecked() != null) {
-                    dispose();
-                    gme.setScreen(new Pelaa2(gme, buttons.getCheckedIndex()));
+                    stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                       //     dispose();
+                            gme.setScreen(new Pelaa2(gme, buttons.getCheckedIndex()));
+                        }
+                    })));
                 }
             }
         });
@@ -86,6 +97,8 @@ public class Pelaa1 implements Screen {
 
         stg.addActor(tbl);
         stg.addActor(tblBottom);
+        stg.addAction(Actions.alpha(0));
+        stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 
         buttons = new ButtonGroup(btns);
         addBtnsBtngroup();

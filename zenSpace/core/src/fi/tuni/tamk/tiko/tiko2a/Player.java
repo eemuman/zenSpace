@@ -18,8 +18,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Player {
+public class Player extends Actor {
 
     private Body b;
     private Texture runTexture;
@@ -31,6 +32,7 @@ public class Player {
     private float playerWidth = 80f;
     private float playerHeight = 240f;
     private float frameDuration = 5f;
+    private float time = 0.0f;
 
 
     public Player(int ROWS, int COLS, int WORLD_WIDTH, int WORLD_HEIGHT, World world) {

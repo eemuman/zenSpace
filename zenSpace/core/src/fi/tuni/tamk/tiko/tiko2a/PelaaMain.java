@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -63,18 +64,34 @@ public class PelaaMain implements Screen {
         btnTaka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new Pelaa1(gme));
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                      //  dispose();
+                        gme.setScreen(new Pelaa1(gme));
+                    }
+                })));
             }
         });
 
         btnEtu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                             //   dispose();
+                                selectBackGround();
+                                gme.getEste().randomizeEste();
+                                gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                            }
+                        })));
+                /*
                 dispose();
                 selectBackGround();
                 gme.getEste().randomizeEste();
                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                 */
             }
         });
 
@@ -86,6 +103,8 @@ public class PelaaMain implements Screen {
         tbl.add(btnTaka).left().bottom().height(75).width(200);
         tbl.add(btnEtu).right().bottom().height(75).width(200);
         tbl.setFillParent(true);
+        stg.addAction(Actions.alpha(0));
+        stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 
         stg.addActor(tbl);
     }
@@ -101,7 +120,6 @@ public class PelaaMain implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-
     }
 
     @Override

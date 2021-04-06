@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -76,12 +77,19 @@ public class Asetukset implements Screen {
         Gdx.input.setInputProcessor(stg);
         tbl.setFillParent(true);
         stg.addActor(tbl);
+        stg.addAction(Actions.alpha(0));
+        stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 
         btnTakaisin.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new newMainMenu(gme));
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                   //     dispose();
+                        gme.setScreen(new newMainMenu(gme));
+                    }
+                })));
             }
         });
     }

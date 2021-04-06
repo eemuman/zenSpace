@@ -9,11 +9,17 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Transition implements Screen {
@@ -30,7 +36,11 @@ public class Transition implements Screen {
 
     private Player player;
     private String curLevel;
+    private Stage stg;
     HUD hud;
+    private Image img;
+
+    private boolean shouldRender = true;
 
     private float stateTime = 0.0f;
 
@@ -39,12 +49,20 @@ public class Transition implements Screen {
     public Transition(zenSpace game, TextureAtlas bgTexture) {
         gme = game;
         hud = gme.getHud();
+
+        img = gme.getFadeImg();
+
         Gdx.input.setInputProcessor(hud.stg);
         scrnView = game.getScrnView();
+        stg = new Stage(scrnView);
+        stg.addActor(img);
         this.curLevel = "st" + game.getCurLevel();
         this.bgTexture = bgTexture.findRegion(curLevel);
         batch = game.getBatch();
         player = new Player(1, 9, gme.getBundle());
+        stg.addAction(Actions.alpha(1));
+        stg.addAction(Actions.fadeOut(gme.getFadeIn()));
+     //   stg.setDebugAll(true);
     }
 
     @Override
@@ -57,41 +75,49 @@ public class Transition implements Screen {
         batch.setProjectionMatrix(scrnView.getCamera().combined);
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(!hud.isPaused()) {
-            stateTime += delta;
-            currentX += delta * movementSpeed;
+        if(shouldRender) {
+            if (!hud.isPaused()) {
+                stateTime += delta;
+                currentX += delta * movementSpeed;
                 currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
+            }
+            if (hud.isBackMenu()) {
+             //   dispose();
+            }
+            batch.begin();
+            batch.draw(bgTexture, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+            batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
+            if (currentPlayerFrame != null) {
+                batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
+            }
+            batch.end();
+            hud.render(delta);
+            checkPlayerPos();
         }
-        if(hud.isBackMenu()) {
-            gme.setCurLevelInt(1);
-            dispose();
-            hud.setBackMenu();
-            gme.setScreen(new newMainMenu(gme));
-        }
-        batch.begin();
-        batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
-        if(currentPlayerFrame !=null) {
-            batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
-        }
-        batch.end();
-        hud.render(delta);
-        checkPlayerPos();
-
+        stg.act(delta);
+        stg.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         scrnView.update(width, height, true);
         scrnView.getCamera().update();
+        stg.getViewport().update(width, height, true);
+        stg.getCamera().update();
     }
 
     private void checkPlayerPos() {
-        if(currentX >= scrnView.getCamera().viewportWidth / 1.8f) {
-            dispose();
-            gme.getEste().setBooleans(false,false);
-            gme.setScreen(new Piirto(gme, bgTexture));
+        if(currentX >= scrnView.getCamera().viewportWidth / 1.8f && shouldRender) {
+            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    shouldRender = false;
+                    Gdx.app.log("HERE", "HERE");
+                 //   dispose();
+                    gme.getEste().setBooleans(false,false);
+                    gme.setScreen(new Piirto(gme, bgTexture));
+                }
+            })));
         }
     }
 
@@ -112,6 +138,8 @@ public class Transition implements Screen {
 
     @Override
     public void dispose() {
-
+    shouldRender = false;
+    stg.clear();
+    stg.dispose();
     }
 }

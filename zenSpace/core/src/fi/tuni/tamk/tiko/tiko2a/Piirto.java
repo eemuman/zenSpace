@@ -28,6 +28,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -69,6 +71,9 @@ public class Piirto extends InputAdapter implements Screen {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledRenderer;
+    private Image img;
+
+    private Boolean shouldRender = true;
 
     Array<Vector2> mapPointObjects;
     Array<Polygon> polygonArray;
@@ -102,6 +107,7 @@ public class Piirto extends InputAdapter implements Screen {
         bundle = gme.getBundle();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
+        img = gme.getFadeImg();
 
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
@@ -111,7 +117,7 @@ public class Piirto extends InputAdapter implements Screen {
         sr = new ShapeRenderer();
         tbl = new Table();
         tbl.setFillParent(true);
-
+        stg.addActor(img);
         mapPointObjects = new Array<>();
         polygonArray = new Array<>();
         winPoints = new Array<>();
@@ -158,6 +164,9 @@ public class Piirto extends InputAdapter implements Screen {
         });
         tbl.add(back).expand().top().left().width(225).height(dynamicUnitScale);
         tbl.add(reset).expand().top().right().width(225).height(dynamicUnitScale);
+
+        img.addAction(Actions.alpha(1));
+        img.addAction(Actions.fadeOut(gme.getFadeIn()));
         stg.addActor(tbl);
     }
 
@@ -170,21 +179,26 @@ public class Piirto extends InputAdapter implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(shouldRender) {
         /*
         gme.getBatch().begin();
         gme.getBatch().draw(tst,0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
         gme.getBatch().draw(gme.getEste().getTexture(), 0, 0,scrnView.getCamera().viewportWidth , scrnView.getCamera().viewportHeight);
         gme.getBatch().end();
          */
-        stg.act(Gdx.graphics.getDeltaTime());
-        tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
-        tiledRenderer.render();
+
+            tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
+            tiledRenderer.render();
+
+            sr.setProjectionMatrix(scrnView.getCamera().combined);
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+            drawLines();
+            sr.end();
+            update();
+        }
+        stg.act(delta);
         stg.draw();
-        sr.setProjectionMatrix(scrnView.getCamera().combined);
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        drawLines();
-        sr.end();
-        update();
     }
 
     @Override
@@ -210,6 +224,8 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
+        shouldRender = false;
+        stg.clear();
         stg.dispose();
     }
 
@@ -347,10 +363,19 @@ public class Piirto extends InputAdapter implements Screen {
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
             }
-            if (checkWinPointsForVisit(inputPoint)) {
+            if (checkWinPointsForVisit(inputPoint) && shouldRender) {
+                inputMultiplexer.clear();
+                shouldRender = false;
             //    clearCells(100, 100, "Tile Layer 1");
-                gme.getEste().setBooleans(false, true);
-                gme.setScreen(new Resultscreen(gme, bgTexture));
+                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gdx.app.log("!H",  " !W ");
+                     //   dispose();
+                        gme.getEste().setBooleans(false, true);
+                        gme.setScreen(new Resultscreen(gme, bgTexture));
+                    }
+                })));
             }
         }
     }

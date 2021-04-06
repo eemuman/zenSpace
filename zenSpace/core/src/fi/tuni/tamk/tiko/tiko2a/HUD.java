@@ -11,6 +11,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -24,15 +26,20 @@ public class HUD implements Screen {
     private Skin skin;
     private TextButton tButton, tButtonJatka, tButtonMenu;
     Stage stg;
+    private Image img;
     private Table tbl;
     private boolean paused = false;
     private boolean backMenu = false;
     private BundleHandler bundle;
     private Window pause;
+    private zenSpace gme;
 
     public HUD(zenSpace game) {
+        gme = game;
         bundle = game.getBundle();
-
+        img = gme.getFadeImg();
+        stg = new Stage(game.getScrnView());
+        stg.addActor(img);
         skin = bundle.getUiSkin();
         tButton = new TextButton("Menu", skin);
         tButton.addListener(new ChangeListener() {
@@ -56,8 +63,16 @@ public class HUD implements Screen {
         tButtonMenu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                backMenu = true;
-                dispose();
+                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        backMenu = true;
+                   //     dispose();
+                        gme.setCurLevelInt(1);
+                        setBackMenu();
+                        gme.setScreen(new newMainMenu(gme));
+                    }
+                })));
             }
         });
 
@@ -71,7 +86,7 @@ public class HUD implements Screen {
         pause.setVisible(false);
 
 
-        stg = new Stage(game.getScrnView());
+
 
 
         tbl = new Table();

@@ -92,7 +92,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(touched) {
-            if (gme.getCurLevel() == 3) {
+            if (gme.getCurLevel() == 1) {
                 dispose();
                 gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
             } else {

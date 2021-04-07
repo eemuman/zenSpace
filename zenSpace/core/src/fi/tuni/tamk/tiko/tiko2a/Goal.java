@@ -40,7 +40,7 @@ public class Goal implements Screen {
 
     private BundleHandler bundle;
     private Skin skin;
-    Stage stg;
+   // Stage stg;
     private Table tbl;
     private Label lbl;
 
@@ -53,7 +53,7 @@ public class Goal implements Screen {
         img = gme.generateFade();
         stg.addActor(img);
 
-        hud = gme.getHud();
+     //   hud = gme.getHud();
         this.bgTexture = bgTexture.findRegion("goal");
         batch = game.getBatch();
         scrnView = game.getScrnView();

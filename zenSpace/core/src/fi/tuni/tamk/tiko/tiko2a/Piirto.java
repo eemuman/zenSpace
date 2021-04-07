@@ -164,6 +164,11 @@ public class Piirto extends InputAdapter implements Screen {
         stg.act(Gdx.graphics.getDeltaTime());
         tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
         tiledRenderer.render();
+        sr.setProjectionMatrix(scrnView.getCamera().combined);
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        drawLines();
+        sr.end();
+        update();
         stg.act(delta);
         stg.draw();
     }

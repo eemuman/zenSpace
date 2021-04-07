@@ -3,8 +3,14 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Roboto-Bold: {
 		file: Roboto-Bold.fnt
 	}
+	Roboto-Bold-Borders: {
+		file: Roboto-Bold-Borders.fnt
+	}
 	Roboto-Bold-Small: {
 		file: Roboto-Bold-Small.fnt
+	}
+	Roboto-Bold-Small-Borders: {
+		file: Roboto-Bold-Small-Borders.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -81,6 +87,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: Roboto-Bold
 		fontColor: Fonttivariu
+	}
+	white: {
+		font: Roboto-Bold-Borders
+		fontColor: white
+	}
+	WhiteSmall: {
+		font: Roboto-Bold-Small-Borders
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {

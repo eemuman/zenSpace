@@ -56,6 +56,8 @@ public class Piirto extends InputAdapter implements Screen {
     private float newX;
     private float newY;
     private float dynamicUnitScale;
+    private float lineWidth = 3f;
+    private float minDistance = 30f;
 
     private boolean touched = false;
     private boolean moved = false;
@@ -65,7 +67,6 @@ public class Piirto extends InputAdapter implements Screen {
     private Vector2 firstPoint;
     private Vector2 inputPoint;
     private BundleHandler bundle;
-    private float lineWidth = 3f;
 
     private InputMultiplexer inputMultiplexer;
 
@@ -101,6 +102,7 @@ public class Piirto extends InputAdapter implements Screen {
      */
     Vector2[][] array2D = new Vector2[200][3000];
 
+
     public Piirto(zenSpace game, final AtlasRegion bgTexture) {
         this.bgTexture = bgTexture;
         gme = game;
@@ -125,7 +127,6 @@ public class Piirto extends InputAdapter implements Screen {
         tiledMapPointsToArray("PiirtoPisteet" , mapPointObjects);
         tiledMapPointsToArray("VoittoPisteet" , winPoints);
 
-
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stg);
@@ -136,33 +137,11 @@ public class Piirto extends InputAdapter implements Screen {
         reset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                for (int i = 0; i < array2D.length - 1; i++) {
-                    for (int j = 0; j < array2D[i].length - 1; j++) {
-                        if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                            array2D[i][j] = null;
-                    }
-                }
+                clearDrawings();
                 tracker = 0;
                 firstShape = true;
             }
         });
-        back = new TextButton("SEURAAVA", skin, "TextButtonSmall");
-        back.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                /*
-                if(gme.getCurLevel()==3) {
-                    dispose();
-                    gme.setScreen(new Goal(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                } else {
-                    gme.setCurLevelInt(gme.getCurLevel() + 1);
-                    dispose();
-                    gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                }
-                 */
-            }
-        });
-        tbl.add(back).expand().top().left().width(225).height(dynamicUnitScale);
         tbl.add(reset).expand().top().right().width(225).height(dynamicUnitScale);
 
 
@@ -182,25 +161,9 @@ public class Piirto extends InputAdapter implements Screen {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(shouldRender) {
-        /*
-        gme.getBatch().begin();
-        gme.getBatch().draw(tst,0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        gme.getBatch().draw(gme.getEste().getTexture(), 0, 0,scrnView.getCamera().viewportWidth , scrnView.getCamera().viewportHeight);
-        gme.getBatch().end();
-         */
-
-            tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
-            tiledRenderer.render();
-
-            sr.setProjectionMatrix(scrnView.getCamera().combined);
-            sr.begin(ShapeRenderer.ShapeType.Filled);
-            drawLines();
-            sr.end();
-            update();
-
-
-        }
+        stg.act(Gdx.graphics.getDeltaTime());
+        tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
+        tiledRenderer.render();
         stg.act(delta);
         stg.draw();
     }
@@ -232,9 +195,19 @@ public class Piirto extends InputAdapter implements Screen {
         stg.dispose();
     }
 
+    public void clearDrawings() {
+        points.clear();
+        for (int i = 0; i < array2D.length - 1; i++) {
+            for (int j = 0; j < array2D[i].length - 1; j++) {
+                if (array2D[i][j] != null && array2D[i][j + 1] != null)
+                    array2D[i][j] = null;
+            }
+        }
+    }
+
     public boolean checkDistanceToLinePoints(Vector2 point) {
         for (Vector2 p : mapPointObjects) {
-            if (p.dst(point) <= 30f) {
+            if (p.dst(point) <= minDistance) {
                 return true;
             }
         }
@@ -243,7 +216,7 @@ public class Piirto extends InputAdapter implements Screen {
 
     public boolean checkWinPointsForVisit(Vector2 p) {
         for (int i = 0; i < winPoints.size; i++) {
-            if (winPoints.get(i).dst(p) <= 20f) {
+            if (winPoints.get(i).dst(p) <= minDistance) {
                 winPoints.get(i).set(0, 0);
             }
         }
@@ -263,22 +236,6 @@ public class Piirto extends InputAdapter implements Screen {
             float x = r.getRectangle().getX();
             float y = r.getRectangle().getY();
             targetArray.add(new Vector2(x, y));
-        }
-    }
-
-    public void clearCells(float rows, float cols, String layerName) {
-        TiledMapTileLayer cellsToClear = (TiledMapTileLayer) tiledMap.getLayers().get(layerName);
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                cellsToClear.setCell(i, j, null);
-            }
-        }
-        points.clear();
-        for (int i = 0; i < array2D.length - 1; i++) {
-            for (int j = 0; j < array2D[i].length - 1; j++) {
-                if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                    array2D[i][j] = null;
-            }
         }
     }
 
@@ -343,15 +300,10 @@ public class Piirto extends InputAdapter implements Screen {
                 array2D[tracker][i] = vectors[i];
             }
         } else {
-            points.clear();
-            for (int i = 0; i < array2D.length - 1; i++) {
-                for (int j = 0; j < array2D[i].length - 1; j++) {
-                    if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                        array2D[i][j] = null;
-                }
-            }
+            clearDrawings();
             tracker = 0;
             firstShape = true;
+            tiledMapPointsToArray("VoittoPisteet" , winPoints);
         }
 
         return false;

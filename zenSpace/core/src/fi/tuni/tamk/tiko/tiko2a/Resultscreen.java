@@ -37,7 +37,8 @@ public class Resultscreen extends InputAdapter implements Screen {
     public Resultscreen(zenSpace game, AtlasRegion bgTexture) {
         bgText = bgTexture;
         gme = game;
-        img = gme.getFadeImg();
+        img = gme.generateFade();
+        Gdx.app.log("HERE", "HERER");
     //    hud = gme.getHud();
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
@@ -47,7 +48,6 @@ public class Resultscreen extends InputAdapter implements Screen {
         inputMultiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(inputMultiplexer);
         batch = game.getBatch();
-        stg.addAction(Actions.alpha(1));
         stg.addAction(Actions.fadeOut(gme.getFadeIn()));
     }
 
@@ -77,6 +77,7 @@ public class Resultscreen extends InputAdapter implements Screen {
             batch.end();
 
             //   hud.render(delta);
+
         }
         stg.act(delta);
         stg.draw();
@@ -105,7 +106,6 @@ public class Resultscreen extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-        shouldRender = false;
         stg.clear();
         stg.dispose();
     }
@@ -114,7 +114,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(touched) {
             if (gme.getCurLevel() == 3) {
-                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         shouldRender = false;
@@ -123,7 +123,7 @@ public class Resultscreen extends InputAdapter implements Screen {
                     }
                 })));
             } else {
-                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         shouldRender = false;

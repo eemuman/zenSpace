@@ -107,8 +107,8 @@ public class Piirto extends InputAdapter implements Screen {
         bundle = gme.getBundle();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
-        img = gme.getFadeImg();
-
+        img = gme.generateFade();
+        Gdx.app.log("HERE", "HEREP");
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
@@ -165,9 +165,11 @@ public class Piirto extends InputAdapter implements Screen {
         tbl.add(back).expand().top().left().width(225).height(dynamicUnitScale);
         tbl.add(reset).expand().top().right().width(225).height(dynamicUnitScale);
 
-        img.addAction(Actions.alpha(1));
-        img.addAction(Actions.fadeOut(gme.getFadeIn()));
+
+
         stg.addActor(tbl);
+        tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
+        img.addAction(Actions.fadeOut(gme.getFadeIn()));
     }
 
     @Override
@@ -196,6 +198,8 @@ public class Piirto extends InputAdapter implements Screen {
             drawLines();
             sr.end();
             update();
+
+
         }
         stg.act(delta);
         stg.draw();
@@ -224,7 +228,6 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-        shouldRender = false;
         stg.clear();
         stg.dispose();
     }
@@ -254,8 +257,6 @@ public class Piirto extends InputAdapter implements Screen {
 
     public void tiledMapPointsToArray(String layername, Array<Vector2> targetArray) {
         MapLayer pointObjectLayer = tiledMap.getLayers().get(layername);
-        TiledMapTileLayer tLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Tile Layer 1");
-        Gdx.app.log("!H", tLayer.getTileHeight() * tLayer.getHeight() + " !W " + tLayer.getTileWidth() * tLayer.getWidth());
         MapObjects pointObjects = pointObjectLayer.getObjects();
         Array<RectangleMapObject> points = pointObjects.getByType(RectangleMapObject.class);
         for (RectangleMapObject r : points) {
@@ -365,12 +366,13 @@ public class Piirto extends InputAdapter implements Screen {
             }
             if (checkWinPointsForVisit(inputPoint) && shouldRender) {
                 inputMultiplexer.clear();
-                shouldRender = false;
+
             //    clearCells(100, 100, "Tile Layer 1");
-                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         Gdx.app.log("!H",  " !W ");
+                        shouldRender = false;
                      //   dispose();
                         gme.getEste().setBooleans(false, true);
                         gme.setScreen(new Resultscreen(gme, bgTexture));

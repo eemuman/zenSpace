@@ -49,20 +49,22 @@ public class Transition implements Screen {
     public Transition(zenSpace game, TextureAtlas bgTexture) {
         gme = game;
         hud = gme.getHud();
-
-        img = gme.getFadeImg();
+        Gdx.app.log("HERE", "HERET");
+        img = gme.generateFade();
 
         Gdx.input.setInputProcessor(hud.stg);
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
+
         stg.addActor(img);
         this.curLevel = "st" + game.getCurLevel();
         this.bgTexture = bgTexture.findRegion(curLevel);
         batch = game.getBatch();
         player = new Player(1, 9, gme.getBundle());
-        stg.addAction(Actions.alpha(1));
-        stg.addAction(Actions.fadeOut(gme.getFadeIn()));
-     //   stg.setDebugAll(true);
+
+            stg.addAction(Actions.fadeOut(gme.getFadeIn()));
+            Gdx.app.log("ALPHA", String.valueOf(stg.getBatch().getColor().a));
+            //   stg.setDebugAll(true);
     }
 
     @Override
@@ -73,30 +75,30 @@ public class Transition implements Screen {
     @Override
     public void render(float delta) {
         batch.setProjectionMatrix(scrnView.getCamera().combined);
-        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(shouldRender) {
-            if (!hud.isPaused()) {
-                stateTime += delta;
-                currentX += delta * movementSpeed;
-                currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
-            }
-            if (hud.isBackMenu()) {
-             //   dispose();
-            }
-            batch.begin();
-            batch.draw(bgTexture, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-            batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
-            if (currentPlayerFrame != null) {
-                batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
-            }
-            batch.end();
-            hud.render(delta);
-            checkPlayerPos();
+        if (!hud.isPaused() && shouldRender) {
+            stateTime += delta;
+            currentX += delta * movementSpeed;
+            currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
         }
+        if (hud.isBackMenu()) {
+            //   dispose();
+        }
+        batch.begin();
+        batch.draw(bgTexture, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+        batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
+        if (currentPlayerFrame != null) {
+            batch.draw(currentPlayerFrame, currentX, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 4f, scrnView.getCamera().viewportHeight / 4f);
+        }
+        batch.end();
+        hud.render(delta);
+        checkPlayerPos();
+
         stg.act(delta);
         stg.draw();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -108,14 +110,14 @@ public class Transition implements Screen {
 
     private void checkPlayerPos() {
         if(currentX >= scrnView.getCamera().viewportWidth / 1.8f && shouldRender) {
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
+            shouldRender = false;
+            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    shouldRender = false;
-                    Gdx.app.log("HERE", "HERE");
-                 //   dispose();
-                    gme.getEste().setBooleans(false,false);
-                    gme.setScreen(new Piirto(gme, bgTexture));
+                    Gdx.app.log("ALPHA", String.valueOf(stg.getBatch().getColor().a));
+                        gme.getEste().setBooleans(false, false);
+                        gme.setScreen(new Piirto(gme, bgTexture));
+
                 }
             })));
         }
@@ -138,7 +140,6 @@ public class Transition implements Screen {
 
     @Override
     public void dispose() {
-    shouldRender = false;
     stg.clear();
     stg.dispose();
     }

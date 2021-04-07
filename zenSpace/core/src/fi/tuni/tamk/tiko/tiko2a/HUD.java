@@ -37,7 +37,8 @@ public class HUD implements Screen {
     public HUD(zenSpace game) {
         gme = game;
         bundle = game.getBundle();
-        img = gme.getFadeImg();
+        img = gme.generateFade();
+        img.addAction(Actions.alpha(0));
         stg = new Stage(game.getScrnView());
         stg.addActor(img);
         skin = bundle.getUiSkin();

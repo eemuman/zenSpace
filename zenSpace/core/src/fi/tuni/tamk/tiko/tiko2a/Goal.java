@@ -32,14 +32,14 @@ public class Goal implements Screen {
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
         gme = game;
-        img = gme.getFadeImg();
+        img = gme.generateFade();
         stg.addActor(img);
 
         hud = gme.getHud();
         this.bgTexture = bgTexture.findRegion("goal");
         Gdx.input.setInputProcessor(hud.stg);
         batch = game.getBatch();
-        stg.addAction(Actions.alpha(1));
+
         stg.addAction(Actions.fadeOut(gme.getFadeIn()));
     }
 
@@ -62,6 +62,8 @@ public class Goal implements Screen {
             batch.end();
             hud.render(delta);
         }
+        stg.act();
+        stg.draw();
     }
 
     @Override

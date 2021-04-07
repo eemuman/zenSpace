@@ -43,8 +43,8 @@ public class zenSpace extends Game {
 	private int curBackground;
 	private HUD hud;
 	private Este este;
-	private Image fadeImg;
-	private float fadeIn = 0.5f;
+	private float fadeIn = 0.25f;
+	private Fade fade;
 
 
 	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas"};
@@ -65,7 +65,7 @@ public class zenSpace extends Game {
 		textCam.setToOrtho(false, wWidth, wHeight);
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		cam.setToOrtho(true, 15, 10);
-		fadeImg = Fade.getImage();
+		fade = new Fade();
 		hud = new HUD(this);
 		este = new Este(this);
 
@@ -74,6 +74,10 @@ public class zenSpace extends Game {
 
 	public void render () {
 		super.render();
+	}
+
+	public Image generateFade() {
+		return fade.getImage();
 	}
 
 	/**
@@ -116,9 +120,6 @@ public class zenSpace extends Game {
 	public Este getEste() {return este;}
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
-	}
-	public Image getFadeImg() {
-		return fadeImg;
 	}
 	public BundleHandler getBundle() {
 		return bundle;

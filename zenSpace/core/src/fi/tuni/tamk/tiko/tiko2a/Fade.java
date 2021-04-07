@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Fade extends Actor {
 
-    public static Image getImage(){
+    public Image getImage(){
         Pixmap pixmap;
         Image text;
         try {

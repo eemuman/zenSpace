@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Goal implements Screen {
@@ -39,10 +40,12 @@ public class Goal implements Screen {
     private float dynamicUnitScale;
 
     private BundleHandler bundle;
+    private I18NBundle curLangBundle;
     private Skin skin;
    // Stage stg;
     private Table tbl;
-    private Label lbl;
+    private Label lbl, lbl1;
+    private float fadeInTime = 3f;
 
     private InputMultiplexer inputMultiplexer;
 
@@ -53,6 +56,7 @@ public class Goal implements Screen {
         img = gme.generateFade();
         stg.addActor(img);
 
+
      //   hud = gme.getHud();
         this.bgTexture = bgTexture.findRegion("goal");
         batch = game.getBatch();
@@ -60,32 +64,32 @@ public class Goal implements Screen {
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
         stg = new Stage(scrnView);
         bundle = gme.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
         skin = bundle.getUiSkin();
         tbl = new Table();
-        tbl.setDebug(true);
         tbl.setFillParent(true);
 
-        inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(stg);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(stg);
 
-        back = new TextButton("MENU", skin, "TextButtonSmall");
-        back.setDebug(true);
+        back = new TextButton(curLangBundle.get("menu"), skin, "TextButtonSmallWhite");
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                gme.prefs.setAmountofCompletions();
                 gme.setScreen(new newMainMenu(gme));
             }
         });
-        tbl.add(back).expand().top().left().width(225).height(dynamicUnitScale);
+        lbl = new Label(curLangBundle.get("hienoa"), skin, "white");
+        lbl1 = new Label(curLangBundle.get("lapipeluu") + gme.prefs.getAmountofCompletions() + curLangBundle.get("kertaa"),skin, "WhiteSmall");
+        lbl1.setWrap(true);
+        lbl1.setWidth(10f);
+        tbl.add(lbl).expand().padTop(250).top();
         tbl.row();
-        lbl = new Label("HIENOA!", skin, "white");
-        lbl.setDebug(true);
-        tbl.add(lbl).top().center().width(260).height(dynamicUnitScale)
-                .padBottom(gme.getwHeight() - dynamicUnitScale).padRight(240f);;
+        tbl.add(lbl1).expand().width(375f).padTop(-175f).top();
+        tbl.row();
+        tbl.add(back).width(300).height(dynamicUnitScale).padBottom(50);
         stg.addActor(tbl);
-
-        stg.addAction(Actions.fadeOut(gme.getFadeIn()));
+        stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime)));
     }
 
     @Override
@@ -101,7 +105,7 @@ public class Goal implements Screen {
         batch.begin();
         batch.draw(bgTexture, 0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
         batch.end();
-        stg.act(Gdx.graphics.getDeltaTime());
+        stg.act(delta);
         stg.draw();
     }
 

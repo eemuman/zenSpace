@@ -45,6 +45,7 @@ public class zenSpace extends Game {
 	private Este este;
 	private float fadeIn = 0.25f;
 	private Fade fade;
+	public Prefs prefs;
 
 
 	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas"};
@@ -55,6 +56,7 @@ public class zenSpace extends Game {
 	 */
 	@Override
 	public void create() {
+		prefs = new Prefs();
 		curLevelInt = 1;
 		curBackground = 0;
 		bundle = new BundleHandler();

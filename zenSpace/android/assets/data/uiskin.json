@@ -161,6 +161,15 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		downFontColor: Fonttivariu
 		disabledFontColor: gray
 	}
+	TextButtonSmallWhite: {
+		parent: default
+		font: Roboto-Bold-Small-Borders
+		fontColor: white
+		downFontColor: white
+		disabledFontColor: gray
+		up: Button2_31x40hdpi
+		down: Button1_31x40hdpi
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {

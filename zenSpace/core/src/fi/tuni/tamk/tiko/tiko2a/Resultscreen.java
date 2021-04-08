@@ -38,7 +38,6 @@ public class Resultscreen extends InputAdapter implements Screen {
         bgText = bgTexture;
         gme = game;
         img = gme.generateFade();
-        Gdx.app.log("HERE", "HERER");
     //    hud = gme.getHud();
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);

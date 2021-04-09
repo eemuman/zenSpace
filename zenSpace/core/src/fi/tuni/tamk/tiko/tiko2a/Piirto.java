@@ -18,19 +18,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -58,6 +57,7 @@ public class Piirto extends InputAdapter implements Screen {
     private float dynamicUnitScale;
     private float lineWidth = 3f;
     private float minDistance = 30f;
+    private float ballRadius = 7.5f;
 
     private boolean touched = false;
     private boolean moved = false;
@@ -77,8 +77,7 @@ public class Piirto extends InputAdapter implements Screen {
     private Boolean shouldRender = true;
 
     Array<Vector2> mapPointObjects;
-    Array<Polygon> polygonArray;
-    Array<Vector2> winPoints;
+    Array<Ellipse> ellipseArray;
 
     AtlasRegion bgTexture;
 
@@ -120,12 +119,11 @@ public class Piirto extends InputAdapter implements Screen {
         tbl = new Table();
         tbl.setFillParent(true);
         stg.addActor(img);
-        mapPointObjects = new Array<>();
-        polygonArray = new Array<>();
-        winPoints = new Array<>();
 
+        mapPointObjects = new Array<>();
+        ellipseArray = new Array<>();
         tiledMapPointsToArray("PiirtoPisteet" , mapPointObjects);
-        tiledMapPointsToArray("VoittoPisteet" , winPoints);
+        tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
@@ -137,7 +135,7 @@ public class Piirto extends InputAdapter implements Screen {
         reset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                clearDrawings();
+                resetDrawing();
                 tracker = 0;
                 firstShape = true;
             }
@@ -166,7 +164,7 @@ public class Piirto extends InputAdapter implements Screen {
         tiledRenderer.render();
         sr.setProjectionMatrix(scrnView.getCamera().combined);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        drawLines();
+        draw();
         sr.end();
         update();
         stg.act(delta);
@@ -200,7 +198,7 @@ public class Piirto extends InputAdapter implements Screen {
         stg.dispose();
     }
 
-    public void clearDrawings() {
+    public void resetDrawing() {
         points.clear();
         for (int i = 0; i < array2D.length - 1; i++) {
             for (int j = 0; j < array2D[i].length - 1; j++) {
@@ -208,6 +206,7 @@ public class Piirto extends InputAdapter implements Screen {
                     array2D[i][j] = null;
             }
         }
+
     }
 
     public boolean checkDistanceToLinePoints(Vector2 point) {
@@ -218,7 +217,7 @@ public class Piirto extends InputAdapter implements Screen {
         }
         return false;
     }
-
+    /*
     public boolean checkWinPointsForVisit(Vector2 p) {
         for (int i = 0; i < winPoints.size; i++) {
             if (winPoints.get(i).dst(p) <= minDistance) {
@@ -226,9 +225,26 @@ public class Piirto extends InputAdapter implements Screen {
             }
         }
         for (Vector2 v : winPoints) {
-            if (!(v.x == 0f) && !(v.y == 0)) {
+            if (!(v.x == 0f) && !(v.y == 0f)) {
                 return false;
             }
+        }
+        return true;
+    }
+
+     */
+
+    public boolean checkWinEllipsesForVisit(Vector2 p) {
+        for (int i = 0; i < ellipseArray.size; i++) {
+            float x = ellipseArray.get(i).x;
+            float y = ellipseArray.get(i).y;
+            Vector2 vec = new Vector2(x, y);
+            if (vec.dst(p) <= minDistance) {
+                ellipseArray.removeIndex(i);
+            }
+        }
+        if (!(ellipseArray.size == 0)) {
+            return false;
         }
         return true;
     }
@@ -244,7 +260,16 @@ public class Piirto extends InputAdapter implements Screen {
         }
     }
 
-    private void drawLines() {
+    public void tiledMapEllipsesToArray(String layername, Array<Ellipse> targetArray) {
+        MapLayer ellipseObjectLayer = tiledMap.getLayers().get(layername);
+        MapObjects ellipseObjects = ellipseObjectLayer.getObjects();
+        Array<EllipseMapObject> ellipses = ellipseObjects.getByType(EllipseMapObject.class);
+        for (EllipseMapObject e : ellipses) {
+            targetArray.add(e.getEllipse());
+        }
+    }
+
+    private void draw() {
         if (firstShape) {
             for (int i = 0; i < points.size() - 1; i++) {
                 sr.rectLine(points.get(i), points.get(i + 1), lineWidth);
@@ -258,7 +283,11 @@ public class Piirto extends InputAdapter implements Screen {
                 }
             }
         }
+        for (Ellipse e : ellipseArray) {
+            sr.circle(e.x, e.y, ballRadius);
+        }
     }
+
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -305,10 +334,10 @@ public class Piirto extends InputAdapter implements Screen {
                 array2D[tracker][i] = vectors[i];
             }
         } else {
-            clearDrawings();
+            resetDrawing();
             tracker = 0;
             firstShape = true;
-            tiledMapPointsToArray("VoittoPisteet" , winPoints);
+            tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
         }
 
         return false;
@@ -321,7 +350,7 @@ public class Piirto extends InputAdapter implements Screen {
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
             }
-            if (checkWinPointsForVisit(inputPoint) && shouldRender) {
+            if (checkWinEllipsesForVisit(inputPoint) && shouldRender) {
                 inputMultiplexer.clear();
 
             //    clearCells(100, 100, "Tile Layer 1");

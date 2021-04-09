@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-down" width="60" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="108">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-down" width="60" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="129">
  <tileset firstgid="1" name="bat" tilewidth="8" tileheight="8" tilecount="29618" columns="118">
   <image source="bat.png" width="944" height="2008"/>
  </tileset>
- <objectgroup id="2" name="PiirtoPisteet">
+ <objectgroup id="2" name="PiirtoPisteet" visible="0">
   <object id="1" x="241.267" y="542.152">
    <point/>
   </object>
@@ -251,75 +251,63 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="3" name="VoittoPisteet" visible="0">
-  <object id="83" x="273.871" y="112.715">
-   <point/>
+ <objectgroup id="3" name="VoittoPisteet">
+  <object id="108" x="262.692" y="220.773">
+   <ellipse/>
   </object>
-  <object id="86" x="237.541" y="151.84">
-   <point/>
+  <object id="109" x="326.968" y="213.321">
+   <ellipse/>
   </object>
-  <object id="87" x="255.24" y="131.346">
-   <point/>
+  <object id="110" x="387.517" y="237.541">
+   <ellipse/>
   </object>
-  <object id="88" x="222.636" y="184.443">
-   <point/>
+  <object id="113" x="440.615" y="301.816">
+   <ellipse/>
   </object>
-  <object id="89" x="214.252" y="217.047">
-   <point/>
+  <object id="114" x="459.245" y="399.627">
+   <ellipse/>
   </object>
-  <object id="90" x="216.116" y="244.061">
-   <point/>
+  <object id="115" x="435.026" y="494.644">
+   <ellipse/>
   </object>
-  <object id="91" x="217.979" y="261.761">
-   <point/>
+  <object id="116" x="344.667" y="544.015">
+   <ellipse/>
   </object>
-  <object id="92" x="253.377" y="224.499">
-   <point/>
+  <object id="117" x="245.925" y="539.357">
+   <ellipse/>
   </object>
-  <object id="93" x="316.721" y="214.252">
-   <point/>
+  <object id="118" x="197.485" y="568.235">
+   <ellipse/>
   </object>
-  <object id="94" x="387.517" y="238.472">
-   <point/>
+  <object id="119" x="136.004" y="570.098">
+   <ellipse/>
   </object>
-  <object id="95" x="440.615" y="301.816">
-   <point/>
+  <object id="120" x="52.1658" y="527.247">
+   <ellipse/>
   </object>
-  <object id="96" x="459.245" y="399.627">
-   <point/>
+  <object id="121" x="22.3568" y="447.136">
+   <ellipse/>
   </object>
-  <object id="97" x="434.094" y="495.575">
-   <point/>
+  <object id="122" x="22.3568" y="357.708">
+   <ellipse/>
   </object>
-  <object id="98" x="344.667" y="545.878">
-   <point/>
+  <object id="123" x="55.8919" y="287.844">
+   <ellipse/>
   </object>
-  <object id="99" x="245.925" y="541.22">
-   <point/>
+  <object id="124" x="112.715" y="245.925">
+   <ellipse/>
   </object>
-  <object id="100" x="221.705" y="566.372">
-   <point/>
+  <object id="125" x="166.744" y="233.815">
+   <ellipse/>
   </object>
-  <object id="101" x="137.867" y="571.029">
-   <point/>
+  <object id="126" x="217.047" y="257.103">
+   <ellipse/>
   </object>
-  <object id="102" x="74.5226" y="547.741">
-   <point/>
+  <object id="127" x="217.979" y="182.58">
+   <ellipse/>
   </object>
-  <object id="103" x="27.946" y="461.109">
-   <point/>
-  </object>
-  <object id="104" x="25.1514" y="378.202">
-   <point/>
-  </object>
-  <object id="105" x="51.2343" y="298.09">
-   <point/>
-  </object>
-  <object id="106" x="95.0163" y="251.514">
-   <point/>
-  </object>
-  <object id="107" x="166.744" y="235.678">
-   <point/>
+  <object id="128" x="267.35" y="116.442">
+   <ellipse/>
   </object>
  </objectgroup>
  <layer id="1" name="Tile Layer 1" width="60" height="100">

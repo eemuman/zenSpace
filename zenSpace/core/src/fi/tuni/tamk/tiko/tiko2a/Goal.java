@@ -74,7 +74,6 @@ public class Goal implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.prefs.setAmountofCompletions();
                 gme.setScreen(new newMainMenu(gme));
             }
         });

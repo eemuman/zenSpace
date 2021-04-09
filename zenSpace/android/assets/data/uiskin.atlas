@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 Button1_31x40hdpi
   rotate: false
-  xy: 1104, 1576
+  xy: 1611, 1573
   size: 35, 31
   split: 12, 12, 14, 14
   orig: 35, 31
@@ -14,7 +14,7 @@ Button1_31x40hdpi
   index: -1
 Button1_smallhdpi
   rotate: false
-  xy: 106, 29
+  xy: 522, 1152
   size: 102, 132
   split: 41, 42, 41, 41
   pad: 41, 42, 60, 60
@@ -23,7 +23,7 @@ Button1_smallhdpi
   index: -1
 Button2_31x40hdpi
   rotate: false
-  xy: 522, 1426
+  xy: 1868, 1977
   size: 37, 32
   split: 15, 15, 14, 14
   orig: 37, 32
@@ -31,7 +31,7 @@ Button2_31x40hdpi
   index: -1
 Button2_smallhdpi
   rotate: false
-  xy: 1, 27
+  xy: 522, 1286
   size: 103, 134
   split: 41, 42, 44, 45
   pad: 41, 42, 60, 60
@@ -40,77 +40,84 @@ Button2_smallhdpi
   index: -1
 Cloud_banner
   rotate: false
-  xy: 590, 1463
+  xy: 1104, 1499
   size: 72, 70
   orig: 72, 70
   offset: 0, 0
   index: -1
 Cloud_englishhdpi
   rotate: false
-  xy: 1611, 1644
+  xy: 1611, 1606
   size: 223, 161
   orig: 223, 161
   offset: 0, 0
   index: -1
 Cloud_finnishhdpi
   rotate: false
-  xy: 1612, 1807
+  xy: 1612, 1769
   size: 224, 161
   orig: 224, 161
   offset: 0, 0
   index: -1
 Cloud_logohdpi
   rotate: false
-  xy: 1, 1091
+  xy: 1, 1053
   size: 519, 367
   orig: 519, 367
   offset: 0, 0
   index: -1
 Sunhdpi
   rotate: false
-  xy: 1, 1460
+  xy: 1, 1422
   size: 587, 587
   orig: 587, 587
   offset: 0, 0
   index: -1
+transparent
+  rotate: false
+  xy: 1178, 1557
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
 Roboto-Bold
   rotate: false
-  xy: 590, 1535
+  xy: 590, 1497
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Roboto-Bold-36
   rotate: false
-  xy: 1104, 1609
+  xy: 1104, 1571
   size: 505, 224
   orig: 505, 224
   offset: 0, 0
   index: -1
 Roboto-Bold-Borders
   rotate: false
-  xy: 1, 163
+  xy: 1, 125
   size: 506, 412
   orig: 506, 412
   offset: 0, 0
   index: -1
 Roboto-Bold-Small
   rotate: false
-  xy: 1, 577
+  xy: 1, 539
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Roboto-Bold-Small-Borders
   rotate: false
-  xy: 1104, 1835
+  xy: 1104, 1797
   size: 506, 212
   orig: 506, 212
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 509, 572
+  xy: 509, 534
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -118,14 +125,14 @@ cursor
   index: -1
 default
   rotate: false
-  xy: 1612, 1970
+  xy: 1612, 1932
   size: 254, 77
   orig: 254, 77
   offset: 0, 0
   index: -1
 default-pane
   rotate: false
-  xy: 515, 1086
+  xy: 515, 1048
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -133,7 +140,7 @@ default-pane
   index: -1
 default-rect-pad
   rotate: false
-  xy: 515, 1086
+  xy: 515, 1048
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -141,7 +148,7 @@ default-rect-pad
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 590, 1460
+  xy: 590, 1478
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -149,7 +156,7 @@ default-pane-noborder
   index: -1
 default-rect
   rotate: false
-  xy: 561, 1455
+  xy: 1838, 1905
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -157,7 +164,7 @@ default-rect
   index: -1
 default-rect-down
   rotate: false
-  xy: 1104, 1571
+  xy: 1, 1
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -165,7 +172,7 @@ default-rect-down
   index: -1
 default-select
   rotate: false
-  xy: 1868, 2027
+  xy: 1838, 1910
   size: 27, 20
   split: 4, 14, 4, 4
   orig: 27, 20
@@ -173,7 +180,7 @@ default-select
   index: -1
 default-select-selection
   rotate: false
-  xy: 1141, 1604
+  xy: 30, 32
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -181,7 +188,7 @@ default-select-selection
   index: -1
 default-slider
   rotate: false
-  xy: 1, 1
+  xy: 1907, 2001
   size: 8, 8
   split: 2, 2, 2, 2
   orig: 8, 8
@@ -189,14 +196,14 @@ default-slider
   index: -1
 default-slider-knob
   rotate: false
-  xy: 664, 1515
+  xy: 1868, 1957
   size: 9, 18
   orig: 9, 18
   offset: 0, 0
   index: -1
 default-splitpane
   rotate: false
-  xy: 522, 1421
+  xy: 1648, 1601
   size: 5, 3
   split: 0, 5, 0, 0
   orig: 5, 3
@@ -204,7 +211,7 @@ default-splitpane
   index: -1
 default-splitpane-vertical
   rotate: false
-  xy: 1868, 2020
+  xy: 147, 102
   size: 3, 5
   split: 0, 0, 0, 5
   orig: 3, 5
@@ -212,7 +219,7 @@ default-splitpane-vertical
   index: -1
 default-window
   rotate: false
-  xy: 1838, 1939
+  xy: 1, 6
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
@@ -220,14 +227,14 @@ default-window
   index: -1
 selection
   rotate: false
-  xy: 1838, 1936
+  xy: 606, 1494
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 textfield
   rotate: false
-  xy: 1611, 1628
+  xy: 147, 109
   size: 14, 14
   split: 3, 3, 3, 3
   orig: 14, 14
@@ -235,22 +242,31 @@ textfield
   index: -1
 tree-minus
   rotate: false
-  xy: 1, 11
+  xy: 590, 1481
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 tree-plus
   rotate: false
-  xy: 210, 147
+  xy: 522, 1136
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 1897, 2044
+  xy: 163, 120
   size: 3, 3
   orig: 3, 3
+  offset: 0, 0
+  index: -1
+pen_test
+  rotate: false
+  xy: 1, 37
+  size: 144, 86
+  split: 55, 52, 28, 29
+  pad: 0, 0, 0, 0
+  orig: 144, 86
   offset: 0, 0
   index: -1

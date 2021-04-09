@@ -85,6 +85,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		up: Cloud_englishhdpi
 		down: Cloud_englishhdpi
 	}
+	noBorders: {
+		up: transparent
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -184,6 +187,11 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		disabledFontColor: gray
 		up: Button2_31x40hdpi
 		down: Button1_31x40hdpi
+	}
+	noBorders: {
+		parent: noBorders
+		font: Roboto-Bold-Small
+		fontColor: Fonttivariu
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

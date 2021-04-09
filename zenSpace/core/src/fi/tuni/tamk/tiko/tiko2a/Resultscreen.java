@@ -117,6 +117,7 @@ public class Resultscreen extends InputAdapter implements Screen {
                     @Override
                     public void run() {
                         shouldRender = false;
+                        gme.prefs.setAmountofCompletions();
                       //  dispose();
                         gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                     }

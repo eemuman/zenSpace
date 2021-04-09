@@ -48,7 +48,7 @@ public class zenSpace extends Game {
 	public Prefs prefs;
 
 
-	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas"};
+	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas", "depression.atlas"};
 
 	private boolean fin = true;
 	/**

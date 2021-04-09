@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -27,7 +28,7 @@ public class PelaaMain implements Screen {
     private String firstChoice, secondChoice, firstPart, secondPart;
     private zenSpace gme;
     private Skin skin;
-    private Label header;
+    private Label header, aloitetaan;
     private ExtendViewport scrnView;
     private Stage stg;
     private Table tbl;
@@ -36,11 +37,13 @@ public class PelaaMain implements Screen {
     private I18NBundle curLangBundle;
     private String[] firstStrings, secondStrings;
     private int backGroundChoice;
+    private Image headerImg;
 
     public PelaaMain(final zenSpace game, int first, int second) {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
+        headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
         firstStrings = curLangBundle.get("firstStrings").split(",");
         secondStrings = curLangBundle.get("secondStrings").split(",");
         firstChoice = firstStrings[first];
@@ -56,8 +59,10 @@ public class PelaaMain implements Screen {
 
 
 
-        header = new Label(firstPart + "\n" + firstChoice + "\n" + secondPart  + "\n" +  secondChoice +"\nAloitetaanko?", skin);
+        header = new Label(firstPart  + firstChoice.toLowerCase() + ".\n" + secondPart +  secondChoice.toLowerCase() + ".", skin, "defaultSmall");
+        aloitetaan = new Label(curLangBundle.get("aloitetaanko"), skin);
         header.setWrap(true);
+        header.setWidth(10f);
         btnTaka = new TextButton(curLangBundle.get("ei"), skin, "TextButtonSmall");
         btnEtu = new TextButton(curLangBundle.get("Kylla"), skin, "TextButtonSmall");
 
@@ -98,11 +103,16 @@ public class PelaaMain implements Screen {
 
         tbl = new Table();
 
-        tbl.add(header).expand();
+        tbl.add(headerImg).expandY().height(250).width(350).top().padTop(45).padBottom(-60).colspan(2);
         tbl.row();
-        tbl.add(btnTaka).left().bottom().height(75).width(200);
-        tbl.add(btnEtu).right().bottom().height(75).width(200);
+        tbl.add(header).expand().width(440f).colspan(2).padTop(-160);
+        tbl.row();
+        tbl.add(aloitetaan).colspan(2).padBottom(75);
+        tbl.row();
+        tbl.add(btnTaka).left().bottom().height(75).width(200).padBottom(15);
+        tbl.add(btnEtu).right().bottom().height(75).width(200).padBottom(15);
         tbl.setFillParent(true);
+     //   tbl.setDebug(true);
         stg.addAction(Actions.alpha(0));
         stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 
@@ -151,22 +161,34 @@ public class PelaaMain implements Screen {
 
         if(backGroundChoice <= 2) {
             gme.setCurBackground(0);
-        } else if(backGroundChoice >2 && backGroundChoice <=5) {
+        } else if(backGroundChoice >2 && backGroundChoice <=4) {
             gme.setCurBackground(1);
+        } else if(backGroundChoice == 5){
+            gme.setCurBackground(3);
         } else if(backGroundChoice > 5) {
             gme.setCurBackground(2);
         }
     }
     private void selectParts(int first, int second) {
-        if(first > 2) {
-            firstPart = curLangBundle.get("firstPart1");
-        } else {
-            firstPart = curLangBundle.get("firstPart2");
+        if(gme.isFin()) {
+            if (first > 2) {
+                firstPart = curLangBundle.get("firstPart1");
+            } else {
+                firstPart = curLangBundle.get("firstPart2");
+            }
+            if (second == 0 || second == 2 || second == 6) {
+                secondPart = curLangBundle.get("secondPart1");
+            } else {
+                secondPart = curLangBundle.get("secondPart2");
+            }
         }
-        if(second > 3) {
+        else {
+            if(first == 0) {
+                firstPart = curLangBundle.get("firstPart2");
+            } else {
+                firstPart = curLangBundle.get("firstPart1");
+            }
             secondPart = curLangBundle.get("secondPart1");
-        } else {
-            secondPart = curLangBundle.get("secondPart2");
         }
     }
 }

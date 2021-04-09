@@ -47,7 +47,6 @@ public class Goal implements Screen {
     private Label lbl, lbl1;
     private float fadeInTime = 3f;
 
-    private InputMultiplexer inputMultiplexer;
 
     public Goal(zenSpace game,TextureAtlas bgTexture) {
         scrnView = game.getScrnView();

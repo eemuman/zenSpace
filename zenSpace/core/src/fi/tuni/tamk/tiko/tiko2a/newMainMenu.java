@@ -118,8 +118,8 @@ public class newMainMenu implements Screen {
                     @Override
                     public void run() {
                      //   dispose();
-               //         gme.setScreen(new Pelaa1(gme));
-                        gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                        gme.setScreen(new Pelaa1(gme));
+                 //       gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
 
                     }
                 })));

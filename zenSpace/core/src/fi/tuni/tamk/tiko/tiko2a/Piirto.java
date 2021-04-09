@@ -32,9 +32,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -43,8 +45,8 @@ import java.util.List;
 
 public class Piirto extends InputAdapter implements Screen {
 
-    private TextButton reset, back;
-    private Table tbl;
+    private TextButton reset;
+    private Table tbl, overlay;
 
     private zenSpace gme;
     private ExtendViewport scrnView;
@@ -72,7 +74,7 @@ public class Piirto extends InputAdapter implements Screen {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledRenderer;
-    private Image img;
+    private Image img, banner;
 
     private Boolean shouldRender = true;
 
@@ -83,6 +85,8 @@ public class Piirto extends InputAdapter implements Screen {
     AtlasRegion bgTexture;
 
     private ShapeRenderer sr;
+    private HUD hud;
+    private Stack topStack;
 
     /**
      * Tracker jolla tallennettava "points" piirros
@@ -106,6 +110,7 @@ public class Piirto extends InputAdapter implements Screen {
     public Piirto(zenSpace game, final AtlasRegion bgTexture) {
         this.bgTexture = bgTexture;
         gme = game;
+        hud = gme.getHud();
         bundle = gme.getBundle();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
@@ -113,11 +118,13 @@ public class Piirto extends InputAdapter implements Screen {
         Gdx.app.log("HERE", "HEREP");
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
+        topStack = new Stack();
 
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
         skin = bundle.getUiSkin();
         sr = new ShapeRenderer();
         tbl = new Table();
+        overlay = new Table();
         tbl.setFillParent(true);
         stg.addActor(img);
         mapPointObjects = new Array<>();
@@ -130,8 +137,10 @@ public class Piirto extends InputAdapter implements Screen {
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stg);
+        inputMultiplexer.addProcessor(hud.stg);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        banner = new Image(bundle.getUiAtlas().findRegion("Cloud_banner"));
 
         reset = new TextButton("CLEARSCREEN", skin, "TextButtonSmall");
         reset.addListener(new ChangeListener() {
@@ -142,9 +151,9 @@ public class Piirto extends InputAdapter implements Screen {
                 firstShape = true;
             }
         });
-        tbl.add(reset).expand().top().right().width(225).height(dynamicUnitScale);
 
-
+        tbl.add(banner).expand().top().height(dynamicUnitScale).width(scrnView.getWorldWidth());
+        tbl.add(reset).expand().top().right().height(dynamicUnitScale).padLeft(-480f);
 
         stg.addActor(tbl);
         tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
@@ -171,6 +180,7 @@ public class Piirto extends InputAdapter implements Screen {
         update();
         stg.act(delta);
         stg.draw();
+        hud.render(delta);
     }
 
     @Override

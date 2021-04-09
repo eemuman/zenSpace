@@ -58,7 +58,7 @@ public class newMainMenu implements Screen {
     private Button flagBtnEN;
     private Stack flagStack;
 
-    private Image img;
+
 
     public newMainMenu(final zenSpace game) {
         gme = game;
@@ -119,6 +119,8 @@ public class newMainMenu implements Screen {
                     public void run() {
                      //   dispose();
                         gme.setScreen(new Pelaa1(gme));
+                 //       gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+
                     }
                 })));
             }

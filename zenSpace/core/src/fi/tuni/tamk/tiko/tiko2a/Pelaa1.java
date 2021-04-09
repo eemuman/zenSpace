@@ -29,8 +29,8 @@ public class Pelaa1 implements Screen {
     private ExtendViewport scrnView;
     private Stage stg;
     private Label header;
-    private Table tbl;
-    private Table tblBottom;
+    private Table tbl,tblBottom;
+
     private TextButton btnTaka, btnEte;
     private ButtonGroup buttons;
     private String[] textStrings;

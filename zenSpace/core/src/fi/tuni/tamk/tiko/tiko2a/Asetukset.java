@@ -47,6 +47,9 @@ public class Asetukset implements Screen {
 
     private Label lbl;
 
+    private boolean isChanged;
+
+
     public Asetukset(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
@@ -59,10 +62,11 @@ public class Asetukset implements Screen {
 
         tbl = new Table();
 
-        lbl = new Label(curLangBundle.get("volyymi"), skin);
+        lbl = new Label(curLangBundle.get("volyymi")+(int)gme.prefs.getVolume(), skin);
 
         btnTakaisin = new TextButton(curLangBundle.get("takaisin"), skin);
-        volSlider = new Slider(0, 1, 0.05f,false, skin);
+        volSlider = new Slider(0, 100, 3f,false, skin);
+        volSlider.setValue(gme.prefs.getVolume());
 
         tbl.add(headerImg).expandX();
         tbl.row();
@@ -106,6 +110,7 @@ public class Asetukset implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
+        update();
     }
 
     @Override
@@ -132,5 +137,18 @@ public class Asetukset implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void update() {
+        if(volSlider.isDragging()) {
+            lbl.setText(curLangBundle.get("volyymi")+(int) volSlider.getValue());
+            isChanged = true;
+        }
+        if(!volSlider.isDragging() && isChanged) {
+            gme.prefs.setVolume((int) volSlider.getValue());
+            Gdx.app.log("HOWMANY", "HERE");
+            lbl.setText(curLangBundle.get("volyymi")+(int)gme.prefs.getVolume());
+            isChanged = false;
+        }
     }
 }

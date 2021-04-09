@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-down" width="60" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="167">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-down" width="60" height="100" tilewidth="8" tileheight="8" infinite="0" nextlayerid="7" nextobjectid="187">
  <tileset firstgid="1" source="wall.tsx"/>
  <objectgroup id="3" name="PiirtoPisteet" visible="0">
   <object id="48" x="89.6667" y="506">
@@ -315,35 +315,30 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="rect" visible="0">
-  <object id="154" x="256.333" y="113.333">
-   <polygon points="0,0 4.66667,-103.333 18.3333,-104 39,-104.333 57.6667,-102.667 76,-99.3333 100,-93.3333 126.667,-93 165.333,-94.6667 187.667,-96.3333 209.667,-97.6667 222.333,-99.6667 223.667,-99.6667 223.667,14.3333 190.333,13.6667 163.333,13 138.333,12.6667 121,7 105.333,2.33333 89.3333,1 75.3333,2.33333 55.3333,3.66667 34.3333,1.66667 9.33333,0.666667"/>
+ <objectgroup id="6" name="VoittoPisteet">
+  <object id="170" x="15.8361" y="411.737">
+   <ellipse/>
   </object>
- </objectgroup>
- <objectgroup id="5" name="VoittoPisteet">
-  <object id="159" x="465" y="252">
-   <point/>
+  <object id="171" x="88.4956" y="412.669">
+   <ellipse/>
   </object>
-  <object id="160" x="279" y="246">
-   <point/>
+  <object id="172" x="93.1532" y="510.48">
+   <ellipse/>
   </object>
-  <object id="161" x="196" y="388">
-   <point/>
+  <object id="173" x="196.553" y="394.038">
+   <ellipse/>
   </object>
-  <object id="162" x="330" y="405">
-   <point/>
+  <object id="174" x="325.105" y="409.874">
+   <ellipse/>
   </object>
-  <object id="163" x="467" y="401">
-   <point/>
+  <object id="175" x="461.109" y="410.806">
+   <ellipse/>
   </object>
-  <object id="164" x="89" y="407">
-   <point/>
+  <object id="180" x="276.665" y="246.856">
+   <ellipse/>
   </object>
-  <object id="165" x="90" y="504">
-   <point/>
-  </object>
-  <object id="166" x="28" y="406">
-   <point/>
+  <object id="181" x="459.245" y="256.171">
+   <ellipse/>
   </object>
  </objectgroup>
  <layer id="1" name="Tile Layer 1" width="60" height="100">

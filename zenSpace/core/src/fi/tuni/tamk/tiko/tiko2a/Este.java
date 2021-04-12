@@ -19,8 +19,8 @@ public class Este {
     private AtlasRegion currentDraw;
     private int randEste;
     private boolean transition = false, result = false;
-    private String[] esteet = {"bat", "butterfly", "dragon", "snake1", "snake2", "snake3", "wall", "zombie", "plant"};
-
+    //private String[] esteet = {"bat", "butterfly", "dragon", "snake1", "snake2", "snake3", "wall", "zombie", "plant"};
+    private String[] esteet = {"anteater"};
     public Este(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();

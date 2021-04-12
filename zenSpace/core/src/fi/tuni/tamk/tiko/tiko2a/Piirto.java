@@ -125,7 +125,7 @@ public class Piirto extends InputAdapter implements Screen {
         tbl = new Table();
         overlay = new Table();
         tbl.setFillParent(true);
-        stg.addActor(img);
+
 
         mapPointObjects = new Array<>();
         ellipseArray = new Array<>();
@@ -140,22 +140,14 @@ public class Piirto extends InputAdapter implements Screen {
 
         banner = new Image(new NinePatchDrawable(bundle.getUiAtlas().createPatch("pen_test")));
 
-        reset = new TextButton("Clear", skin);
-        reset.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                resetDrawing();
-                tracker = 0;
-                firstShape = true;
-            }
-        });
-
-        tbl.add(banner).expand().top().height(dynamicUnitScale+50f).width(scrnView.getWorldWidth());
+        tbl.add(banner).expand().top().height(dynamicUnitScale+30f).width(scrnView.getWorldWidth());
         tbl.add(reset).expand().top().right().height(dynamicUnitScale).padLeft(-490f);
 
         stg.addActor(tbl);
-        tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
+        stg.addActor(img);
         img.addAction(Actions.fadeOut(gme.getFadeIn()));
+        tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
+
     }
 
     @Override

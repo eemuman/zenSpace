@@ -31,8 +31,8 @@ public class Resultscreen extends InputAdapter implements Screen {
     private AtlasRegion bgText;
     private Image img;
     private Stage stg;
-    private boolean touched = false;
-    private boolean shouldRender = true;
+    private boolean touched = false, shouldRender = true;
+    private float time;
 
     public Resultscreen(zenSpace game, AtlasRegion bgTexture) {
         bgText = bgTexture;
@@ -80,6 +80,7 @@ public class Resultscreen extends InputAdapter implements Screen {
         }
         stg.act(delta);
         stg.draw();
+        update();
     }
 
     @Override
@@ -112,29 +113,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(touched) {
-            if (gme.getCurLevel() == 3) {
-                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
-                    @Override
-                    public void run() {
-                        shouldRender = false;
-                        gme.prefs.setAmountofCompletions();
-                      //  dispose();
-                        gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                    }
-                })));
-            } else {
-                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
-                    @Override
-                    public void run() {
-                        shouldRender = false;
-                        gme.setCurLevelInt(gme.getCurLevel() + 1);
-                        gme.getEste().randomizeEste();
-                      //  dispose();
-                        gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                    }
-                })));
-
-            }
+            changeLevel();
         }
         return false;
     }
@@ -143,5 +122,37 @@ public class Resultscreen extends InputAdapter implements Screen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         touched = true;
         return false;
+    }
+
+    private void update() {
+        time += Gdx.graphics.getDeltaTime();
+        if(time >= 3.5f) {
+            changeLevel();
+        }
+    }
+
+    private void changeLevel() {
+        if (gme.getCurLevel() == 3) {
+            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    shouldRender = false;
+                    gme.prefs.setAmountofCompletions();
+                    //  dispose();
+                    gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                }
+            })));
+        } else {
+            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    shouldRender = false;
+                    gme.setCurLevelInt(gme.getCurLevel() + 1);
+                    gme.getEste().randomizeEste();
+                    //  dispose();
+                    gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                }
+            })));
+        }
     }
 }

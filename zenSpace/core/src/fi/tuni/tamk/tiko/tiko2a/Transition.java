@@ -63,7 +63,6 @@ public class Transition implements Screen {
         player = new Player(1, 9, gme.getBundle());
 
             stg.addAction(Actions.fadeOut(gme.getFadeIn()));
-            Gdx.app.log("ALPHA", String.valueOf(stg.getBatch().getColor().a));
             //   stg.setDebugAll(true);
     }
 

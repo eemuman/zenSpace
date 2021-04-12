@@ -20,17 +20,22 @@ public class Este {
     private int randEste;
     private boolean transition = false, result = false;
     private String[] esteet = {"bat", "butterfly", "dragon", "snake1", "snake2", "snake3", "wall", "zombie", "plant"};
+    private Boolean[] seenAlready = new Boolean[esteet.length];
 
     public Este(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
+        initseenAlready();
     }
 
 
     public void randomizeEste() {
-        randEste = MathUtils.random(0, esteet.length -1);
-        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste]+".atlas");
-        setBooleans(true,  false);
+        do {
+            randEste = MathUtils.random(0, esteet.length - 1);
+        } while (!checkAndSetSeen());
+        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste] + ".atlas");
+        setBooleans(true, false);
+
     }
 
     public void setBooleans(boolean transition, boolean result) {
@@ -40,19 +45,33 @@ public class Este {
     }
 
     private void setTexture() {
-        if(transition) {
+        if (transition) {
             currentDraw = esteTextures.findRegion("sthdpi");
-        }
-     else if(result) {
+        } else if (result) {
             currentDraw = esteTextures.findRegion("resulthdpi");
         }
-}
+    }
+
     public AtlasRegion getTexture() {
         return currentDraw;
     }
 
     public String getEste() {
         return esteet[randEste];
+    }
+
+    private boolean checkAndSetSeen() {
+        if(!seenAlready[randEste]) {
+            seenAlready[randEste] = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void initseenAlready() {
+        for (int i = 0; i < seenAlready.length; i++) {
+            seenAlready[i] = false;
+        }
     }
 }
 

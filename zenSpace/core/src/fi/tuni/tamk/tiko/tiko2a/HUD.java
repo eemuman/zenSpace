@@ -33,6 +33,7 @@ public class HUD implements Screen {
     private BundleHandler bundle;
     private Window pause;
     private zenSpace gme;
+    private float dynamicUiScale;
 
     public HUD(zenSpace game) {
         gme = game;
@@ -40,6 +41,7 @@ public class HUD implements Screen {
         img = gme.generateFade();
         img.addAction(Actions.alpha(0));
         stg = new Stage(game.getScrnView());
+        dynamicUiScale = game.getScrnView().getWorldHeight() - game.getwHeight();
         stg.addActor(img);
         skin = bundle.getUiSkin();
         tButton = new TextButton("Menu", skin);
@@ -71,6 +73,7 @@ public class HUD implements Screen {
                    //     dispose();
                         gme.setCurLevelInt(1);
                         setBackMenu();
+                        gme.getEste().initseenAlready();
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));
@@ -79,9 +82,9 @@ public class HUD implements Screen {
 
         pause = new Window("", skin);
         pause.setMovable(false);
-        pause.add(tButtonJatka).expand().center().height(115);
+        pause.add(tButtonJatka).expand().center().height(dynamicUiScale);
         pause.row();
-        pause.add(tButtonMenu).expand().center().height(115);
+        pause.add(tButtonMenu).expand().center().height(dynamicUiScale);
         pause.pack();
         pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 300);
         pause.setVisible(false);
@@ -91,7 +94,7 @@ public class HUD implements Screen {
 
 
         tbl = new Table();
-        tbl.add(tButton).top().left().expand().height(115);
+        tbl.add(tButton).top().left().expand().height(dynamicUiScale);
         tbl.setFillParent(true);
 
         stg.addActor(tbl);

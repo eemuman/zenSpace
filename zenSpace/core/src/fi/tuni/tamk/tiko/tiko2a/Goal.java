@@ -44,7 +44,7 @@ public class Goal implements Screen {
     private Skin skin;
    // Stage stg;
     private Table tbl;
-    private Label lbl, lbl1;
+    private Label lbl, lbl1, lbl2;
     private float fadeInTime = 3f;
 
 
@@ -81,11 +81,14 @@ public class Goal implements Screen {
         });
         lbl = new Label(curLangBundle.get("hienoa"), skin, "white");
         lbl1 = new Label(curLangBundle.get("lapipeluu") + gme.prefs.getAmountofCompletions() + curLangBundle.get("kertaa"),skin, "WhiteSmall");
+        lbl2 = new Label(gme.prefs.calculateAmount() + "/" + gme.prefs.getAmountOfEste(),skin,"WhiteSmall");
         lbl1.setWrap(true);
         lbl1.setWidth(10f);
         tbl.add(lbl).expand().padTop(250).top();
         tbl.row();
         tbl.add(lbl1).expand().width(375f).padTop(-175f).top();
+        tbl.row();
+        tbl.add(lbl2).expand();
         tbl.row();
         tbl.add(back).width(300).height(dynamicUnitScale).padBottom(50);
         stg.addActor(tbl);

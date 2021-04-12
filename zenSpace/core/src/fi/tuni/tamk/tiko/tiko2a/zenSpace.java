@@ -46,6 +46,7 @@ public class zenSpace extends Game {
 	private float fadeIn = 0.25f;
 	private Fade fade;
 	public Prefs prefs;
+	private int curEsteInt;
 
 
 	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas", "depression.atlas"};
@@ -133,6 +134,10 @@ public class zenSpace extends Game {
 
 	public float getFadeIn() {
 		return fadeIn;
+	}
+
+	public int getCurEsteInt() {
+		return este.getEsteInt();
 	}
 
 }

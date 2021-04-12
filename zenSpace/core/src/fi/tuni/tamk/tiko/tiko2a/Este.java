@@ -60,6 +60,10 @@ public class Este {
         return esteet[randEste];
     }
 
+    public int getEsteInt() {
+        return randEste;
+    }
+
     private boolean checkAndSetSeen() {
         if(!seenAlready[randEste]) {
             seenAlready[randEste] = true;

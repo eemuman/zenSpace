@@ -14,13 +14,17 @@ public class Prefs {
 
     private Preferences pref;
 
-    private int amountofCompletions;
+    private int amountOfCompletions;
+    private int amountOfEste = 9;
+    private boolean[] amountOfBoolean = new boolean[amountOfEste];
     private float volume;
+    private String este = "este", background = "background";
 
     public Prefs() {
         pref = Gdx.app.getPreferences("My Preferences");
         volume = pref.getFloat("volume", 100);
-        amountofCompletions = pref.getInteger("amountofCompletions", 0);
+        amountOfCompletions = pref.getInteger("amountofCompletions", 0);
+        amountOfBoolean = getAmountOfBoolean();
     }
 
 
@@ -31,8 +35,8 @@ public class Prefs {
     }
 
     public void setAmountofCompletions() {
-        amountofCompletions++;
-        pref.putInteger("amountofCompletions", amountofCompletions);
+        amountOfCompletions++;
+        pref.putInteger("amountofCompletions", amountOfCompletions);
         pref.flush();
     }
 
@@ -41,6 +45,34 @@ public class Prefs {
     }
 
     public int getAmountofCompletions() {
-        return amountofCompletions;
+        return amountOfCompletions;
+    }
+
+    public void setAndCheckBoolean(int index) {
+            if(!amountOfBoolean[index]) {
+                pref.putBoolean(este + index, true);
+                pref.flush();
+            }
+    }
+
+    public boolean[] getAmountOfBoolean() {
+        for (int i = 0; i < amountOfEste; i++) {
+            amountOfBoolean[i] = pref.getBoolean(este+i, false);
+        }
+        return amountOfBoolean;
+    }
+
+    public int calculateAmount() {
+        int amount = 0;
+        for (int i = 0; i < amountOfEste; i++) {
+            if(pref.getBoolean(este+i)) {
+                amount++;
+            }
+        }
+        return amount;
+    }
+
+    public int getAmountOfEste() {
+        return amountOfEste;
     }
 }

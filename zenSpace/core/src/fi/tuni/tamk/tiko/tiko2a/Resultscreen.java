@@ -132,6 +132,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     }
 
     private void changeLevel() {
+        gme.prefs.setAndCheckBoolean(gme.getCurEsteInt());
         if (gme.getCurLevel() == 3) {
             stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override

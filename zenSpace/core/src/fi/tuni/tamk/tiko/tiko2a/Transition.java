@@ -85,6 +85,7 @@ public class Transition implements Screen {
             //   dispose();
         }
         batch.begin();
+        if(bgTexture != null)
         batch.draw(bgTexture, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
         batch.draw(gme.getEste().getTexture(), scrnView.getCamera().viewportWidth / 1.3f, scrnView.getCamera().viewportHeight / 4, scrnView.getCamera().viewportWidth / 5f, scrnView.getCamera().viewportHeight / 5f);
         if (currentPlayerFrame != null) {

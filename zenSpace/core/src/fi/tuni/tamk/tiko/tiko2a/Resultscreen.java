@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
@@ -71,6 +72,7 @@ public class Resultscreen extends InputAdapter implements Screen {
 
          */
             batch.begin();
+            if(bgText != null)
             batch.draw(bgText, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
             batch.draw(gme.getEste().getTexture(), 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
             batch.end();
@@ -132,12 +134,13 @@ public class Resultscreen extends InputAdapter implements Screen {
     }
 
     private void changeLevel() {
-        gme.prefs.setAndCheckBoolean(gme.getCurEsteInt());
+        gme.prefs.setAndCheckEste(gme.getCurEsteInt());
         if (gme.getCurLevel() == 3) {
             stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
                     shouldRender = false;
+                    gme.prefs.setAndCheckBack(gme.getCurBackground());
                     gme.prefs.setAmountofCompletions();
                     //  dispose();
                     gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
@@ -149,6 +152,7 @@ public class Resultscreen extends InputAdapter implements Screen {
                 public void run() {
                     shouldRender = false;
                     gme.setCurLevelInt(gme.getCurLevel() + 1);
+                    Gdx.app.log("VALUEFO", String.valueOf(gme.getCurLevel()));
                     gme.getEste().randomizeEste();
                     //  dispose();
                     gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));

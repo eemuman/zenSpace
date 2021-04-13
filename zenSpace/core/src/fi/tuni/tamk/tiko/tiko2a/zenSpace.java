@@ -46,12 +46,11 @@ public class zenSpace extends Game {
 	private float fadeIn = 0.25f;
 	private Fade fade;
 	public Prefs prefs;
-	private int curEsteInt;
+
 
 
 	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas", "depression.atlas"};
 
-	private boolean fin = true;
 	/**
 	 * Täällä initializetaan kaikki yllä luodut.
 	 */
@@ -100,10 +99,10 @@ public class zenSpace extends Game {
 		return wWidth;
 	}
 	public boolean isFin() {
-		return fin;
+		return prefs.getFin();
 	}
 	public void setFin() {
-		fin = !fin;
+		prefs.setFin(!prefs.getFin());
 	}
 	public int getCurLevel() {
 		return curLevelInt;

@@ -14,9 +14,9 @@ public class Prefs {
 
     private Preferences pref;
 
-    private int amountOfCompletions;
-    private int amountOfEste = 9;
-    private boolean[] amountOfBoolean = new boolean[amountOfEste];
+    private int amountOfEste = 9, amountOfCompletions, amountOfBack = 4;
+    private boolean[] amountOfBooleanEste = new boolean[amountOfEste], amountOfBooleanback = new boolean[amountOfBack];
+    private boolean isFin;
     private float volume;
     private String este = "este", background = "background";
 
@@ -24,7 +24,9 @@ public class Prefs {
         pref = Gdx.app.getPreferences("My Preferences");
         volume = pref.getFloat("volume", 100);
         amountOfCompletions = pref.getInteger("amountofCompletions", 0);
-        amountOfBoolean = getAmountOfBoolean();
+        getAmountOfBoolean(este);
+        getAmountOfBoolean(background);
+        isFin = pref.getBoolean("isFin", true);
     }
 
 
@@ -32,6 +34,16 @@ public class Prefs {
         this.volume = volume;
         pref.putFloat("volume", volume);
         pref.flush();
+    }
+
+    public void setFin(boolean isFin) {
+        this.isFin = isFin;
+        pref.putBoolean("isFin", isFin);
+        pref.flush();
+    }
+
+    public boolean getFin() {
+        return isFin;
     }
 
     public void setAmountofCompletions() {
@@ -48,24 +60,46 @@ public class Prefs {
         return amountOfCompletions;
     }
 
-    public void setAndCheckBoolean(int index) {
-            if(!amountOfBoolean[index]) {
+    public void setAndCheckEste(int index) {
+            if(!amountOfBooleanEste[index]) {
                 pref.putBoolean(este + index, true);
                 pref.flush();
             }
     }
 
-    public boolean[] getAmountOfBoolean() {
-        for (int i = 0; i < amountOfEste; i++) {
-            amountOfBoolean[i] = pref.getBoolean(este+i, false);
+    public void setAndCheckBack(int index) {
+        if (!amountOfBooleanback[index]) {
+            pref.putBoolean(background+index, true);
+            pref.flush();
         }
-        return amountOfBoolean;
     }
 
-    public int calculateAmount() {
-        int amount = 0;
-        for (int i = 0; i < amountOfEste; i++) {
-            if(pref.getBoolean(este+i)) {
+    public void getAmountOfBoolean(String whatToCalc) {
+        int whatCalc;
+        if (whatToCalc.equals("este")) {
+            whatCalc = amountOfEste;
+            for (int i = 0; i < whatCalc; i++) {
+                amountOfBooleanEste[i] = pref.getBoolean(whatToCalc + i, false);
+            }
+        } else {
+            whatCalc = amountOfBack;
+            for (int i = 0; i < whatCalc; i++) {
+                amountOfBooleanback[i] = pref.getBoolean(whatToCalc + i, false);
+            }
+        }
+
+    }
+
+
+    public int calculateAmount(String whatToCalc) {
+        int amount = 0, whatCalc;
+        if(whatToCalc.equals("este")) {
+            whatCalc = amountOfEste;
+        } else {
+            whatCalc = amountOfBack;
+        }
+        for (int i = 0; i < whatCalc; i++) {
+            if (pref.getBoolean(whatToCalc + i)) {
                 amount++;
             }
         }
@@ -75,4 +109,8 @@ public class Prefs {
     public int getAmountOfEste() {
         return amountOfEste;
     }
+    public int getAmountOfBack() {
+        return amountOfBack;
+    }
+
 }

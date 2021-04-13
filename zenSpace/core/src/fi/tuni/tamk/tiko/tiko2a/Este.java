@@ -22,6 +22,7 @@ public class Este {
     private String[] esteet =
             {"anteater","bat", "butterfly", "crafts", "dragon", "flamingo", "onion",
                     "paint", "plant", "snake1", "snake2", "snake3", "trex", "wall", "zombie", "zombie2"};
+    private boolean[] seenAlready = new boolean[esteet.length];
 
     public Este(zenSpace game) {
         gme = game;

@@ -14,7 +14,7 @@ public class Prefs {
 
     private Preferences pref;
 
-    private int amountOfEste = 9, amountOfCompletions, amountOfBack = 4;
+    private int amountOfEste = 16, amountOfCompletions, amountOfBack = 4;
     private boolean[] amountOfBooleanEste = new boolean[amountOfEste], amountOfBooleanback = new boolean[amountOfBack];
     private boolean isFin;
     private float volume;

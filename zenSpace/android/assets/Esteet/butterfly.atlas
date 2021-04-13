@@ -1,5 +1,5 @@
 butterfly.png
-size: 1340, 800
+size: 480, 1760
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -12,15 +12,15 @@ drawhdpi
   index: -1
 resulthdpi
   rotate: false
-  xy: 480, 0
-  size: 583, 699
-  orig: 583, 699
+  xy: 0, 800
+  size: 480, 800
+  orig: 480, 800
   offset: 0, 0
   index: -1
 sthdpi
   rotate: false
-  xy: 1063, 0
-  size: 277, 372
-  orig: 277, 372
+  xy: 0, 1600
+  size: 96, 160
+  orig: 96, 160
   offset: 0, 0
   index: -1

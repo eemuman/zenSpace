@@ -219,22 +219,6 @@ public class Piirto extends InputAdapter implements Screen {
         }
         return false;
     }
-    /*
-    public boolean checkWinPointsForVisit(Vector2 p) {
-        for (int i = 0; i < winPoints.size; i++) {
-            if (winPoints.get(i).dst(p) <= minDistance) {
-                winPoints.get(i).set(0, 0);
-            }
-        }
-        for (Vector2 v : winPoints) {
-            if (!(v.x == 0f) && !(v.y == 0f)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-     */
 
     public boolean checkWinEllipsesForVisit(Vector2 p) {
         for (int i = 0; i < ellipseArray.size; i++) {
@@ -354,8 +338,6 @@ public class Piirto extends InputAdapter implements Screen {
             }
             if (checkWinEllipsesForVisit(inputPoint) && shouldRender) {
                 inputMultiplexer.clear();
-
-            //    clearCells(100, 100, "Tile Layer 1");
                 stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {

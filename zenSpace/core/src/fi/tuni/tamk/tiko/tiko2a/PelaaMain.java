@@ -158,16 +158,7 @@ public class PelaaMain implements Screen {
         stg.dispose();
     }
     private void selectBackGround() {
-
-        if(backGroundChoice <= 2) {
-            gme.setCurBackground(0);
-        } else if(backGroundChoice >2 && backGroundChoice <=4) {
-            gme.setCurBackground(1);
-        } else if(backGroundChoice == 5){
-            gme.setCurBackground(3);
-        } else if(backGroundChoice > 5) {
-            gme.setCurBackground(2);
-        }
+        gme.setCurBackground(backGroundChoice);
     }
     private void selectParts(int first, int second) {
         if(gme.isFin()) {

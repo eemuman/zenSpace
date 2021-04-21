@@ -17,7 +17,6 @@ public class Este {
     private BundleHandler bundle;
     private TextureAtlas esteTextures;
     private AtlasRegion currentDraw;
-    private int randEste;
     private boolean transition = false, result = false;
     private String[] esteet =
             {"anteater","bat", "bull", "butterfly", "crafts", "dragon", "flamingo", "onion",
@@ -34,9 +33,9 @@ public class Este {
 
     public void randomizeEste() {
         do {
-            randEste = MathUtils.random(0, esteet.length - 1);
+            gme.setRandEste(MathUtils.random(0, esteet.length - 1));
         } while (!checkAndSetSeen());
-        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste] + ".atlas");
+        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getRandEste()] + ".atlas");
         setBooleans(true, false);
 
     }
@@ -60,16 +59,13 @@ public class Este {
     }
 
     public String getEste() {
-        return esteet[randEste];
+        return esteet[gme.getRandEste()];
     }
 
-    public int getEsteInt() {
-        return randEste;
-    }
 
     private boolean checkAndSetSeen() {
-        if(!seenAlready[randEste]) {
-            seenAlready[randEste] = true;
+        if(!seenAlready[gme.getRandEste()]) {
+            seenAlready[gme.getRandEste()] = true;
             return true;
         }
         return false;

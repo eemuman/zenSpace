@@ -39,8 +39,7 @@ public class zenSpace extends Game {
 	private int wWidth = 480;
 	private int wHeight = 800;
 	private BundleHandler bundle;
-	private int curLevelInt;
-	private int curBackground;
+	private int curLevelInt, curBackground, randEste;
 	private HUD hud;
 	private Este este;
 	private float fadeIn = 0.25f;
@@ -49,7 +48,9 @@ public class zenSpace extends Game {
 
 
 
-	private String[] backGrounds = {"anger.atlas", "fear.atlas", "joy.atlas", "depression.atlas"};
+	private String[] backGrounds = {"anger.atlas","anxiety.atlas","sadness.atlas","fear.atlas","shame.atlas","depression.atlas","joy.atlas"};
+
+
 
 	/**
 	 * Täällä initializetaan kaikki yllä luodut.
@@ -57,6 +58,7 @@ public class zenSpace extends Game {
 	@Override
 	public void create() {
 		prefs = new Prefs();
+		randEste = 0;
 		curLevelInt = 1;
 		curBackground = 0;
 		bundle = new BundleHandler();
@@ -137,6 +139,13 @@ public class zenSpace extends Game {
 
 	public int getCurEsteInt() {
 		return este.getEsteInt();
+	}
+	public int getRandEste() {
+		return randEste;
+	}
+
+	public void setRandEste(int randEste) {
+		this.randEste = randEste;
 	}
 
 }

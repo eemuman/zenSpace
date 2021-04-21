@@ -20,8 +20,9 @@ public class Este {
     private int randEste;
     private boolean transition = false, result = false;
     private String[] esteet =
-            {"anteater","bat", "butterfly", "crafts", "dragon", "flamingo", "onion",
+            {"anteater","bat", "bull", "butterfly", "crafts", "dragon", "flamingo", "onion",
                     "paint", "plant", "snake1", "snake2", "snake3", "trex", "wall", "zombie", "zombie2"};
+
     private boolean[] seenAlready = new boolean[esteet.length];
 
     public Este(zenSpace game) {

@@ -97,6 +97,7 @@ public class Goal implements Screen {
         tbl.row();
         tbl.add(back).width(300).height(dynamicUnitScale).padBottom(50);
         stg.addActor(tbl);
+        img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
         stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime)));
     }
 

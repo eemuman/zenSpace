@@ -145,7 +145,7 @@ public class Piirto extends InputAdapter implements Screen {
 
         stg.addActor(tbl);
         stg.addActor(img);
-        img.addAction(Actions.fadeOut(gme.getFadeIn()));
+        img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
         tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
 
     }
@@ -338,7 +338,7 @@ public class Piirto extends InputAdapter implements Screen {
             }
             if (checkWinEllipsesForVisit(inputPoint) && shouldRender) {
                 inputMultiplexer.clear();
-                stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         Gdx.app.log("!H",  " !W ");

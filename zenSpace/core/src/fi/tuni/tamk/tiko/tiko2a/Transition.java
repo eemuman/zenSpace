@@ -62,7 +62,7 @@ public class Transition implements Screen {
         batch = game.getBatch();
         player = new Player(1, 9, gme.getBundle());
 
-            stg.addAction(Actions.fadeOut(gme.getFadeIn()));
+        img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
             //   stg.setDebugAll(true);
     }
 
@@ -111,7 +111,7 @@ public class Transition implements Screen {
     private void checkPlayerPos() {
         if(currentX >= scrnView.getCamera().viewportWidth / 1.8f && shouldRender) {
             shouldRender = false;
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.run(new Runnable() {
+            img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.run(new Runnable() {
                 @Override
                 public void run() {
                     Gdx.app.log("ALPHA", String.valueOf(stg.getBatch().getColor().a));

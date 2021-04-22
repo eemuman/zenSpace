@@ -59,7 +59,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     //    hud = gme.getHud();
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
-        stg.addActor(img);
+
         inputMultiplexer = new InputMultiplexer();
        // inputMultiplexer.addProcessor(hud.stg);
         inputMultiplexer.addProcessor(this);
@@ -73,7 +73,9 @@ public class Resultscreen extends InputAdapter implements Screen {
         lbl.setAlignment(Align.center);
         tbl.add(lbl).width(360f);
         stg.addActor(tbl);
-        stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime)));
+        stg.addActor(img);
+        tbl.addAction(Actions.alpha(0));
+        img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
     }
 
     @Override
@@ -86,6 +88,7 @@ public class Resultscreen extends InputAdapter implements Screen {
         batch.setProjectionMatrix(scrnView.getCamera().combined);
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setColor(1, 1, 1, 1);
         if(shouldUpdate) {
         /*
         if(hud.isBackMenu()) {
@@ -153,7 +156,11 @@ public class Resultscreen extends InputAdapter implements Screen {
 
     private void update() {
         time += Gdx.graphics.getDeltaTime();
-        if(time >= 3.5f) {
+        if(time >= 1f) {
+            tbl.addAction(Actions.fadeIn(fadeInTime));
+        }
+        if(time >= 4f) {
+            tbl.addAction(Actions.fadeOut(gme.getFadeIn()));
             changeLevel();
         }
     }
@@ -162,7 +169,7 @@ public class Resultscreen extends InputAdapter implements Screen {
         gme.prefs.setAndCheckEste(gme.getCurEsteInt());
         Gdx.app.log("CURLEVEL", String.valueOf(gme.getCurLevel()));
         if (gme.getCurLevel() == 3) {
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+            img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
                     gme.prefs.setAndCheckBack(gme.getCurBackground());
@@ -172,7 +179,7 @@ public class Resultscreen extends InputAdapter implements Screen {
                 }
             })));
         } else {
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+            img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
                     if(shouldUpdate) {

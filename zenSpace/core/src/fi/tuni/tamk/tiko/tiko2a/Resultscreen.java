@@ -134,32 +134,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     }
 
     private void changeLevel() {
-        gme.prefs.setAndCheckEste(gme.getCurEsteInt());
-        Gdx.app.log("CURLEVEL", String.valueOf(gme.getCurLevel()));
-        if (gme.getCurLevel() == 3) {
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
-                @Override
-                public void run() {
-                    gme.prefs.setAndCheckBack(gme.getCurBackground());
-                    gme.prefs.setAmountofCompletions();
-                    //  dispose();
-                    gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                }
-            })));
-        } else {
-            stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
-                @Override
-                public void run() {
-                    if(shouldUpdate) {
-                        gme.setCurLevelInt(gme.getCurLevel() + 1);
-                        shouldUpdate = false;
-                    }
-                    Gdx.app.log("VALUEFO", String.valueOf(gme.getCurLevel()));
-                    gme.getEste().randomizeEste();
-                    //  dispose();
-                    gme.setScreen(new Transition(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                }
-            })));
-        }
+        shouldUpdate = false;
+        gme.setScreen(new MotiText(gme));
     }
 }

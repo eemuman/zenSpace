@@ -35,7 +35,7 @@ public class Este {
         do {
             gme.setRandEste(MathUtils.random(0, esteet.length - 1));
         } while (!checkAndSetSeen());
-        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getRandEste()] + ".atlas");
+        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getCurEsteInt()] + ".atlas");
         setBooleans(true, false);
 
     }
@@ -59,13 +59,13 @@ public class Este {
     }
 
     public String getEste() {
-        return esteet[gme.getRandEste()];
+        return esteet[gme.getCurEsteInt()];
     }
 
 
     private boolean checkAndSetSeen() {
-        if(!seenAlready[gme.getRandEste()]) {
-            seenAlready[gme.getRandEste()] = true;
+        if(!seenAlready[gme.getCurEsteInt()]) {
+            seenAlready[gme.getCurEsteInt()] = true;
             return true;
         }
         return false;

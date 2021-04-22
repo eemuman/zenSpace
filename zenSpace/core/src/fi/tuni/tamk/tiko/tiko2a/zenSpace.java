@@ -9,21 +9,13 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.assets.AssetErrorListener;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import java.util.Locale;
 
 
 /**
@@ -94,9 +86,6 @@ public class zenSpace extends Game {
 	public ExtendViewport getScrnView() {
 		return scrnView;
 	}
-	public OrthographicCamera getTextCam() {
-		return textCam;
-	}
 	public int getwWidth() {
 		return wWidth;
 	}
@@ -138,9 +127,6 @@ public class zenSpace extends Game {
 	}
 
 	public int getCurEsteInt() {
-		return randEste;
-	}
-	public int getRandEste() {
 		return randEste;
 	}
 

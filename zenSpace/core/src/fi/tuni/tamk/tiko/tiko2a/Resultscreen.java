@@ -32,7 +32,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     private AtlasRegion bgText;
     private Image img;
     private Stage stg;
-    private boolean touched = false, shouldRender = true;
+    private boolean touched = false, shouldUpdate = true;
     private float time;
 
     public Resultscreen(zenSpace game, AtlasRegion bgTexture) {
@@ -61,7 +61,7 @@ public class Resultscreen extends InputAdapter implements Screen {
         batch.setProjectionMatrix(scrnView.getCamera().combined);
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(shouldRender) {
+        if(shouldUpdate) {
         /*
         if(hud.isBackMenu()) {
             gme.setCurLevelInt(1);
@@ -135,11 +135,11 @@ public class Resultscreen extends InputAdapter implements Screen {
 
     private void changeLevel() {
         gme.prefs.setAndCheckEste(gme.getCurEsteInt());
+        Gdx.app.log("CURLEVEL", String.valueOf(gme.getCurLevel()));
         if (gme.getCurLevel() == 3) {
             stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    shouldRender = false;
                     gme.prefs.setAndCheckBack(gme.getCurBackground());
                     gme.prefs.setAmountofCompletions();
                     //  dispose();
@@ -150,8 +150,10 @@ public class Resultscreen extends InputAdapter implements Screen {
             stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    shouldRender = false;
-                    gme.setCurLevelInt(gme.getCurLevel() + 1);
+                    if(shouldUpdate) {
+                        gme.setCurLevelInt(gme.getCurLevel() + 1);
+                        shouldUpdate = false;
+                    }
                     Gdx.app.log("VALUEFO", String.valueOf(gme.getCurLevel()));
                     gme.getEste().randomizeEste();
                     //  dispose();

@@ -138,7 +138,7 @@ public class zenSpace extends Game {
 	}
 
 	public int getCurEsteInt() {
-		return este.getEsteInt();
+		return randEste;
 	}
 	public int getRandEste() {
 		return randEste;

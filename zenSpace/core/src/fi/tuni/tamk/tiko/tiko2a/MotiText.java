@@ -48,14 +48,15 @@ public class MotiText implements Screen {
         img = gme.generateFade();
         stg = new Stage(scrnView);
         tbl = new Table();
-        tbl.setFillParent(true);
+        tbl.setSize(300f, 200f);
+        tbl.setPosition(240f, 400f);
         stg.addActor(img);
         Gdx.input.setInputProcessor(stg);
         motiStrings = curLangBundle.get("motiText").split(",");
         lbl = new Label(motiStrings[gme.getCurEsteInt()],skin,"WhiteSmall");
         lbl.setWrap(true);
         lbl.setWidth(10f);
-        tbl.add(lbl).width(375f);
+        tbl.add(lbl).width(475f);
         stg.addActor(tbl);
         img.addAction(Actions.fadeOut(gme.getFadeIn()));
         stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime)));

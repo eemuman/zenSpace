@@ -34,7 +34,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     private ExtendViewport scrnView;
     private SpriteBatch batch;
     private InputMultiplexer inputMultiplexer;
-    private AtlasRegion bgText;
+   // private AtlasRegion bgText;
     private Image img;
     private Stage stg;
     private boolean touched = false, shouldUpdate = true;
@@ -47,7 +47,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     private I18NBundle curLangBundle;
 
     public Resultscreen(zenSpace game, AtlasRegion bgTexture) {
-        bgText = bgTexture;
+   //     bgText = bgTexture;
         gme = game;
         img = gme.generateFade();
         bundle = gme.getBundle();
@@ -100,8 +100,8 @@ public class Resultscreen extends InputAdapter implements Screen {
 
          */
             batch.begin();
-            if(bgText != null)
-            batch.draw(bgText, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+      //      if(bgText != null)
+        //    batch.draw(bgText, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
             batch.draw(gme.getEste().getTexture(), 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
             batch.end();
 

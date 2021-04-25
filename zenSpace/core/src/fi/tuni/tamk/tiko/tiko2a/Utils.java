@@ -93,7 +93,7 @@ public class Utils {
     /**
      * Used to split texture into textureregions
      *
-     * @param t    texture to get the size of the region
+     * @param t    texture to be split
      * @param ROWS amount of textureregions in a row
      * @param COLS amount of textureregions in a column
      * @return returns a 2D TextureRegion array

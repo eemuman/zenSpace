@@ -106,8 +106,11 @@ public class Piirto extends InputAdapter implements Screen {
      */
     Vector2[][] array2D = new Vector2[200][3000];
 
-
-
+    /**
+     * Constructor for the screen
+     * @param game  zenspace peli, jonka pohjalta sceeni luodaan
+     * @param bgTexture
+     */
     public Piirto(zenSpace game, final AtlasRegion bgTexture) {
         this.bgTexture = bgTexture;
         gme = game;
@@ -279,7 +282,7 @@ public class Piirto extends InputAdapter implements Screen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
         Vector3 vec = new Vector3(screenX, screenY, 0); //Painetaan hiirellä/sormella, niin otetaan siitä kohtaa X ja Y koordinaatit
-        scrnView.getCamera().unproject(vec); // Muutetaan nämä X ja Y koordinaatit pikselikoordinaateista kameran koordinaatteihin. (Tai toistepäin, emt...)
+        scrnView.getCamera().unproject(vec); // Muutetaan nämä X ja Y koordinaatit pikselikoordinaateista kameran koordinaatteihin.
         touched = true; //Touched trueksi
         startX = vec.x; //Tallennetaan nämä muunnellut X ja Y koordinaatit startX ja startY floatteihin
         startY = vec.y;

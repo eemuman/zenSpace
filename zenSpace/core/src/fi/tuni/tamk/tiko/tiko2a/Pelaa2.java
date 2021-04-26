@@ -66,7 +66,6 @@ public class Pelaa2 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                     //   dispose();
                         gme.setScreen(new Pelaa1(gme));
                     }
                 })));
@@ -81,7 +80,6 @@ public class Pelaa2 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                          //  dispose();
                             gme.setScreen(new PelaaMain(gme, firstChoice, buttons.getCheckedIndex()));
                         }
                     })));
@@ -93,9 +91,9 @@ public class Pelaa2 implements Screen {
         tblBottom = new Table();
         tbl.add(header).expand().padBottom(25).padTop(75);
         addBtnsTable();
-        tblBottom.defaults().height(75);
-        tblBottom.add(btnTaka).left().bottom().expand();
-        tblBottom.add(btnEte).right().bottom().expand();
+        tblBottom.defaults().height(75).width(200).padBottom(5f);
+        tblBottom.add(btnTaka).left().bottom().expand().padLeft(7f);
+        tblBottom.add(btnEte).right().bottom().expand().padRight(7f);
         tbl.setFillParent(true);
         tblBottom.setFillParent(true);
 

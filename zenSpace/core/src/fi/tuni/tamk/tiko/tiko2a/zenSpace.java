@@ -26,7 +26,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class zenSpace extends Game {
 	private SpriteBatch batch;
 	private ExtendViewport scrnView;
-	private OrthographicCamera cam;
 	private OrthographicCamera textCam;
 	private int wWidth = 480;
 	private int wHeight = 800;
@@ -56,11 +55,9 @@ public class zenSpace extends Game {
 		bundle = new BundleHandler();
 		bundle.loadAssets();
 		batch = new SpriteBatch();
-		cam = new OrthographicCamera();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
-		cam.setToOrtho(true, 15, 10);
 		fade = new Fade();
 		hud = new HUD(this);
 		este = new Este(this);

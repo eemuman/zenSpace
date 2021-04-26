@@ -63,7 +63,6 @@ public class Pelaa1 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                   //     dispose();
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));
@@ -77,7 +76,6 @@ public class Pelaa1 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                       //     dispose();
                             gme.setScreen(new Pelaa2(gme, buttons.getCheckedIndex()));
                         }
                     })));
@@ -89,9 +87,9 @@ public class Pelaa1 implements Screen {
         tblBottom = new Table();
         tbl.add(header).expand().padBottom(25).padTop(75);
         addBtnsTable();
-        tblBottom.defaults().height(75);
-        tblBottom.add(btnTaka).left().bottom().expand();
-        tblBottom.add(btnEte).right().bottom().expand();
+        tblBottom.defaults().height(75).width(200).padBottom(5f);;
+        tblBottom.add(btnTaka).left().bottom().expand().padLeft(7f);
+        tblBottom.add(btnEte).right().bottom().expand().padRight(7f);
         tbl.setFillParent(true);
         tblBottom.setFillParent(true);
 
@@ -115,8 +113,6 @@ public class Pelaa1 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-
-        //Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
     }
 
     @Override

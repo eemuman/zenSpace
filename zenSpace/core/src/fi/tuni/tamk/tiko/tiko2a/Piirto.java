@@ -46,8 +46,7 @@ import java.util.List;
 
 public class Piirto extends InputAdapter implements Screen {
 
-    private TextButton reset;
-    private Table tbl, overlay;
+    private Table tbl;
 
     private zenSpace gme;
     private ExtendViewport scrnView;
@@ -83,7 +82,6 @@ public class Piirto extends InputAdapter implements Screen {
     Array<Vector2> mapPointObjects;
     Array<Ellipse> ellipseArray;
 
-    AtlasRegion bgTexture;
 
     private ShapeRenderer sr;
     private HUD hud;
@@ -108,8 +106,7 @@ public class Piirto extends InputAdapter implements Screen {
 
 
 
-    public Piirto(zenSpace game, final AtlasRegion bgTexture) {
-        this.bgTexture = bgTexture;
+    public Piirto(zenSpace game) {
         gme = game;
         hud = gme.getHud();
         bundle = gme.getBundle();
@@ -123,7 +120,6 @@ public class Piirto extends InputAdapter implements Screen {
         skin = bundle.getUiSkin();
         sr = new ShapeRenderer();
         tbl = new Table();
-        overlay = new Table();
         tbl.setFillParent(true);
 
 
@@ -141,7 +137,6 @@ public class Piirto extends InputAdapter implements Screen {
         banner = new Image(new NinePatchDrawable(bundle.getUiAtlas().createPatch("pen_test")));
 
         tbl.add(banner).expand().top().height(dynamicUnitScale+30f).width(scrnView.getWorldWidth());
-        tbl.add(reset).expand().top().right().height(dynamicUnitScale).padLeft(-490f);
 
         stg.addActor(tbl);
         stg.addActor(img);
@@ -345,7 +340,7 @@ public class Piirto extends InputAdapter implements Screen {
                         shouldRender = false;
                      //   dispose();
                         gme.getEste().setBooleans(false, true);
-                        gme.setScreen(new Resultscreen(gme, bgTexture));
+                        gme.setScreen(new Resultscreen(gme));
                     }
                 })));
             }

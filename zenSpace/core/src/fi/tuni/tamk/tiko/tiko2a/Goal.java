@@ -8,7 +8,6 @@
 package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -35,14 +33,12 @@ public class Goal implements Screen {
     private TextureAtlas.AtlasRegion bgTexture;
     private ExtendViewport scrnView;
     private SpriteBatch batch;
-    private boolean shouldRender = true;
 
     private float dynamicUnitScale;
 
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
     private Skin skin;
-   // Stage stg;
     private Table tbl;
     private Label lbl, lbl1, lbl2, lbl3;
     private float fadeInTime = 3f;
@@ -55,8 +51,6 @@ public class Goal implements Screen {
         img = gme.generateFade();
         stg.addActor(img);
 
-
-     //   hud = gme.getHud();
         this.bgTexture = bgTexture.findRegion("goal");
         batch = game.getBatch();
         scrnView = game.getScrnView();
@@ -141,7 +135,6 @@ public class Goal implements Screen {
 
     @Override
     public void dispose() {
-        shouldRender = false;
         stg.clear();
         stg.dispose();
     }

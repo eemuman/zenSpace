@@ -10,7 +10,6 @@ package fi.tuni.tamk.tiko.tiko2a;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -72,7 +71,6 @@ public class PelaaMain implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                      //  dispose();
                         gme.setScreen(new Pelaa1(gme));
                     }
                 })));
@@ -85,18 +83,11 @@ public class PelaaMain implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                             //   dispose();
                                 selectBackGround();
                                 gme.getEste().randomizeEste();
                                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                             }
                         })));
-                /*
-                dispose();
-                selectBackGround();
-                gme.getEste().randomizeEste();
-                gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                 */
             }
         });
 
@@ -109,10 +100,9 @@ public class PelaaMain implements Screen {
         tbl.row();
         tbl.add(aloitetaan).colspan(2).padBottom(75);
         tbl.row();
-        tbl.add(btnTaka).left().bottom().height(75).width(200).padBottom(15);
-        tbl.add(btnEtu).right().bottom().height(75).width(200).padBottom(15);
+        tbl.add(btnTaka).left().bottom().height(75).width(200).padBottom(15).padLeft(15);
+        tbl.add(btnEtu).right().bottom().height(75).width(200).padBottom(15).padRight(15);
         tbl.setFillParent(true);
-     //   tbl.setDebug(true);
         stg.addAction(Actions.alpha(0));
         stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 

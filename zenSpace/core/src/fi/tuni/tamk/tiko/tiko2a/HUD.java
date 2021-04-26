@@ -7,7 +7,7 @@
 
 package fi.tuni.tamk.tiko.tiko2a;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,13 +19,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
 
 public class HUD implements Screen {
 
     private Skin skin;
     private TextButton tButton, tButtonJatka, tButtonMenu;
-    Stage stg;
+     Stage stg;
     private Image img;
     private Table tbl;
     private boolean paused = false;
@@ -34,17 +34,19 @@ public class HUD implements Screen {
     private Window pause;
     private zenSpace gme;
     private float dynamicUiScale;
+    private I18NBundle curLangBundle;
 
     public HUD(zenSpace game) {
         gme = game;
         bundle = game.getBundle();
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
         img = gme.generateFade();
         img.addAction(Actions.alpha(0));
         stg = new Stage(game.getScrnView());
         dynamicUiScale = game.getScrnView().getWorldHeight() - game.getwHeight();
         stg.addActor(img);
         skin = bundle.getUiSkin();
-        tButton = new TextButton("Menu", skin);
+        tButton = new TextButton(curLangBundle.get("menu"), skin);
         tButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -53,7 +55,7 @@ public class HUD implements Screen {
                 paused = true;
             }
         });
-        tButtonJatka = new TextButton("Jatka peliä", skin);
+        tButtonJatka = new TextButton(curLangBundle.get("jatka"), skin);
         tButtonJatka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -62,7 +64,7 @@ public class HUD implements Screen {
                 paused = false;
             }
         });
-        tButtonMenu = new TextButton("Main Menuun", skin);
+        tButtonMenu = new TextButton(curLangBundle.get("valikko"), skin);
         tButtonMenu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -70,7 +72,6 @@ public class HUD implements Screen {
                     @Override
                     public void run() {
                         backMenu = true;
-                   //     dispose();
                         gme.setCurLevelInt(1);
                         setBackMenu();
                         gme.getEste().initseenAlready();
@@ -86,7 +87,7 @@ public class HUD implements Screen {
         pause.row();
         pause.add(tButtonMenu).expand().center().height(dynamicUiScale);
         pause.pack();
-        pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 300);
+        pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 450);
         pause.setVisible(false);
 
 

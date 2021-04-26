@@ -9,35 +9,28 @@ package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class Transition implements Screen {
 
+    HUD hud;
     private int movementSpeed  = 50;
-
     private float currentX;
-
     private TextureRegion currentPlayerFrame;
-
     private AtlasRegion bgTexture;
     private ExtendViewport scrnView;
     private SpriteBatch batch;
-
     private Player player;
     private String curLevel;
     private Stage stg;
-    HUD hud;
     private Image img;
 
     private boolean shouldRender = true;
@@ -49,7 +42,6 @@ public class Transition implements Screen {
     public Transition(zenSpace game, TextureAtlas bgTexture) {
         gme = game;
         hud = gme.getHud();
-        Gdx.app.log("HERE", "HERET");
         img = gme.generateFade();
 
         Gdx.input.setInputProcessor(hud.stg);
@@ -63,7 +55,6 @@ public class Transition implements Screen {
         player = new Player(1, 9, gme.getBundle());
 
         img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
-            //   stg.setDebugAll(true);
     }
 
     @Override
@@ -80,9 +71,6 @@ public class Transition implements Screen {
             stateTime += delta;
             currentX += delta * movementSpeed;
             currentPlayerFrame = player.getRunAnimation().getKeyFrame(stateTime, true);
-        }
-        if (hud.isBackMenu()) {
-            //   dispose();
         }
         batch.begin();
         if(bgTexture != null)
@@ -114,9 +102,8 @@ public class Transition implements Screen {
             img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    Gdx.app.log("ALPHA", String.valueOf(stg.getBatch().getColor().a));
                         gme.getEste().setBooleans(false, false);
-                        gme.setScreen(new Piirto(gme, bgTexture));
+                        gme.setScreen(new Piirto(gme));
 
                 }
             })));

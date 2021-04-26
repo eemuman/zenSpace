@@ -14,8 +14,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -56,6 +58,8 @@ public class newMainMenu implements Screen {
     private Button flagBtnEN;
     private Stack flagStack;
 
+
+
     public newMainMenu(final zenSpace game) {
         gme = game;
         scrnView = gme.getScrnView();
@@ -76,9 +80,11 @@ public class newMainMenu implements Screen {
         flagStack.add(flagBtnFI);
         flagStack.add(flagBtnEN);
 
+        stg = new Stage(scrnView);
         btnPela = new TextButton(curLangBundle.get("pelaa"), skin, "Play");
         btnAsetukset = new TextButton(curLangBundle.get("asetukset"), skin);
         btnExit = new TextButton(curLangBundle.get("sammuta"), skin);
+        tbl.row();
         tbl.add(headerImg).expandY().height(250).width(350).top().padTop(15).padBottom(-5);
         tbl.row();
         tbl.defaults().expandY().width(325).height(115).top();
@@ -95,18 +101,28 @@ public class newMainMenu implements Screen {
 
 
 
-        stg = new Stage(scrnView);
+
         Gdx.input.setInputProcessor(stg);
         tbl.setFillParent(true);
         stg.addActor(tbl);
+
+        stg.addAction(Actions.alpha(0));
+        stg.addAction(Actions.fadeIn(gme.getFadeIn()));
         updateButtons();
 
 
         btnPela.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new Pelaa1(gme));
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                     //   dispose();
+                        gme.setScreen(new Pelaa1(gme));
+                 //       gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+
+                    }
+                })));
             }
         });
         btnExit.addListener(new ChangeListener() {
@@ -119,8 +135,13 @@ public class newMainMenu implements Screen {
         btnAsetukset.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                gme.setScreen(new Asetukset(gme));
+                stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                            //    dispose();
+                                gme.setScreen(new Asetukset(gme));
+                            }
+                        })));
             }
         });
 
@@ -159,6 +180,7 @@ public class newMainMenu implements Screen {
         btnPela.setText(curLangBundle.get("pelaa"));
         btnAsetukset.setText(curLangBundle.get("asetukset"));
         btnExit.setText(curLangBundle.get("sammuta"));
+        gme.getHud().updateText();
     }
 
     @Override

@@ -14,25 +14,23 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -41,7 +39,6 @@ import java.util.List;
 
 public class Piirto extends InputAdapter implements Screen {
 
-    private TextButton reset, back;
     private Table tbl;
 
     private zenSpace gme;
@@ -54,6 +51,9 @@ public class Piirto extends InputAdapter implements Screen {
     private float newX;
     private float newY;
     private float dynamicUnitScale;
+    private float lineWidth = 3f;
+    private float minDistance = 30f;
+    private float ballRadius = 7.5f;
 
     private boolean touched = false;
     private boolean moved = false;
@@ -63,20 +63,21 @@ public class Piirto extends InputAdapter implements Screen {
     private Vector2 firstPoint;
     private Vector2 inputPoint;
     private BundleHandler bundle;
-    private float lineWidth = 3f;
 
     private InputMultiplexer inputMultiplexer;
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledRenderer;
+    private Image img, banner;
+
+    private Boolean shouldRender = true;
 
     Array<Vector2> mapPointObjects;
-    Array<Polygon> polygonArray;
-    Array<Vector2> winPoints;
+    Array<Ellipse> ellipseArray;
 
-    AtlasRegion bgTexture;
 
     private ShapeRenderer sr;
+    private HUD hud;
 
     /**
      * Tracker jolla tallennettava "points" piirros
@@ -96,69 +97,46 @@ public class Piirto extends InputAdapter implements Screen {
      */
     Vector2[][] array2D = new Vector2[200][3000];
 
-    public Piirto(zenSpace game, final AtlasRegion bgTexture) {
-        this.bgTexture = bgTexture;
+    /**
+     * Constructor for the screen
+     * @param game  zenspace peli, jonka pohjalta sceeni luodaan
+     */
+    public Piirto(zenSpace game) {
         gme = game;
+        hud = gme.getHud();
         bundle = gme.getBundle();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
-
+        img = gme.generateFade();
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
-
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
         skin = bundle.getUiSkin();
         sr = new ShapeRenderer();
         tbl = new Table();
         tbl.setFillParent(true);
 
+
         mapPointObjects = new Array<>();
-        polygonArray = new Array<>();
-        winPoints = new Array<>();
-
+        ellipseArray = new Array<>();
         tiledMapPointsToArray("PiirtoPisteet" , mapPointObjects);
-        tiledMapPointsToArray("VoittoPisteet" , winPoints);
-
+        tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stg);
+        inputMultiplexer.addProcessor(hud.stg);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        banner = new Image(new NinePatchDrawable(bundle.getUiAtlas().createPatch("pen_test")));
 
-        reset = new TextButton("CLEARSCREEN", skin, "TextButtonSmall");
-        reset.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                for (int i = 0; i < array2D.length - 1; i++) {
-                    for (int j = 0; j < array2D[i].length - 1; j++) {
-                        if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                            array2D[i][j] = null;
-                    }
-                }
-                tracker = 0;
-                firstShape = true;
-            }
-        });
-        back = new TextButton("SEURAAVA", skin, "TextButtonSmall");
-        back.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                /*
-                if(gme.getCurLevel()==3) {
-                    dispose();
-                    gme.setScreen(new Goal(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                } else {
-                    gme.setCurLevelInt(gme.getCurLevel() + 1);
-                    dispose();
-                    gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-                }
-                 */
-            }
-        });
-        tbl.add(back).expand().top().left().width(225).height(dynamicUnitScale);
-        tbl.add(reset).expand().top().right().width(225).height(dynamicUnitScale);
+        tbl.add(banner).expand().top().height(dynamicUnitScale+30f).width(scrnView.getWorldWidth());
+
         stg.addActor(tbl);
+        stg.addActor(img);
+        img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
+        tbl.addAction(Actions.fadeIn(gme.getFadeIn()));
+
     }
 
     @Override
@@ -170,21 +148,18 @@ public class Piirto extends InputAdapter implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        /*
-        gme.getBatch().begin();
-        gme.getBatch().draw(tst,0,0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
-        gme.getBatch().draw(gme.getEste().getTexture(), 0, 0,scrnView.getCamera().viewportWidth , scrnView.getCamera().viewportHeight);
-        gme.getBatch().end();
-         */
+
         stg.act(Gdx.graphics.getDeltaTime());
         tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
         tiledRenderer.render();
-        stg.draw();
         sr.setProjectionMatrix(scrnView.getCamera().combined);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        drawLines();
+        draw();
         sr.end();
         update();
+        stg.act(delta);
+        stg.draw();
+        hud.render(delta);
     }
 
     @Override
@@ -210,36 +185,47 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
+        stg.clear();
         stg.dispose();
+    }
+
+    public void resetDrawing() {
+        points.clear();
+        for (int i = 0; i < array2D.length - 1; i++) {
+            for (int j = 0; j < array2D[i].length - 1; j++) {
+                if (array2D[i][j] != null && array2D[i][j + 1] != null)
+                    array2D[i][j] = null;
+            }
+        }
+
     }
 
     public boolean checkDistanceToLinePoints(Vector2 point) {
         for (Vector2 p : mapPointObjects) {
-            if (p.dst(point) <= 30f) {
+            if (p.dst(point) <= minDistance) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkWinPointsForVisit(Vector2 p) {
-        for (int i = 0; i < winPoints.size; i++) {
-            if (winPoints.get(i).dst(p) <= 20f) {
-                winPoints.get(i).set(0, 0);
+    public boolean checkWinEllipsesForVisit(Vector2 p) {
+        for (int i = 0; i < ellipseArray.size; i++) {
+            float x = ellipseArray.get(i).x;
+            float y = ellipseArray.get(i).y;
+            Vector2 vec = new Vector2(x, y);
+            if (vec.dst(p) <= minDistance) {
+                ellipseArray.removeIndex(i);
             }
         }
-        for (Vector2 v : winPoints) {
-            if (!(v.x == 0f) && !(v.y == 0)) {
-                return false;
-            }
+        if (!(ellipseArray.size == 0)) {
+            return false;
         }
         return true;
     }
 
     public void tiledMapPointsToArray(String layername, Array<Vector2> targetArray) {
         MapLayer pointObjectLayer = tiledMap.getLayers().get(layername);
-        TiledMapTileLayer tLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Tile Layer 1");
-        Gdx.app.log("!H", tLayer.getTileHeight() * tLayer.getHeight() + " !W " + tLayer.getTileWidth() * tLayer.getWidth());
         MapObjects pointObjects = pointObjectLayer.getObjects();
         Array<RectangleMapObject> points = pointObjects.getByType(RectangleMapObject.class);
         for (RectangleMapObject r : points) {
@@ -249,23 +235,16 @@ public class Piirto extends InputAdapter implements Screen {
         }
     }
 
-    public void clearCells(float rows, float cols, String layerName) {
-        TiledMapTileLayer cellsToClear = (TiledMapTileLayer) tiledMap.getLayers().get(layerName);
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                cellsToClear.setCell(i, j, null);
-            }
-        }
-        points.clear();
-        for (int i = 0; i < array2D.length - 1; i++) {
-            for (int j = 0; j < array2D[i].length - 1; j++) {
-                if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                    array2D[i][j] = null;
-            }
+    public void tiledMapEllipsesToArray(String layername, Array<Ellipse> targetArray) {
+        MapLayer ellipseObjectLayer = tiledMap.getLayers().get(layername);
+        MapObjects ellipseObjects = ellipseObjectLayer.getObjects();
+        Array<EllipseMapObject> ellipses = ellipseObjects.getByType(EllipseMapObject.class);
+        for (EllipseMapObject e : ellipses) {
+            targetArray.add(e.getEllipse());
         }
     }
 
-    private void drawLines() {
+    private void draw() {
         if (firstShape) {
             for (int i = 0; i < points.size() - 1; i++) {
                 sr.rectLine(points.get(i), points.get(i + 1), lineWidth);
@@ -279,13 +258,17 @@ public class Piirto extends InputAdapter implements Screen {
                 }
             }
         }
+        for (Ellipse e : ellipseArray) {
+            sr.circle(e.x, e.y, ballRadius);
+        }
     }
+
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
         Vector3 vec = new Vector3(screenX, screenY, 0); //Painetaan hiirellä/sormella, niin otetaan siitä kohtaa X ja Y koordinaatit
-        scrnView.getCamera().unproject(vec); // Muutetaan nämä X ja Y koordinaatit pikselikoordinaateista kameran koordinaatteihin. (Tai toistepäin, emt...)
+        scrnView.getCamera().unproject(vec); // Muutetaan nämä X ja Y koordinaatit pikselikoordinaateista kameran koordinaatteihin.
         touched = true; //Touched trueksi
         startX = vec.x; //Tallennetaan nämä muunnellut X ja Y koordinaatit startX ja startY floatteihin
         startY = vec.y;
@@ -326,15 +309,10 @@ public class Piirto extends InputAdapter implements Screen {
                 array2D[tracker][i] = vectors[i];
             }
         } else {
-            points.clear();
-            for (int i = 0; i < array2D.length - 1; i++) {
-                for (int j = 0; j < array2D[i].length - 1; j++) {
-                    if (array2D[i][j] != null && array2D[i][j + 1] != null)
-                        array2D[i][j] = null;
-                }
-            }
+            resetDrawing();
             tracker = 0;
             firstShape = true;
+            tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
         }
 
         return false;
@@ -347,10 +325,16 @@ public class Piirto extends InputAdapter implements Screen {
                 startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
                 startY = newY;
             }
-            if (checkWinPointsForVisit(inputPoint)) {
-            //    clearCells(100, 100, "Tile Layer 1");
-                gme.getEste().setBooleans(false, true);
-                gme.setScreen(new Resultscreen(gme, bgTexture));
+            if (checkWinEllipsesForVisit(inputPoint) && shouldRender) {
+                inputMultiplexer.clear();
+                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        shouldRender = false;
+                        gme.getEste().setBooleans(false, true);
+                        gme.setScreen(new Resultscreen(gme));
+                    }
+                })));
             }
         }
     }

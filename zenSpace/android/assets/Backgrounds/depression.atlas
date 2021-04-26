@@ -1,0 +1,33 @@
+depression.png
+size: 2044, 908
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+goal
+  rotate: false
+  xy: 0, 0
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st1
+  rotate: false
+  xy: 511, 0
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st2
+  rotate: false
+  xy: 1022, 0
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1
+st3
+  rotate: false
+  xy: 1533, 0
+  size: 511, 908
+  orig: 511, 908
+  offset: 0, 0
+  index: -1

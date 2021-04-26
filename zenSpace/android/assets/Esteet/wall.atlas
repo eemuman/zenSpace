@@ -1,5 +1,5 @@
 wall.png
-size: 480, 1903
+size: 480, 1760
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -20,7 +20,7 @@ resulthdpi
 sthdpi
   rotate: false
   xy: 0, 1600
-  size: 179, 303
-  orig: 179, 303
+  size: 96, 160
+  orig: 96, 160
   offset: 0, 0
   index: -1

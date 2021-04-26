@@ -17,21 +17,28 @@ public class Este {
     private BundleHandler bundle;
     private TextureAtlas esteTextures;
     private AtlasRegion currentDraw;
-    private int randEste;
     private boolean transition = false, result = false;
-    //private String[] esteet = {"bat", "butterfly", "dragon", "snake1", "snake2", "snake3", "wall"};
-    private String[] esteet = {"wall"};
+    private String[] esteet =
+            {"anteater", "bat", "bull", "butterfly", "crafts", "dragon", "elephant", "flamingo", "friend", "onion",
+                    "paint", "plant", "snake1", "snake2", "snake3", "trex", "wall", "zombie", "zombie2"};
+
+
+    private boolean[] seenAlready = new boolean[esteet.length];
 
     public Este(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
+        initseenAlready();
     }
 
 
     public void randomizeEste() {
-        randEste = MathUtils.random(0, esteet.length -1);
-        esteTextures = bundle.getBackground("Esteet/" + esteet[randEste]+".atlas");
-        setBooleans(true,  false);
+        do {
+            gme.setRandEste(MathUtils.random(0, esteet.length - 1));
+        } while (!checkAndSetSeen());
+        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getCurEsteInt()] + ".atlas");
+        setBooleans(true, false);
+
     }
 
     public void setBooleans(boolean transition, boolean result) {
@@ -41,19 +48,34 @@ public class Este {
     }
 
     private void setTexture() {
-        if(transition) {
+        if (transition) {
             currentDraw = esteTextures.findRegion("sthdpi");
-        }
-     else if(result) {
+        } else if (result) {
             currentDraw = esteTextures.findRegion("resulthdpi");
         }
-}
+    }
+
     public AtlasRegion getTexture() {
         return currentDraw;
     }
 
     public String getEste() {
-        return esteet[randEste];
+        return esteet[gme.getCurEsteInt()];
+    }
+
+
+    private boolean checkAndSetSeen() {
+        if(!seenAlready[gme.getCurEsteInt()]) {
+            seenAlready[gme.getCurEsteInt()] = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void initseenAlready() {
+        for (int i = 0; i < seenAlready.length; i++) {
+            seenAlready[i] = false;
+        }
     }
 }
 

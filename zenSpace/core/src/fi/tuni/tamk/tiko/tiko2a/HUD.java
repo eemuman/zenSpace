@@ -8,6 +8,7 @@
 package fi.tuni.tamk.tiko.tiko2a;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,7 +30,6 @@ public class HUD implements Screen {
     private Image img;
     private Table tbl;
     private boolean paused = false;
-    private boolean backMenu = false;
     private BundleHandler bundle;
     private Window pause;
     private zenSpace gme;
@@ -71,7 +71,6 @@ public class HUD implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        backMenu = true;
                         gme.setCurLevelInt(1);
                         setBackMenu();
                         gme.getEste().initseenAlready();
@@ -87,7 +86,7 @@ public class HUD implements Screen {
         pause.row();
         pause.add(tButtonMenu).expand().center().height(dynamicUiScale);
         pause.pack();
-        pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 450);
+        pause.setBounds((game.getScrnView().getCamera().viewportWidth - 400) / 2.5f, (game.getScrnView().getCamera().viewportHeight - 200) / 2, 400, 400);
         pause.setVisible(false);
 
 
@@ -143,12 +142,13 @@ public class HUD implements Screen {
         return paused;
     }
 
-    public boolean isBackMenu() {
-        return backMenu;
+    public void updateText() {
+        curLangBundle = bundle.getResourceBundle(gme.isFin());
+        tButtonJatka.setText(curLangBundle.get("jatka"));
+        tButtonMenu.setText(curLangBundle.get("valikko"));
     }
 
     public void setBackMenu() {
-        backMenu = false;
         tButton.setVisible(true);
         pause.setVisible(false);
         paused = false;

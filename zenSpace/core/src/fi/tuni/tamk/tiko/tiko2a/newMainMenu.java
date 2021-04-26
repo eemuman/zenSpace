@@ -180,6 +180,7 @@ public class newMainMenu implements Screen {
         btnPela.setText(curLangBundle.get("pelaa"));
         btnAsetukset.setText(curLangBundle.get("asetukset"));
         btnExit.setText(curLangBundle.get("sammuta"));
+        gme.getHud().updateText();
     }
 
     @Override

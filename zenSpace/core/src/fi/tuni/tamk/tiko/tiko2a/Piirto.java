@@ -14,8 +14,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
@@ -27,17 +25,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -107,7 +100,6 @@ public class Piirto extends InputAdapter implements Screen {
     /**
      * Constructor for the screen
      * @param game  zenspace peli, jonka pohjalta sceeni luodaan
-     * @param bgTexture
      */
     public Piirto(zenSpace game) {
         gme = game;
@@ -116,7 +108,6 @@ public class Piirto extends InputAdapter implements Screen {
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
         img = gme.generateFade();
-        Gdx.app.log("HERE", "HEREP");
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
@@ -339,9 +330,7 @@ public class Piirto extends InputAdapter implements Screen {
                 img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        Gdx.app.log("!H",  " !W ");
                         shouldRender = false;
-                     //   dispose();
                         gme.getEste().setBooleans(false, true);
                         gme.setScreen(new Resultscreen(gme));
                     }

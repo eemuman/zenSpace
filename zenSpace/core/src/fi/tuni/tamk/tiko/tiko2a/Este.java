@@ -19,8 +19,9 @@ public class Este {
     private AtlasRegion currentDraw;
     private boolean transition = false, result = false;
     private String[] esteet =
-            {"anteater","bat", "bull", "butterfly", "crafts", "dragon", "flamingo", "onion",
+            {"anteater", "bat", "bull", "butterfly", "crafts", "dragon", "elephant", "flamingo", "friend", "onion",
                     "paint", "plant", "snake1", "snake2", "snake3", "trex", "wall", "zombie", "zombie2"};
+
 
     private boolean[] seenAlready = new boolean[esteet.length];
 

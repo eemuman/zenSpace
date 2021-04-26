@@ -22,73 +22,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Player extends Actor {
 
-    private Body b;
     private Texture runTexture;
-    private TextureRegion[][] textureRegion2D;
-    private TextureRegion[] textureRegionArray;
     private Animation<TextureRegion> runAnimation;
-    private BodyDef myBodyDef;
-    private FixtureDef myFixtureDef;
-    private float playerWidth = 80f;
-    private float playerHeight = 240f;
     private float frameDuration = 5f;
-    private float time = 0.0f;
-
-
-    public Player(int ROWS, int COLS, int WORLD_WIDTH, int WORLD_HEIGHT, World world) {
-        runTexture = new Texture("spritesheet.png");
-
-        // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
-        // mut jätin näin koska on selkeämpi aluks.)
-        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
-        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
-        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, 7);
-
-        // Luodaan pelaajan box2dbody
-        myBodyDef = new BodyDef();
-        myBodyDef.type = BodyDef.BodyType.DynamicBody;
-
-        myBodyDef.position.set(WORLD_WIDTH/2f, WORLD_HEIGHT/2f);
-        myBodyDef.fixedRotation = true;
-
-        b = world.createBody(myBodyDef);
-        b.setUserData(runTexture);
-
-        myFixtureDef = new FixtureDef();
-        myFixtureDef.density = 2;
-        myFixtureDef.restitution = 0.01f;
-        myFixtureDef.friction = 0.5f;
-
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(playerWidth, playerHeight);
-
-        myFixtureDef.shape = polygonShape;
-        b.createFixture(myFixtureDef);
-    }
 
     public Player(int ROWS, int COLS, BundleHandler bundle) {
         runTexture = bundle.getPlayerSkin();
 
-        // Tehdään siitä animaatio (nää kolme voi yhdistää yhteen pötköön,
-        // mut jätin näin koska on selkeämpi aluks.)
-        textureRegion2D = Utils.setRegionArray(runTexture, ROWS, COLS);
-        textureRegionArray = Utils.transformTo1D(textureRegion2D, ROWS, COLS);
-        runAnimation = Utils.setAnimation(textureRegionArray, runAnimation, frameDuration);
+        // Tehdään siitä animaatio
+        runAnimation = Utils.setAnimation(Utils.transformTo1D(
+                Utils.setRegionArray(runTexture, ROWS, COLS), ROWS, COLS), runAnimation, frameDuration);
+
     }
 
     public Animation<TextureRegion> getRunAnimation() {
         return runAnimation;
-    }
-
-    public float getPlayerWidth() {
-        return playerWidth;
-    }
-
-    public float getPlayerHeight() {
-        return playerHeight;
-    }
-    public Body getB() {
-        return b;
     }
 
 }

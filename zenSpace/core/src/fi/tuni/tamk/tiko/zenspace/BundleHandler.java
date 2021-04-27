@@ -5,7 +5,7 @@
  * Copyright (c) 2021.
  */
 
-package fi.tuni.tamk.tiko.tiko2a;
+package fi.tuni.tamk.tiko.zenspace;
 
 
 

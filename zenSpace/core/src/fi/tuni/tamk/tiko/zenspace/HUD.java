@@ -5,10 +5,9 @@
  * Copyright (c) 2021.
  */
 
-package fi.tuni.tamk.tiko.tiko2a;
+package fi.tuni.tamk.tiko.zenspace;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;

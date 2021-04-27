@@ -1,8 +1,8 @@
-package fi.tuni.tamk.tiko.tiko2a.desktop;
+package fi.tuni.tamk.tiko.zenspace.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fi.tuni.tamk.tiko.tiko2a.zenSpace;
+import fi.tuni.tamk.tiko.zenspace.zenSpace;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

@@ -23,6 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+/**
+ * Settings Screen class for our game, is currently only used to change the volume of the background music..
+ */
 public class Asetukset implements Screen {
 
     private Stage stg;
@@ -39,6 +42,10 @@ public class Asetukset implements Screen {
     private boolean isChanged;
 
 
+    /**
+     * Settings menu, Has volume-slider,Button to go back to {@link newMainMenu}. Uses {@link Table} and {@link Stage}.
+     * @param game The main game object
+     */
     public Asetukset(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
@@ -66,7 +73,7 @@ public class Asetukset implements Screen {
         stg.addAction(Actions.fadeIn(gme.getFadeIn()));
         btnTakaisin.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //Button used to go back to the Main Menu
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -119,11 +126,17 @@ public class Asetukset implements Screen {
 
     }
 
+    /**
+     * Update the number in the volume text to the number that the slider is at. (For example Volume: 69 -->  Volume: 74)
+     * After the user stops dragging the volume-slider, update that number into the .preferences file to use it elsewhere.
+     */
     private void update() {
+        //HERE we update the text
         if(volSlider.isDragging()) {
             lbl.setText(curLangBundle.get("volyymi")+(int) volSlider.getValue());
             isChanged = true;
         }
+        //HERE we update it to the .preferences file
         if(!volSlider.isDragging() && isChanged) {
             gme.prefs.setVolume((int) volSlider.getValue());
             Gdx.app.log("HOWMANY", "HERE");

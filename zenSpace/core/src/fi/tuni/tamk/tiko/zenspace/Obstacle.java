@@ -28,7 +28,6 @@ public class Obstacle {
                     "paint", "paper", "parrot", "penguin", "plant", "snake1",
                     "snake2", "snake3", "trex", "wall", "yoga", "zombie", "zombie2"}; //All the different obstacles, probably could've stored these somewhere else..
 
-
     private boolean[] seenAlready = new boolean[esteet.length]; //This is used to make sure that the same obstacle isn't shown more than once per playthrough.
 
     /**

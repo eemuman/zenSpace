@@ -1,9 +1,10 @@
 /**
  * This file was created by:
+ *
  * @author Petr H.
  * Edited to fit other classes by:
  * @author Eemil V.
- *
+ * <p>
  * Copyright (c) 2021.
  */
 
@@ -92,7 +93,7 @@ public class Drawing extends InputAdapter implements Screen {
     /**
      * Helper variable used to change the width of the line that player draws
      */
-    private float lineWidth = 3f;
+    private float lineWidth = 4f;
 
     /**
      * Helper variable used to determine the maximum distance
@@ -103,7 +104,7 @@ public class Drawing extends InputAdapter implements Screen {
     /**
      * Variable used to determine the size of the small circles rendered on the screen
      */
-    private float ballRadius = 7.5f;
+    private float ballRadius = 9f;
 
     /**
      * Variable to determine the minimum distance between player drawn line and the ellipses.
@@ -266,9 +267,23 @@ public class Drawing extends InputAdapter implements Screen {
         tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
         tiledRenderer.render();
         sr.setProjectionMatrix(scrnView.getCamera().combined);
-        sr.setColor(1, 165/255f, 0f, 1f);
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        draw();
+        if (gme.getEste().getEste().equalsIgnoreCase("friend")
+                || gme.getEste().getEste().equalsIgnoreCase("parrot")
+                || gme.getEste().getEste().equalsIgnoreCase("paper")
+                || gme.getEste().getEste().equalsIgnoreCase("penguin")) {
+            sr.setColor(48/255f, 103/255f, 154f, 1f);
+        } else {
+            sr.setColor(1f, 1f, 1f, 1f);
+        }
+        drawLines();
+        if(gme.getEste().getEste().equalsIgnoreCase("friend")
+                || gme.getEste().getEste().equalsIgnoreCase("parrot")) {
+            sr.setColor(48/255f, 103/255f, 154f, 1f);
+        } else {
+            sr.setColor(1f, 1f, 1f, 1f);
+        }
+        drawEllipses();
         sr.end();
         update();
         stg.act(delta);
@@ -337,7 +352,7 @@ public class Drawing extends InputAdapter implements Screen {
      * Uses Vector2 dst() method {@link Vector2} for calculating the distance.
      * @param point Players inputPoint that is checked against the ellipseArray
      *             (ellipse positions) for the distance.
-     * @return  true if not all ellipse have been visited, false if all of them have.
+     * @return true if not all ellipse have been visited, false if all of them have.
      */
     public boolean checkWinEllipsesForVisit(Vector2 point) {
         for (int i = 0; i < ellipseArray.size; i++) {
@@ -389,13 +404,13 @@ public class Drawing extends InputAdapter implements Screen {
     /**
      * This method is used to render the lines between drawn points and to render the ellipses.
      */
-    private void draw() {
+    private void drawLines() {
         // If the current drawing is the first drawing or first shape then the points ArrayList is rendered.
         if (firstShape) {
             for (int i = 0; i < points.size() - 1; i++) {
                 sr.rectLine(points.get(i), points.get(i + 1), lineWidth);
             }
-        // Else the 2D array of saved points arrays is rendered
+            // Else the 2D array of saved points arrays is rendered
         } else {
             for (int i = 0; i < array2D.length - 1; i++) {
                 for (int j = 0; j < array2D[i].length - 1; j++) {
@@ -405,6 +420,12 @@ public class Drawing extends InputAdapter implements Screen {
                 }
             }
         }
+    }
+
+    /**
+     * This method is used to render the ellipses.
+     */
+    private void drawEllipses() {
         // Each Ellipse in ellipseArray is rendered
         for (Ellipse e : ellipseArray) {
             sr.circle(e.x, e.y, ballRadius);
@@ -477,7 +498,7 @@ public class Drawing extends InputAdapter implements Screen {
             for (int i = 0; i < vectors.length; i++) {
                 array2D[tracker][i] = vectors[i];
             }
-        // If the distance is not ok, reset: the drawings, tracker, firstShape boolean and the ellipseArray
+            // If the distance is not ok, reset: the drawings, tracker, firstShape boolean and the ellipseArray
         } else {
             resetDrawing();
             tracker = 0;

@@ -118,7 +118,7 @@ public class newMainMenu implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.setScreen(new Pelaa1(gme));
+                        gme.setScreen(new Play1(gme));
                     }
                 })));
             }
@@ -137,7 +137,7 @@ public class newMainMenu implements Screen {
                             @Override
                             public void run() {
                             //    dispose();
-                                gme.setScreen(new Asetukset(gme));
+                                gme.setScreen(new Settings(gme));
                             }
                         })));
             }

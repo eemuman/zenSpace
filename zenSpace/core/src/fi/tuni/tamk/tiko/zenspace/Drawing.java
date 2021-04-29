@@ -1,6 +1,6 @@
 /*
  * This file was created by:
- * @Petr H. 
+ * @Petr H.
  * Edited to fit other classes by Eemil V.
  *
  * Copyright (c) 2021.
@@ -28,7 +28,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -37,71 +36,179 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Piirto extends InputAdapter implements Screen {
+/**
+ * This class handles rendering what the player draws, the objective circles,
+ * checking if player is drawing close enough to the lines
+ * and checking if the player has cleared the obstacle.
+ */
+public class Drawing extends InputAdapter implements Screen {
 
-    private Table tbl;
-
+    /**
+     * Instance of the main class of the game {@link zenSpace}
+     */
     private zenSpace gme;
+
+    /**
+     * An ExtendViewport used to position the cameras correctly {@link ExtendViewport}
+     */
     private ExtendViewport scrnView;
-    private Skin skin;
+
+    /**
+     * {@link Stage}
+     */
     private Stage stg;
 
+    /**
+     * {@link Table}
+     */
+    private Table tbl;
+
+    /**
+     * First point coordinate X (where player starts drawing)
+     */
     private float startX;
+
+    /**
+     * First point coordinate Y (where player starts drawing)
+     */
     private float startY;
+
+    /**
+     * The next point coordinate X (when player has dragged their finger on the screen)
+     */
     private float newX;
+
+    /**
+     * The next point coordinate Y (when player has dragged their finger on the screen)
+     */
     private float newY;
+
+    /**
+     * Helper variable used to place the top banner into the spot on the screen.
+     */
     private float dynamicUnitScale;
+
+    /**
+     * Helper variable used to change the width of the line that player draws
+     */
     private float lineWidth = 3f;
-    private float minDistance = 30f;
+
+    /**
+     * Helper variable used to determine the maximum distance
+     * the player can draw away from the desired line.
+     */
+    private float maxDistance = 30f;
+
+    /**
+     * Variable used to determine the size of the small circles rendered on the screen
+     */
     private float ballRadius = 7.5f;
 
+    /**
+     * Helper variable used to check if the screen has been touched
+     */
     private boolean touched = false;
+
+    /**
+     * Helper variable used to check if player has dragged their finger on the screen
+     */
     private boolean moved = false;
+
+    /**
+     * Helper variable that is used to check if
+     * the current drawing is the first shape the player is drawing or not.
+     */
     private boolean firstShape = true;
+
+    /**
+     * Boolean that is used to check if the distance of the player drawn line is OK.
+     */
     private boolean isDistanceOk;
 
+    /**
+     * The point where the player touches the screen.
+     */
     private Vector2 firstPoint;
+
+    /**
+     * The next point after finger has been dragged.
+     */
     private Vector2 inputPoint;
+
+    /**
+     * Instance of BundleHandler that is used to manage all the assets. {@link BundleHandler}
+     */
     private BundleHandler bundle;
 
+    /**
+     * An Instance of InputMultiplexer {@link InputMultiplexer}
+     */
     private InputMultiplexer inputMultiplexer;
 
+    /**
+     * An instance of a TiledMap used to create the drawing obstacle. {@link TiledMap}
+     */
     private TiledMap tiledMap;
+
+    /**
+     * Renderer used to render the TiledMap {@link TiledMapRenderer}
+     */
     private TiledMapRenderer tiledRenderer;
+
+    /**
+     * Images used by this class
+     */
     private Image img, banner;
 
+    /**
+     * Helper variable used to prevent the update() method from creating multiple new screen instances
+     * when the obstacle has been cleared.
+     */
     private Boolean shouldRender = true;
 
+    /**
+     * Array of TiledMap point objects used to determine where player should (is able) to draw.
+     */
     Array<Vector2> mapPointObjects;
+
+    /**
+     * Array of TiledMap ellipse objects used to render the small circles
+     * and to check if player has cleared the obstacle.
+     */
     Array<Ellipse> ellipseArray;
 
-
+    /**
+     * ShapeRenderer used to render the lines and circles {@link ShapeRenderer}
+     */
     private ShapeRenderer sr;
+
+    /**
+     * Instance of the HUD class {@link HUD}
+     */
     private HUD hud;
 
     /**
-     * Tracker jolla tallennettava "points" piirros
-     * laitetaan aina seuraavaan Arrayhyn
+     * Tracker that is used to place the "points" array into the next slot of the 2D array.
      */
     private int tracker = 0;
 
     /**
-     * ArrayList johon kerätään aina yhden piirtokerran
-     * eli touchDown ja touchUp välissä sijoitetut Vector2 pisteet
+     * ArrayList in which all the points of one drawing are collected to,
+     * meaning all the points between each toucDown and touchUp.
      */
     List<Vector2> points = new ArrayList<>();
 
     /**
-     * 2D Vector2 Array johon yhden piirtokerran arraylist "points"
-     * tallennetaan aina touchUpin tapahtuessa
+     * 2D Vector2 Array in which all the seperate points arraylists are saved to, every time touchUp is called.
      */
     Vector2[][] array2D = new Vector2[200][3000];
 
     /**
      * Constructor for the screen
-     * @param game  zenspace peli, jonka pohjalta sceeni luodaan
+     * @param game zenspace game that the screen is based on
      */
-    public Piirto(zenSpace game) {
+    public Drawing(zenSpace game) {
+        // Initialize all the needed elements
         gme = game;
         hud = gme.getHud();
         bundle = gme.getBundle();
@@ -111,27 +218,26 @@ public class Piirto extends InputAdapter implements Screen {
         tiledMap = bundle.getTiledMap(gme.getEste().getEste());
         tiledRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
-        skin = bundle.getUiSkin();
         sr = new ShapeRenderer();
         tbl = new Table();
         tbl.setFillParent(true);
-
-
         mapPointObjects = new Array<>();
         ellipseArray = new Array<>();
-        tiledMapPointsToArray("PiirtoPisteet" , mapPointObjects);
-        tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
-
         inputMultiplexer = new InputMultiplexer();
+        banner = new Image(new NinePatchDrawable(bundle.getUiAtlas().createPatch("pen_test")));
+
+        // Setup the inputprocessors
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stg);
         inputMultiplexer.addProcessor(hud.stg);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        banner = new Image(new NinePatchDrawable(bundle.getUiAtlas().createPatch("pen_test")));
+        // Translate TiledMap objects into the corresponding arrays
+        tiledMapPointsToArray("PiirtoPisteet", mapPointObjects);
+        tiledMapEllipsesToArray("VoittoPisteet", ellipseArray);
 
-        tbl.add(banner).expand().top().height(dynamicUnitScale+30f).width(scrnView.getWorldWidth());
-
+        // Add all the needed elements to table and the stage
+        tbl.add(banner).expand().top().height(dynamicUnitScale + 30f).width(scrnView.getWorldWidth());
         stg.addActor(tbl);
         stg.addActor(img);
         img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
@@ -189,6 +295,9 @@ public class Piirto extends InputAdapter implements Screen {
         stg.dispose();
     }
 
+    /**
+     * This method is used to reset the all the drawings the player has made.
+     */
     public void resetDrawing() {
         points.clear();
         for (int i = 0; i < array2D.length - 1; i++) {
@@ -200,21 +309,34 @@ public class Piirto extends InputAdapter implements Screen {
 
     }
 
+    /**
+     * This method is used to check if the player is drawing close enough to the desired line.
+     * Uses Vector2 dst() method {@link Vector2} for calculating the distance.
+     * @param point Players inputPoint that is checked against the mapPointObjects for the distance
+     * @return true if the distance is below or equal to maxDistance, false if not.
+     */
     public boolean checkDistanceToLinePoints(Vector2 point) {
         for (Vector2 p : mapPointObjects) {
-            if (p.dst(point) <= minDistance) {
+            if (p.dst(point) <= maxDistance) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkWinEllipsesForVisit(Vector2 p) {
+    /**
+     * This method is used to check if player has visited (drawn close enough to) an ellipse.
+     * Uses Vector2 dst() method {@link Vector2} for calculating the distance.
+     * @param point Players inputPoint that is checked against the ellipseArray
+     *             (ellipse positions) for the distance.
+     * @return  true if not all ellipse have been visited, false if all of them have.
+     */
+    public boolean checkWinEllipsesForVisit(Vector2 point) {
         for (int i = 0; i < ellipseArray.size; i++) {
             float x = ellipseArray.get(i).x;
             float y = ellipseArray.get(i).y;
             Vector2 vec = new Vector2(x, y);
-            if (vec.dst(p) <= minDistance) {
+            if (vec.dst(point) <= 20f) {
                 ellipseArray.removeIndex(i);
             }
         }
@@ -224,6 +346,12 @@ public class Piirto extends InputAdapter implements Screen {
         return true;
     }
 
+    /**
+     * This method is used to translate the positions of the TiledMap point objects into the desired
+     * Vector2 targetArray.
+     * @param layername The name of the layer taht holds the desired objects in the map
+     * @param targetArray The Vector2 targetArray that will contain the positions
+     */
     public void tiledMapPointsToArray(String layername, Array<Vector2> targetArray) {
         MapLayer pointObjectLayer = tiledMap.getLayers().get(layername);
         MapObjects pointObjects = pointObjectLayer.getObjects();
@@ -235,6 +363,12 @@ public class Piirto extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * This method is used to translate the TiledMap ellipse objects into ellipses
+     * that are saved in the targetArray of ellipses.
+     * @param layername The name of the layer that holds the desired objects in the map
+     * @param targetArray The Ellipse targetArray that will contain the ellipses
+     */
     public void tiledMapEllipsesToArray(String layername, Array<Ellipse> targetArray) {
         MapLayer ellipseObjectLayer = tiledMap.getLayers().get(layername);
         MapObjects ellipseObjects = ellipseObjectLayer.getObjects();
@@ -244,11 +378,16 @@ public class Piirto extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * This method is used to render the lines between drawn points and to render the ellipses.
+     */
     private void draw() {
+        // If the current drawing is the first drawing or first shape then the points ArrayList is rendered.
         if (firstShape) {
             for (int i = 0; i < points.size() - 1; i++) {
                 sr.rectLine(points.get(i), points.get(i + 1), lineWidth);
             }
+        // Else the 2D array of saved points arrays is rendered
         } else {
             for (int i = 0; i < array2D.length - 1; i++) {
                 for (int j = 0; j < array2D[i].length - 1; j++) {
@@ -258,6 +397,7 @@ public class Piirto extends InputAdapter implements Screen {
                 }
             }
         }
+        // Each Ellipse in ellipseArray is rendered
         for (Ellipse e : ellipseArray) {
             sr.circle(e.x, e.y, ballRadius);
         }
@@ -266,13 +406,20 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // When the screen is touched the coordinates are collected as a point
+        Vector3 vec = new Vector3(screenX, screenY, 0);
 
-        Vector3 vec = new Vector3(screenX, screenY, 0); //Painetaan hiirellä/sormella, niin otetaan siitä kohtaa X ja Y koordinaatit
-        scrnView.getCamera().unproject(vec); // Muutetaan nämä X ja Y koordinaatit pikselikoordinaateista kameran koordinaatteihin.
-        touched = true; //Touched trueksi
-        startX = vec.x; //Tallennetaan nämä muunnellut X ja Y koordinaatit startX ja startY floatteihin
+        // Translate the point from screen coordinates to world space.
+        scrnView.getCamera().unproject(vec);
+
+        // set touched as true
+        touched = true;
+
+        // Save the unprojected coordinates into floats (startX and startY)
+        startX = vec.x;
         startY = vec.y;
-        // Tallenetaan aloituspiste Vector2 ja lisätään se points ArrayListiin
+
+        // Make a point out of those coordinates and if the distance is ok, add it into the points ArrayList
         firstPoint = new Vector2(startX, startY);
         if (isDistanceOk) {
             points.add(firstPoint);
@@ -283,7 +430,9 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        touched = false; //Kun sormi/hiirennapin nostetaan, laitetaan booleanit falseksi
+        // When the finger is lifted off the screen change all the booleans to false
+        // add +1 to tracker and clear the points ArrayList
+        touched = false;
         moved = false;
         tracker++;
         points.clear();
@@ -293,21 +442,34 @@ public class Piirto extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        Vector3 vec = new Vector3(screenX, screenY, 0); //Kun hiirtä/sormea liikutetaan, otetaan päivitetyt koordinaatit
-        scrnView.getCamera().unproject(vec); //muunnetaan ne taas oikeiksi koordinaateiksi
-        newX = vec.x; //Tallennetaan nämä newX ja newY floatteihin
+        // When the finger is dragged the updated coordinates are collected into a Vector3 point
+        Vector3 vec = new Vector3(screenX, screenY, 0);
+
+        // Translate the point from screen coordinates to world space.
+        scrnView.getCamera().unproject(vec);
+
+        // Save the unprojected coordinates into floats (newX and newY)
+        newX = vec.x;
         newY = vec.y;
-        moved = true; //muutetaan moved trueksi
+
+        // set moved as true
+        moved = true;
+
+        // Check if the distance is OK
         isDistanceOk = checkDistanceToLinePoints(new Vector2(newX, newY));
-        // Tallenetaan aina seuraava piste Vector2
+
+        // Save the coordinates as a Vector2 point
         inputPoint = new Vector2(newX, newY);
+
         if (isDistanceOk) {
-            // Muutetaan arrayList points Vector2 arrayksi
+            // Change "points" ArrayList into "vectors" Array
             Vector2[] vectors = points.toArray(new Vector2[0]);
             // Tallenetaan uusi Vector2 array 2DArrayhyn
+            // Save the new Vector2 Array (vectors) into the 2D array of Vector2 Arrays
             for (int i = 0; i < vectors.length; i++) {
                 array2D[tracker][i] = vectors[i];
             }
+        // If the distance is not ok, reset: the drawings, tracker, firstShape boolean and the ellipseArray
         } else {
             resetDrawing();
             tracker = 0;
@@ -318,16 +480,21 @@ public class Piirto extends InputAdapter implements Screen {
         return false;
     }
 
+    /**
+     * This method is used to update the drawing and change the screen if the obstacle is cleared
+     */
     private void update() {
         if (touched && moved) {
             if (isDistanceOk) {
                 points.add(inputPoint);
-                startX = newX; //muutetaan startX ja startY koordinaatteihin, mihin viimeisin viiva päättyi.
+                // Change startX and startY into the coordinates where the previous line ended
+                startX = newX;
                 startY = newY;
             }
+            // If all of the ellipses have been visited change the screen into ResultScreen
             if (checkWinEllipsesForVisit(inputPoint) && shouldRender) {
                 inputMultiplexer.clear();
-                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
+                img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.delay(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         shouldRender = false;

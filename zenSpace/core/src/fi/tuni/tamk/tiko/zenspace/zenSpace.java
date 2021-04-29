@@ -32,7 +32,7 @@ public class zenSpace extends Game {
 	private BundleHandler bundle;
 	private int curLevelInt, curBackground, randEste;
 	private HUD hud;
-	private Este este;
+	private Obstacle este;
 	private float fadeIn = 0.25f;
 	private Fade fade;
 	public Prefs prefs;
@@ -60,7 +60,7 @@ public class zenSpace extends Game {
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		fade = new Fade();
 		hud = new HUD(this);
-		este = new Este(this);
+		este = new Obstacle(this);
 
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
@@ -107,7 +107,7 @@ public class zenSpace extends Game {
 	public HUD getHud() {
 		return hud;
 	}
-	public Este getEste() {return este;}
+	public Obstacle getEste() {return este;}
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
 	}

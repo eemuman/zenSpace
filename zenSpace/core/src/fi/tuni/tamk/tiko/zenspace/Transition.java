@@ -103,7 +103,7 @@ public class Transition implements Screen {
                 @Override
                 public void run() {
                         gme.getEste().setBooleans(false, false);
-                        gme.setScreen(new Piirto(gme));
+                        gme.setScreen(new Drawing(gme));
 
                 }
             })));

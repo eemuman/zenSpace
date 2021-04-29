@@ -22,18 +22,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+public class Play1 implements Screen {
 
-
-public class Pelaa2 implements Screen {
-
-    private int firstChoice;
     private zenSpace gme;
     private Skin skin;
     private ExtendViewport scrnView;
     private Stage stg;
     private Label header;
-    private Table tbl;
-    private Table tblBottom;
+    private Table tbl,tblBottom;
+
     private TextButton btnTaka, btnEte;
     private ButtonGroup buttons;
     private String[] textStrings;
@@ -43,22 +40,22 @@ public class Pelaa2 implements Screen {
 
 
 
-    public Pelaa2(zenSpace game, final int first) {
+    public Play1(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
-        textStrings = curLangBundle.get("secondStrings").split(",");
+
+        textStrings = curLangBundle.get("firstStrings").split(",");
         btns = new TextButton[textStrings.length];
         skin = bundle.getUiSkin();
         scrnView = gme.getScrnView();
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
-        firstChoice = first;
+
         createBtns();
-        header = new Label(curLangBundle.get("fiilis"), skin);
+        header = new Label(curLangBundle.get("miltatuntuu"), skin);
         btnTaka = new TextButton(curLangBundle.get("takaisin"), skin, "TextButtonSmall");
         btnEte = new TextButton(curLangBundle.get("seuraava"), skin, "TextButtonSmall");
-
 
         btnTaka.addListener(new ChangeListener() {
             @Override
@@ -66,10 +63,9 @@ public class Pelaa2 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.setScreen(new Pelaa1(gme));
+                        gme.setScreen(new newMainMenu(gme));
                     }
                 })));
-
             }
         });
 
@@ -80,7 +76,7 @@ public class Pelaa2 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            gme.setScreen(new PelaaMain(gme, firstChoice, buttons.getCheckedIndex()));
+                            gme.setScreen(new Play2(gme, buttons.getCheckedIndex()));
                         }
                     })));
                 }
@@ -91,7 +87,7 @@ public class Pelaa2 implements Screen {
         tblBottom = new Table();
         tbl.add(header).expand().padBottom(25).padTop(75);
         addBtnsTable();
-        tblBottom.defaults().height(75).width(200).padBottom(5f);
+        tblBottom.defaults().height(75).width(200).padBottom(5f);;
         tblBottom.add(btnTaka).left().bottom().expand().padLeft(7f);
         tblBottom.add(btnEte).right().bottom().expand().padRight(7f);
         tbl.setFillParent(true);
@@ -117,8 +113,6 @@ public class Pelaa2 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-
-        //Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
     }
 
     @Override

@@ -76,7 +76,7 @@ public class BundleHandler {
     }
 
     /**
-     * This method is used to load the Background set that the user chooses AND the RANDOMIZED obstacle that the {@link Este} generates.
+     * This method is used to load the Background set that the user chooses AND the RANDOMIZED obstacle that the {@link Obstacle} generates.
      * @param name The backgrounds name we want to load
      * @return The loaded background / Obstacle .atlas
      */
@@ -103,7 +103,7 @@ public class BundleHandler {
     }
 
     /**
-     * This method is used to load the obstacle's tiledmap. Which is used at the {@link Piirto} for the players to draw on.
+     * This method is used to load the obstacle's tiledmap. Which is used at the {@link Drawing} for the players to draw on.
      * @param name The needed tilemap's name
      * @return The loaded tilemap
      */

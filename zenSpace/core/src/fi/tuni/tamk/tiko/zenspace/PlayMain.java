@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-public class PelaaMain implements Screen {
+public class PlayMain implements Screen {
 
     private String firstChoice, secondChoice, firstPart, secondPart;
     private zenSpace gme;
@@ -38,7 +38,7 @@ public class PelaaMain implements Screen {
     private int backGroundChoice;
     private Image headerImg;
 
-    public PelaaMain(final zenSpace game, int first, int second) {
+    public PlayMain(final zenSpace game, int first, int second) {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
@@ -71,7 +71,7 @@ public class PelaaMain implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.setScreen(new Pelaa1(gme));
+                        gme.setScreen(new Play1(gme));
                     }
                 })));
             }

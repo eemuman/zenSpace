@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 /**
  * Settings Screen class for our game, is currently only used to change the volume of the background music..
  */
-public class Asetukset implements Screen {
+public class Settings implements Screen {
 
     private Stage stg;
     private ExtendViewport scrnView;
@@ -46,7 +46,7 @@ public class Asetukset implements Screen {
      * Settings menu, Has volume-slider,Button to go back to {@link newMainMenu}. Uses {@link Table} and {@link Stage}.
      * @param game The main game object
      */
-    public Asetukset(zenSpace game) {
+    public Settings(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());

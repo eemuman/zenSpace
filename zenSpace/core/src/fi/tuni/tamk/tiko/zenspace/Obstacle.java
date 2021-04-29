@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 /**
  * This Class handles the Obstacles. (The thing on the right at the transition, the tiledmap, and the resulting screen after the next transition)
  */
-public class Este {
+public class Obstacle {
     private zenSpace gme;
     private BundleHandler bundle;
     private TextureAtlas esteTextures;
@@ -32,7 +32,7 @@ public class Este {
      * Init the obstacles class see {@link #initseenAlready()} to see what it does.
      * @param game The main game object.
      */
-    public Este(zenSpace game) {
+    public Obstacle(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
         initseenAlready();

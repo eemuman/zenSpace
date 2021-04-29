@@ -1,6 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */

@@ -1,8 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
- * TODO: SAADA TÄÄ EHKÄ TOIMII JOSKUS??? EMT
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */

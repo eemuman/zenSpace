@@ -1,7 +1,8 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
+ * @author Eemil V.
+ * Edited by:
+ * @author Petr H.
  * Copyright (c) 2021.
  */
 
@@ -21,9 +22,11 @@ public class Obstacle {
     private TextureAtlas esteTextures;
     private AtlasRegion currentDraw;
     private boolean transition = false, result = false;
-    private String[] esteet =
-            {"anteater", "bat", "bull", "butterfly", "crafts", "dragon", "elephant", "flamingo", "friend", "onion",
-                    "paint", "plant", "snake1", "snake2", "snake3", "trex", "wall", "zombie", "zombie2"}; //All the different obstacles, probably could've stored these somewhere else..
+    private static String[] esteet =
+            {"anteater", "bat", "bull", "butterfly", "crafts", "dragon", "elephant", "flamingo",
+                    "friend", "helium", "lizard", "octopus", "onion",
+                    "paint", "paper", "parrot", "penguin", "plant", "snake1",
+                    "snake2", "snake3", "trex", "wall", "yoga", "zombie", "zombie2"}; //All the different obstacles, probably could've stored these somewhere else..
 
 
     private boolean[] seenAlready = new boolean[esteet.length]; //This is used to make sure that the same obstacle isn't shown more than once per playthrough.
@@ -38,6 +41,9 @@ public class Obstacle {
         initseenAlready();
     }
 
+    public static int getObstacleCount() {
+        return esteet.length;
+    }
 
     /**
      * This method is used to randomize what obstacle to show next. first we randomize a number in a do/while to make sure that we randomize it at least once. While loop condition is that the obstacle hasn't been seen yet. (See: {@link #checkAndSetSeen()})

@@ -1,7 +1,8 @@
-/*
+/**
  * This file was created by:
- * @Petr H.
- * Edited to fit other classes by Eemil V.
+ * @author Petr H.
+ * Edited to fit other classes by:
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */
@@ -105,6 +106,11 @@ public class Drawing extends InputAdapter implements Screen {
     private float ballRadius = 7.5f;
 
     /**
+     * Variable to determine the minimum distance between player drawn line and the ellipses.
+     */
+    private float winDistance = 17.5f;
+
+    /**
      * Helper variable used to check if the screen has been touched
      */
     private boolean touched = false;
@@ -203,6 +209,7 @@ public class Drawing extends InputAdapter implements Screen {
      */
     Vector2[][] array2D = new Vector2[200][3000];
 
+
     /**
      * Constructor for the screen
      * @param game zenspace game that the screen is based on
@@ -259,6 +266,7 @@ public class Drawing extends InputAdapter implements Screen {
         tiledRenderer.setView((OrthographicCamera) scrnView.getCamera());
         tiledRenderer.render();
         sr.setProjectionMatrix(scrnView.getCamera().combined);
+        sr.setColor(1, 165/255f, 0f, 1f);
         sr.begin(ShapeRenderer.ShapeType.Filled);
         draw();
         sr.end();
@@ -336,7 +344,7 @@ public class Drawing extends InputAdapter implements Screen {
             float x = ellipseArray.get(i).x;
             float y = ellipseArray.get(i).y;
             Vector2 vec = new Vector2(x, y);
-            if (vec.dst(point) <= 20f) {
+            if (vec.dst(point) <= winDistance) {
                 ellipseArray.removeIndex(i);
             }
         }

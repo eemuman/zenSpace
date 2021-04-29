@@ -1,7 +1,8 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
+ * @author Eemil V.
+ * Edited by:
+ * @author Petr H.
  * Copyright (c) 2021.
  */
 
@@ -14,7 +15,7 @@ public class Prefs {
 
     private Preferences pref;
 
-    private int amountOfEste = 19, amountOfCompletions, amountOfBack = 7;
+    private int amountOfEste = Obstacle.getObstacleCount(), amountOfCompletions, amountOfBack = 7;
     private boolean[] amountOfBooleanEste = new boolean[amountOfEste], amountOfBooleanback = new boolean[amountOfBack];
     private boolean isFin;
     private float volume;

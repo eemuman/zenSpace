@@ -1,7 +1,8 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
+ * @author Eemil V.
+ * Edited by:
+ * @author Petr H.
  * Copyright (c) 2021.
  */
 

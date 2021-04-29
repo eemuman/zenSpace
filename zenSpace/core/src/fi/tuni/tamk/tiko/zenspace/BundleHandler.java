@@ -1,14 +1,12 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
+ * @author Eemil V.
+ * Edited by:
+ * @author Petr H.
  * Copyright (c) 2021.
  */
 
 package fi.tuni.tamk.tiko.zenspace;
-
-
-
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
-
 
 /**
  * This is our games asset manager. It handles loading all the assets in our game. (UISKIN.atlas, Languagebundles, Background atlases, obstacle atlases. Etc.

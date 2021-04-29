@@ -23,7 +23,9 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
-
+/**
+ * This class is the screen where the player chooses how (s)he feels like. Made like every other screen like this {@link Stage}, {@link Table}, etc. The choice that player makes here changes the background set that is seen when playing.
+ */
 public class Play2 implements Screen {
 
     private int firstChoice;
@@ -35,14 +37,19 @@ public class Play2 implements Screen {
     private Table tbl;
     private Table tblBottom;
     private TextButton btnTaka, btnEte;
-    private ButtonGroup buttons;
+    private ButtonGroup<TextButton> buttons;
     private String[] textStrings;
     private TextButton[] btns;
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
 
 
-
+    /**
+     * This constructor creates the layout, uses the {@link BundleHandler} to get the language that is used and the UISkin for the buttons.
+     * Buttons are made as {@link ButtonGroup}where the player can only choose one of the feelings and if other is chosen, the old one goes back to not chosen. TextStrings generates the array by splitting the words with ",".
+     * The player also has to choose one to continue here.
+     * @param game The main game object
+     */
     public Play2(zenSpace game, final int first) {
         gme = game;
         bundle = gme.getBundle();
@@ -54,7 +61,7 @@ public class Play2 implements Screen {
         stg = new Stage(scrnView);
         Gdx.input.setInputProcessor(stg);
         firstChoice = first;
-        createBtns();
+        createBtns();//Generate the buttons with their respective texts using a for-loop
         header = new Label(curLangBundle.get("fiilis"), skin);
         btnTaka = new TextButton(curLangBundle.get("takaisin"), skin, "TextButtonSmall");
         btnEte = new TextButton(curLangBundle.get("seuraava"), skin, "TextButtonSmall");
@@ -62,7 +69,7 @@ public class Play2 implements Screen {
 
         btnTaka.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {//Back-button to go back to the first choice screen
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -75,12 +82,12 @@ public class Play2 implements Screen {
 
         btnEte.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {// Next-button, only usable if one of the ButtonGroup-buttons is checked.
                 if(buttons.getChecked() != null) {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            gme.setScreen(new PlayMain(gme, firstChoice, buttons.getCheckedIndex()));
+                            gme.setScreen(new PlayMain(gme, firstChoice, buttons.getCheckedIndex()));//We send the ButtonGroup-button that is checked as integer for later use. Also we send the first integer as well.
                         }
                     })));
                 }
@@ -102,7 +109,8 @@ public class Play2 implements Screen {
         stg.addAction(Actions.alpha(0));
         stg.addAction(Actions.fadeIn(gme.getFadeIn()));
 
-        buttons = new ButtonGroup(btns);
+        //Add the generated buttons to the ButtonGroup
+        buttons = new ButtonGroup<>();
         addBtnsBtngroup();
     }
 
@@ -117,8 +125,6 @@ public class Play2 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-
-        //Gdx.app.log("CURRENTLY CHECKED", String.valueOf(buttons.getChecked()));
     }
 
     @Override
@@ -147,12 +153,18 @@ public class Play2 implements Screen {
 
     }
 
-    private void createBtns() {
+    /**
+     * SEE: {@link Play1#createBtns()}
+     */
+    void createBtns() {
         for (int i = 0; i < btns.length; i++) {
             btns[i] = new TextButton(textStrings[i], skin, "toggle");
         }
     }
 
+    /**
+     * SEE: {@link Play1#addBtnsTable()}
+     */
     private void addBtnsTable() {
         for (int i = 0; i < btns.length; i++) {
             tbl.row();
@@ -163,6 +175,9 @@ public class Play2 implements Screen {
             }
         }
     }
+    /**
+     * SEE: {@link Play1#addBtnsBtngroup()}
+     */
     private void addBtnsBtngroup() {
         for (int i = 0; i < btns.length; i++) {
             buttons.add(btns[i]);

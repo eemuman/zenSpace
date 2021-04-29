@@ -41,7 +41,7 @@ public class Obstacle {
 
     /**
      * This method is used to randomize what obstacle to show next. first we randomize a number in a do/while to make sure that we randomize it at least once. While loop condition is that the obstacle hasn't been seen yet. (See: {@link #checkAndSetSeen()})
-     * If the obstacle is new, load the obstacle through the bundlehandler. And set booleans.
+     * If the obstacle is new, load the obstacle through the {@link BundleHandler}. And set booleans.
      */
     public void randomizeEste() {
         do {
@@ -65,7 +65,7 @@ public class Obstacle {
     }
 
     /**
-     * This method is used to set the texture that we want to render next. Which part to load, depends on the {@link #setBooleans(boolean, boolean) @setBooleans} method.
+     * This method is used to set the texture that we want to render next. Which part to load, depends on the {@link #setBooleans(boolean, boolean)} method.
      */
     private void setTexture() {
         if (transition) {//sthdpi is the name for the transitionscreen part of the .atlas
@@ -84,7 +84,7 @@ public class Obstacle {
     }
 
     /**
-     * This methos is used to give other classes the obstacles name as STRING
+     * This method is used to give other classes the obstacles name as STRING
      * @return Current obstacles name as STRING
      */
     public String getEste() {

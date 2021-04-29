@@ -22,6 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+/**
+ * This class is used to show the player what he chose on the {@link Play1} and {@link Play2} screens. Also this uses the information of these mentioned screens to choose the background-set that is to be used.
+ */
 public class PlayMain implements Screen {
 
     private String firstChoice, secondChoice, firstPart, secondPart;
@@ -38,6 +41,12 @@ public class PlayMain implements Screen {
     private int backGroundChoice;
     private Image headerImg;
 
+    /**
+     * This is the PlayMain constructor. Uses {@link Stage}, {@link BundleHandler}, etc.
+     * @param game The main game object
+     * @param first The first ButtonGroup-buttons index as integer
+     * @param second The second ButtonGroup-buttons index as integer
+     */
     public PlayMain(final zenSpace game, int first, int second) {
         gme = game;
         bundle = gme.getBundle();
@@ -58,16 +67,16 @@ public class PlayMain implements Screen {
 
 
 
-        header = new Label(firstPart  + firstChoice.toLowerCase() + ".\n" + secondPart +  secondChoice.toLowerCase() + ".", skin, "defaultSmall");
+        header = new Label(firstPart  + firstChoice.toLowerCase() + ".\n" + secondPart +  secondChoice.toLowerCase() + ".", skin, "defaultSmall"); //This is the part where the player is shown his choices.
         aloitetaan = new Label(curLangBundle.get("aloitetaanko"), skin);
         header.setWrap(true);
         header.setWidth(10f);
-        btnTaka = new TextButton(curLangBundle.get("ei"), skin, "TextButtonSmall");
-        btnEtu = new TextButton(curLangBundle.get("Kylla"), skin, "TextButtonSmall");
+        btnTaka = new TextButton(curLangBundle.get("ei"), skin, "TextButtonSmall"); //No-button to go back.
+        btnEtu = new TextButton(curLangBundle.get("Kylla"), skin, "TextButtonSmall");//Yes-button to start the game.
 
         btnTaka.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //If no is pressed go back to the first choice screen.
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -79,12 +88,12 @@ public class PlayMain implements Screen {
 
         btnEtu.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //If yes is pressed go to the gameplay loop.
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                selectBackGround();
-                                gme.getEste().randomizeEste();
+                                selectBackGround(); //First we choose what background to pick
+                                gme.getEste().randomizeEste(); //Then we randomize the first Obstacle to the game.
                                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                             }
                         })));
@@ -147,9 +156,19 @@ public class PlayMain implements Screen {
     public void dispose() {
         stg.dispose();
     }
+
+    /**
+     * This is used to choose the background. It is an integer on the main game object that the other classes then use.
+     */
     private void selectBackGround() {
         gme.setCurBackground(backGroundChoice);
     }
+
+    /**
+     * This method is used to generate a more natural looking sentences. (These are the choice sentences)
+     * @param first The first choice as integer
+     * @param second The second choice as integer
+     */
     private void selectParts(int first, int second) {
         if(gme.isFin()) {
             if (first > 2) {

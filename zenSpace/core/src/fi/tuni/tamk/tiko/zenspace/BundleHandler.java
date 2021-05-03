@@ -9,6 +9,7 @@
 package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -29,6 +30,11 @@ public class BundleHandler {
     public void loadAssets() {
         manager.load("data/uiskin.atlas", TextureAtlas.class);
         manager.load("data/uiskin.json", Skin.class);
+        manager.finishLoading();
+    }
+
+    public void loadSounds() {
+        manager.load("audio/music/testmusic.mp3", Music.class);
         manager.finishLoading();
     }
 
@@ -109,5 +115,9 @@ public class BundleHandler {
         manager.load("Esteet/"+name+".tmx", TiledMap.class);
         manager.finishLoading();
         return manager.get("Esteet/"+name+".tmx", TiledMap.class);
+    }
+
+    public Music getMusic() {
+        return manager.get("audio/music/testmusic.mp3");
     }
 }

@@ -54,6 +54,7 @@ public class zenSpace extends Game {
 		curBackground = 0;
 		bundle = new BundleHandler();
 		bundle.loadAssets();
+		bundle.loadSounds();
 		batch = new SpriteBatch();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);

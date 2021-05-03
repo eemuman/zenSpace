@@ -29,7 +29,7 @@ public class zenSpace extends Game {
 	private OrthographicCamera textCam;
 	private int wWidth = 480;
 	private int wHeight = 800;
-	private BundleHandler bundle;
+	private static BundleHandler bundle;
 	private int curLevelInt, curBackground, randEste;
 	private HUD hud;
 	private Obstacle este;
@@ -54,7 +54,7 @@ public class zenSpace extends Game {
 		curBackground = 0;
 		bundle = new BundleHandler();
 		bundle.loadAssets();
-		bundle.loadSounds();
+		Sounds.loadSounds();
 		batch = new SpriteBatch();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
@@ -112,7 +112,7 @@ public class zenSpace extends Game {
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
 	}
-	public BundleHandler getBundle() {
+	public static BundleHandler getBundle() {
 		return bundle;
 	}
 

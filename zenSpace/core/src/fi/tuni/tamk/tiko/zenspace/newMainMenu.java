@@ -199,7 +199,7 @@ public class newMainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-        bundle.getMusic().play();
+        Sounds.getMusic().play();
     }
 
     @Override

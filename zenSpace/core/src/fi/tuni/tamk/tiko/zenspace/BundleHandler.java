@@ -33,11 +33,6 @@ public class BundleHandler {
         manager.finishLoading();
     }
 
-    public void loadSounds() {
-        manager.load("audio/music/testmusic.mp3", Music.class);
-        manager.finishLoading();
-    }
-
     /**
      * This method is used to load the Language bundle that is needed. First we check if the other language is loaded and unload it if it is, then load the wanted one and return it. We don't use the androids locale to check which language to use
      * @param fin This boolean is used to check if we should load the Finnish or English language bundles.
@@ -117,7 +112,5 @@ public class BundleHandler {
         return manager.get("Esteet/"+name+".tmx", TiledMap.class);
     }
 
-    public Music getMusic() {
-        return manager.get("audio/music/testmusic.mp3");
-    }
+
 }

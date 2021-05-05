@@ -1,6 +1,5 @@
 /**
  * This file was created by:
- *
  * @author Petr H.
  * Edited to fit other classes by:
  * @author Eemil V.
@@ -334,7 +333,7 @@ public class Drawing extends InputAdapter implements Screen {
 
     /**
      * This method is used to check if the player is drawing close enough to the desired line.
-     * Uses Vector2 dst() method {@link Vector2} for calculating the distance.
+     * Uses {@link Vector2} dst() method for calculating the distance.
      * @param point Players inputPoint that is checked against the mapPointObjects for the distance
      * @return true if the distance is below or equal to maxDistance, false if not.
      */
@@ -349,10 +348,10 @@ public class Drawing extends InputAdapter implements Screen {
 
     /**
      * This method is used to check if player has visited (drawn close enough to) an ellipse.
-     * Uses Vector2 dst() method {@link Vector2} for calculating the distance.
+     * Uses {@link Vector2} dst() method for calculating the distance.
      * @param point Players inputPoint that is checked against the ellipseArray
      *             (ellipse positions) for the distance.
-     * @return true if not all ellipse have been visited, false if all of them have.
+     * @return false if not all ellipses have been visited, true if all of them have.
      */
     public boolean checkWinEllipsesForVisit(Vector2 point) {
         for (int i = 0; i < ellipseArray.size; i++) {

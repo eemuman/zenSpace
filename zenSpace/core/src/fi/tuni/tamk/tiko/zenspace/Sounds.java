@@ -8,12 +8,13 @@
 package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 /**
  * This class is for handling all the sounds and music of the game.
  */
 public class Sounds {
-    // Get BundleHandler from the class zenSpace
+    // Get BundleHandler from the class zenSpace, to get access to the asset manager
     private static BundleHandler handler = zenSpace.getBundle();
 
     /**
@@ -21,6 +22,7 @@ public class Sounds {
      */
     public static void loadSounds() {
         handler.manager.load("audio/music/testmusic.mp3", Music.class);
+        handler.manager.load("audio/sound/plop.wav", Sound.class);
         handler.manager.finishLoading();
     }
 
@@ -30,6 +32,14 @@ public class Sounds {
      */
     public static Music getMusic() {
         return handler.manager.get("audio/music/testmusic.mp3");
+    }
+
+    /**
+     * This method is used to be able to play the sound effect in other classes.
+     * @return returns the Sound class audiofile to be played.
+     */
+    public static Sound getPlopSound() {
+        return handler.manager.get("audio/sound/plop.wav");
     }
 
 }

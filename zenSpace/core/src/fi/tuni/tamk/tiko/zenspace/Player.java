@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * This class handels the creation of the player animation
+ * This class handles the creation of the player animation
  */
 public class Player extends Actor {
     /**
@@ -40,7 +40,7 @@ public class Player extends Actor {
      * @param bundle the BundleHandler used to manage assets
      */
     public Player(int ROWS, int COLS, BundleHandler bundle) {
-        // load texture via BundleHandler
+        // get texture from BundleHandler
         runTexture = bundle.getPlayerSkin();
 
         // make it into an animation using Utils class methods

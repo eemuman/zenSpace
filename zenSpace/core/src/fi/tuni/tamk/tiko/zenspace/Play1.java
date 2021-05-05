@@ -9,6 +9,7 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -41,6 +42,8 @@ public class Play1 implements Screen {
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
 
+    private Sound plop; // Added by Petr H.
+
 
     /**
      * This constructor creates the layout, uses the {@link BundleHandler} to get the language that is used and the UISkin for the buttons.
@@ -52,6 +55,8 @@ public class Play1 implements Screen {
         gme = game;
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
+
+        plop = Sounds.getPlopSound();
 
         textStrings = curLangBundle.get("firstStrings").split(",");
         btns = new TextButton[textStrings.length];
@@ -71,6 +76,7 @@ public class Play1 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
+                        plop.play(1f);
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));
@@ -84,6 +90,7 @@ public class Play1 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
+                            plop.play(1f);
                             gme.setScreen(new Play2(gme, buttons.getCheckedIndex())); //We send the ButtonGroup-button that is checked as integer for later use.
                         }
                     })));

@@ -9,6 +9,7 @@ package fi.tuni.tamk.tiko.zenspace;
 
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -39,10 +40,12 @@ public class HUD implements Screen {
     private zenSpace gme;
     private float dynamicUiScale;
     private I18NBundle curLangBundle;
+    private Sound plop; // Added by Petr H.
 
     public HUD(zenSpace game) {
         gme = game;
         bundle = game.getBundle();
+        plop = Sounds.getPlopSound();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
         img = gme.generateFade();
         img.addAction(Actions.alpha(0));
@@ -54,6 +57,7 @@ public class HUD implements Screen {
         tButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                plop.play(1f);
                 tButton.setVisible(false);
                 pause.setVisible(true);
                 paused = true;
@@ -63,6 +67,7 @@ public class HUD implements Screen {
         tButtonJatka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                plop.play(1f);
                 tButton.setVisible(true);
                 pause.setVisible(false);
                 paused = false;
@@ -75,6 +80,7 @@ public class HUD implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
+                        plop.play(1f);
                         gme.setCurLevelInt(1); // This is to make sure that the background starts from the first again
                         setBackMenu(); //Changes visibilities and booleans here at the HUD. (Prevents the next playthrough starting with menu open)
                         gme.getEste().initseenAlready();

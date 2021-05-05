@@ -135,12 +135,11 @@ public class Transition implements Screen {
 
     @Override
     public void hide() {
-
+    dispose();
     }
 
     @Override
     public void dispose() {
-    stg.clear();
     stg.dispose();
     }
 }

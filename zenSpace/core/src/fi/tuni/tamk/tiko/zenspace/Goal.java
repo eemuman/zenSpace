@@ -146,12 +146,12 @@ public class Goal implements Screen {
 
     @Override
     public void hide() {
-
+    dispose();
     }
 
     @Override
     public void dispose() {
-        stg.clear();
         stg.dispose();
+        bundle.unLoadAsset("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()]); //Unload the Background-set we used
     }
 }

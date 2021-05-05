@@ -13,7 +13,9 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -45,6 +47,7 @@ public class Resultscreen extends InputAdapter implements Screen {
     private BundleHandler bundle;
     private String[] motiStrings;
     private I18NBundle curLangBundle;
+    private TextureAtlas.AtlasRegion obsTexture;
 
     /**
      * The Screen's constructor. Uses {@link Stage}, {@link Table} and {@link BundleHandler}.
@@ -61,6 +64,8 @@ public class Resultscreen extends InputAdapter implements Screen {
         tbl.setPosition(0f, 400f);
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
+
+        obsTexture = gme.getEste().getTexture();
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
@@ -92,7 +97,7 @@ public class Resultscreen extends InputAdapter implements Screen {
         batch.setColor(1, 1, 1, 1);
         if(shouldUpdate) {
             batch.begin();
-            batch.draw(gme.getEste().getTexture(), 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
+            batch.draw(obsTexture, 0, 0, scrnView.getCamera().viewportWidth, scrnView.getCamera().viewportHeight);
             batch.end();
         }
         stg.act(delta);
@@ -117,13 +122,11 @@ public class Resultscreen extends InputAdapter implements Screen {
     }
 
     @Override
-    public void hide() {
-
+    public void hide() {dispose();
     }
 
     @Override
     public void dispose() {
-        stg.clear();
         stg.dispose();
     }
 
@@ -173,9 +176,13 @@ public class Resultscreen extends InputAdapter implements Screen {
             img.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()),Actions.delay(gme.getFadeIn()) ,Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    gme.prefs.setAndCheckBack(gme.getCurBackground()); //Here we update the prefs.
-                    gme.prefs.setAmountofCompletions(); //Also we update the amount of completions.
-                    gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                    if (shouldUpdate) {
+                        gme.prefs.setAndCheckBack(gme.getCurBackground()); //Here we update the prefs.
+                        gme.prefs.setAmountofCompletions(); //Also we update the amount of completions.
+                        bundle.unLoadAsset("Esteet/" + gme.getEsteString()); //Unload the last Obstacle we used
+                        gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
+                        shouldUpdate = false;
+                    }
                 }
             })));
         } else { //If we are not done yet, go to the Transition screen here.
@@ -183,6 +190,7 @@ public class Resultscreen extends InputAdapter implements Screen {
                 @Override
                 public void run() {
                     if(shouldUpdate) { //We need to make sure that this gets run only once.
+                        bundle.unLoadAsset("Esteet/" + gme.getEsteString()); //Unload the last Obstacle we used
                         gme.setCurLevelInt(gme.getCurLevel() + 1); //Update the Curlevel so that we know to load the next part of the atlas.
                         shouldUpdate = false;
                     }

@@ -7,6 +7,7 @@
 
 package fi.tuni.tamk.tiko.zenspace;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  * This is our games asset manager. It handles loading all the assets in our game. (UISKIN.atlas, Languagebundles, Background atlases, obstacle atlases. Etc.
@@ -78,12 +80,13 @@ public class BundleHandler {
      * @return The loaded background / Obstacle .atlas
      */
     public TextureAtlas getBackground(String name) {
-        if(manager.isLoaded(name, TextureAtlas.class)) {
-            return manager.get(name, TextureAtlas.class);
+        if(manager.isLoaded(name+".atlas", TextureAtlas.class)) {
+            return manager.get(name+".atlas", TextureAtlas.class);
         }
-        manager.load(name, TextureAtlas.class);
+        manager.load(name+".atlas", TextureAtlas.class);
         manager.finishLoading();
-        return manager.get(name, TextureAtlas.class);
+        Gdx.app.log("NAME: ", name);
+        return manager.get(name+".atlas", TextureAtlas.class);
     }
 
     /**
@@ -109,6 +112,14 @@ public class BundleHandler {
         manager.load("Esteet/"+name+".tmx", TiledMap.class);
         manager.finishLoading();
         return manager.get("Esteet/"+name+".tmx", TiledMap.class);
+    }
+
+    public void unLoadAsset(String whatToUnLoad) {
+        Gdx.app.log("NAMEUN: ", whatToUnLoad);
+        if(manager.isLoaded(whatToUnLoad+".atlas", TextureAtlas.class)){
+            manager.unload(whatToUnLoad+".atlas");
+            Gdx.app.log("UNLOADED:", "YES");
+        }
     }
 
 

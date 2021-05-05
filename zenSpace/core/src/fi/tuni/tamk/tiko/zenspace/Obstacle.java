@@ -52,7 +52,7 @@ public class Obstacle {
         do {
             gme.setRandEste(MathUtils.random(0, esteet.length - 1));
         } while (!checkAndSetSeen());
-        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getCurEsteInt()] + ".atlas"); //We load the obstacle using the String array that has all of the obstacle names and using the number we randomized before
+        esteTextures = bundle.getBackground("Esteet/" + esteet[gme.getCurEsteInt()]); //We load the obstacle using the String array that has all of the obstacle names and using the number we randomized before
         setBooleans(true, false);
 
     }

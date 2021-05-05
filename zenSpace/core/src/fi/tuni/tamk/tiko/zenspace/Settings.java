@@ -41,7 +41,6 @@ public class Settings implements Screen {
     private Image headerImg;
     private Label lbl;
     private boolean isChanged;
-    private Sound plop; // Added by Petr H.
 
 
     /**
@@ -51,7 +50,6 @@ public class Settings implements Screen {
     public Settings(zenSpace game) {
         gme = game;
         bundle = gme.getBundle();
-        plop= Sounds.getPlopSound();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
         headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
         this.skin = bundle.getUiSkin();
@@ -80,7 +78,7 @@ public class Settings implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        plop.play(1f);
+                        gme.plop.play(1f);
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));

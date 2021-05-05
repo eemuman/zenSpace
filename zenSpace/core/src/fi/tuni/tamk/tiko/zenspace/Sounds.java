@@ -15,7 +15,7 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class Sounds {
     // Get BundleHandler from the class zenSpace, to get access to the asset manager
-    private static BundleHandler handler = zenSpace.getBundle();
+    public static BundleHandler handler = zenSpace.getBundle();
 
     /**
      * This method is used to load all the sound and music assets.

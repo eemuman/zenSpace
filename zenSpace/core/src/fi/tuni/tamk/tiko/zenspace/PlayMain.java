@@ -41,7 +41,6 @@ public class PlayMain implements Screen {
     private String[] firstStrings, secondStrings;
     private int backGroundChoice;
     private Image headerImg;
-    private Sound plop; // Added by Petr H.
 
     /**
      * This is the PlayMain constructor. Uses {@link Stage}, {@link BundleHandler}, etc.
@@ -52,7 +51,6 @@ public class PlayMain implements Screen {
     public PlayMain(final zenSpace game, int first, int second) {
         gme = game;
         bundle = gme.getBundle();
-        plop = Sounds.getPlopSound();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
         headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
         firstStrings = curLangBundle.get("firstStrings").split(",");
@@ -83,7 +81,7 @@ public class PlayMain implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        plop.play(1f);
+                        gme.plop.play(1f);
                         gme.setScreen(new Play1(gme));
                     }
                 })));
@@ -97,7 +95,7 @@ public class PlayMain implements Screen {
                             @Override
                             public void run() {
                                 selectBackGround(); //First we choose what background to pick
-                                plop.play(1f);
+                                gme.plop.play(1f);
                                 gme.getEste().randomizeEste(); //Then we randomize the first Obstacle to the game.
                                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                             }

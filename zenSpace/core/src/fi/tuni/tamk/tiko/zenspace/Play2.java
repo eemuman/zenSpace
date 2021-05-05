@@ -43,7 +43,6 @@ public class Play2 implements Screen {
     private TextButton[] btns;
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
-    private Sound plop; // Added by Petr H.
 
 
     /**
@@ -55,7 +54,6 @@ public class Play2 implements Screen {
     public Play2(zenSpace game, final int first) {
         gme = game;
         bundle = gme.getBundle();
-        plop = Sounds.getPlopSound();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
         textStrings = curLangBundle.get("secondStrings").split(",");
         btns = new TextButton[textStrings.length];
@@ -76,7 +74,7 @@ public class Play2 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        plop.play(1f);
+                        gme.plop.play(1f);
                         gme.setScreen(new Play1(gme));
                     }
                 })));
@@ -91,7 +89,7 @@ public class Play2 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            plop.play(1f);
+                            gme.plop.play(1f);
                             gme.setScreen(new PlayMain(gme, firstChoice, buttons.getCheckedIndex()));//We send the ButtonGroup-button that is checked as integer for later use. Also we send the first integer as well.
                         }
                     })));

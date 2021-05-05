@@ -121,12 +121,12 @@ public class Settings implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        stg.dispose();
     }
 
     /**
@@ -142,7 +142,6 @@ public class Settings implements Screen {
         //HERE we update it to the .preferences file
         if(!volSlider.isDragging() && isChanged) {
             gme.prefs.setVolume((int) volSlider.getValue());
-            Gdx.app.log("HOWMANY", "HERE");
             lbl.setText(curLangBundle.get("volyymi")+(int)gme.prefs.getVolume());
             isChanged = false;
         }

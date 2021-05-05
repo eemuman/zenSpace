@@ -39,7 +39,7 @@ public class zenSpace extends Game {
 
 
 
-	private String[] backGrounds = {"anger.atlas","anxiety.atlas","sadness.atlas","fear.atlas","shame.atlas","depression.atlas","joy.atlas"};
+	private String[] backGrounds = {"anger","anxiety","sadness","fear","shame","depression","joy"};
 
 
 
@@ -127,6 +127,8 @@ public class zenSpace extends Game {
 	public int getCurEsteInt() {
 		return randEste;
 	}
+
+	public String getEsteString() {return este.getEste();}
 
 	public void setRandEste(int randEste) {
 		this.randEste = randEste;

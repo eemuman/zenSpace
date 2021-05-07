@@ -1,6 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */
@@ -29,17 +29,17 @@ public class zenSpace extends Game {
 	private OrthographicCamera textCam;
 	private int wWidth = 480;
 	private int wHeight = 800;
-	private BundleHandler bundle;
+	private static BundleHandler bundle;
 	private int curLevelInt, curBackground, randEste;
 	private HUD hud;
-	private Este este;
+	private Obstacle este;
 	private float fadeIn = 0.25f;
 	private Fade fade;
 	public Prefs prefs;
+	public Sounds sounds; // Added by Petr H.
 
 
-
-	private String[] backGrounds = {"anger.atlas","anxiety.atlas","sadness.atlas","fear.atlas","shame.atlas","depression.atlas","joy.atlas"};
+	private String[] backGrounds = {"anger","anxiety","sadness","fear","shame","depression","joy"};
 
 
 
@@ -60,8 +60,9 @@ public class zenSpace extends Game {
 		scrnView = new ExtendViewport(wWidth,wHeight, textCam);
 		fade = new Fade();
 		hud = new HUD(this);
-		este = new Este(this);
-
+		este = new Obstacle(this);
+		sounds = new Sounds(this);
+		sounds.playMusic();
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
 
@@ -107,7 +108,7 @@ public class zenSpace extends Game {
 	public HUD getHud() {
 		return hud;
 	}
-	public Este getEste() {return este;}
+	public Obstacle getEste() {return este;}
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
 	}
@@ -126,6 +127,8 @@ public class zenSpace extends Game {
 	public int getCurEsteInt() {
 		return randEste;
 	}
+
+	public String getEsteString() {return este.getEste();}
 
 	public void setRandEste(int randEste) {
 		this.randEste = randEste;

@@ -1,6 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Petr H.
+ * @author Petr H.
  *
  * Copyright (c) 2021.
  */

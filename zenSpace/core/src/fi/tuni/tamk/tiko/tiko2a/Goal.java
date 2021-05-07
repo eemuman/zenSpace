@@ -1,6 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */
@@ -24,6 +24,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+/**
+ * This class is used to show the goal screen. That is the screen that is shown when player plays through the game. This screen shows the player some statistics that we collect. (Playthrough amount, seen background/obstacle amounts)
+ * See: {@link Prefs} for more information on what we collect.
+ */
 public class Goal implements Screen {
     private zenSpace gme;
     private Image img;
@@ -44,6 +48,13 @@ public class Goal implements Screen {
     private float fadeInTime = 3f;
 
 
+    /**
+     * The constructor for the goal class.
+     * Generating the background, texts for the statistics we have been collecting, setting them up, wrapping them (to prevent the text from overflowing the screen), and then adding a fade in animation to the texts, so that the player first sees the background and then the texts slowly fade in on top of the background.
+     * Also has a button that takes you back to the {@link newMainMenu}.
+     * @param game The main game object
+     * @param bgTexture The background set we are using. (To get which background to render)
+     */
     public Goal(zenSpace game,TextureAtlas bgTexture) {
         scrnView = game.getScrnView();
         stg = new Stage(scrnView);
@@ -51,7 +62,7 @@ public class Goal implements Screen {
         img = gme.generateFade();
         stg.addActor(img);
 
-        this.bgTexture = bgTexture.findRegion("goal");
+        this.bgTexture = bgTexture.findRegion("goal"); // Load the Goal part of the Bgtexture .atlas
         batch = game.getBatch();
         scrnView = game.getScrnView();
         dynamicUnitScale = scrnView.getWorldHeight() - gme.getwHeight();
@@ -64,19 +75,20 @@ public class Goal implements Screen {
 
         Gdx.input.setInputProcessor(stg);
 
-        back = new TextButton(curLangBundle.get("menu"), skin, "TextButtonSmallWhite");
+        back = new TextButton(curLangBundle.get("menu"), skin, "TextButtonSmallWhite"); // Button to put at the BOTTOM TO GO BACK INTO THE MAIN MENU
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                gme.sounds.playPlopSound();
                 gme.setCurLevelInt(1);
                 gme.getEste().initseenAlready();
                 gme.setScreen(new newMainMenu(gme));
             }
         });
         lbl = new Label(curLangBundle.get("hienoa"), skin, "white");
-        lbl1 = new Label(curLangBundle.get("lapipeluu") + gme.prefs.getAmountofCompletions() + curLangBundle.get("kertaa"),skin, "WhiteSmall");
-        lbl2 = new Label( curLangBundle.get("esteesta")+gme.prefs.calculateAmount("este") + "/" + gme.prefs.getAmountOfEste(),skin,"WhiteSmall");
-        lbl3 = new Label(curLangBundle.get("taustaa") + gme.prefs.calculateAmount("background") + "/" + gme.prefs.getAmountOfBack(), skin, "WhiteSmall");
+        lbl1 = new Label(curLangBundle.get("lapipeluu") + gme.prefs.getAmountofCompletions() + curLangBundle.get("kertaa"),skin, "WhiteSmall"); // LBL TO SHOW PLAYER HOW MANY PLAYTHROUGHS HAS BEEN PLAYED
+        lbl2 = new Label( curLangBundle.get("esteesta")+gme.prefs.calculateAmount("este") + "/" + gme.prefs.getAmountOfEste(),skin,"WhiteSmall"); // LBL TO SHOW HOW MANY OUT OF ALL OBSTACLES THE PLAYER HAS SEEN
+        lbl3 = new Label(curLangBundle.get("taustaa") + gme.prefs.calculateAmount("background") + "/" + gme.prefs.getAmountOfBack(), skin, "WhiteSmall"); // SAME AS ABOVE, BUT WITH BACKGROUNDS INSTEAD
         lbl1.setWrap(true);
         lbl1.setWidth(10f);
         lbl2.setWrap(true);
@@ -92,7 +104,7 @@ public class Goal implements Screen {
         tbl.add(back).width(300).height(dynamicUnitScale).padBottom(50);
         stg.addActor(tbl);
         img.addAction(Actions.sequence(Actions.alpha(1), Actions.fadeOut(gme.getFadeIn())));
-        stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime)));
+        stg.addAction(Actions.sequence(Actions.alpha(0),Actions.delay(fadeInTime), Actions.fadeIn(fadeInTime))); //MAKE THE TEXTS INVISIBLE FIRST, THEN FADE THEM IN AFTER SET AMOUNT OF TIME.
     }
 
     @Override
@@ -130,12 +142,12 @@ public class Goal implements Screen {
 
     @Override
     public void hide() {
-
+    dispose();
     }
 
     @Override
     public void dispose() {
-        stg.clear();
         stg.dispose();
+        bundle.unLoadAsset("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()]); //Unload the Background-set we used
     }
 }

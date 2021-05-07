@@ -339,10 +339,10 @@
   <object id="111" x="360.503" y="258.966">
    <ellipse/>
   </object>
-  <object id="112" x="449.93" y="258.034">
+  <object id="112" x="435.025" y="256.171">
    <ellipse/>
   </object>
-  <object id="113" x="459.245" y="408.943">
+  <object id="113" x="439.683" y="408.943">
    <ellipse/>
   </object>
   <object id="114" x="332.557" y="408.943">
@@ -363,7 +363,7 @@
   <object id="120" x="93.1532" y="510.48">
    <ellipse/>
   </object>
-  <object id="121" x="17.6991" y="410.806">
+  <object id="121" x="33.5352" y="408.943">
    <ellipse/>
   </object>
  </objectgroup>

@@ -1,8 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
- *
- * TODO: SAADA TÄÄ EHKÄ TOIMII JOSKUS??? EMT
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */
@@ -20,9 +18,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 
-
+/**
+ * This class is used to make a background colored texture that fills the whole screen.
+ * This is then used to create pseudo fade-in-out effects between screens.
+ */
 public class Fade extends Actor {
 
+    /**
+     * Creating a pixmap that is 1x1 pixel in size and coloring it to the backgrounds color. Then turning that into a texture.
+     * @return
+     */
     public Image getImage(){
         Pixmap pixmap;
         Image text;

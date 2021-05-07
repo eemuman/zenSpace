@@ -1,6 +1,6 @@
-/*
+/**
  * This file was created by:
- * @Eemil V.
+ * @author Eemil V.
  *
  * Copyright (c) 2021.
  */
@@ -24,7 +24,10 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
-
+/**
+ * This is the MAIN MENU class, we load into this when the game starts. This class uses {@link Stage},{@link Table} and 'actors' (Images, labels, buttons, etc.) to construct the main menu screen.
+ * Changing the language is done through {@link Stack} where the flagButtons are on top of each other with the one not in use visible and the other hidden.
+ */
 public class newMainMenu implements Screen {
 
     private Stage stg;
@@ -42,7 +45,6 @@ public class newMainMenu implements Screen {
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
 
-
     private Image headerImg;
     private Image sunImg;
     private Button flagBtnFI;
@@ -50,14 +52,16 @@ public class newMainMenu implements Screen {
     private Stack flagStack;
 
 
-
+    /**
+     *The contstructor for the main menu. First we get the language used, the UISkin.atlas/Json (See: {@link BundleHandler}) and use those to construct all the 'actors' (Buttons, images, flagStack, etc.)
+     * When everything is constructed, we add them to the {@link Table} layout and manipulate their position to what our designers wanted. Then everything is added to the {@link Stage} for Input events and handling of the viewport
+     * @param game The game object
+     */
     public newMainMenu(final zenSpace game) {
         gme = game;
         scrnView = gme.getScrnView();
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
-
-
 
         headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
         sunImg = new Image(bundle.getUiAtlas().findRegion("Sunhdpi"));
@@ -65,6 +69,7 @@ public class newMainMenu implements Screen {
 
         tbl = new Table();
 
+        //Generate the Flagstack, where clicking the flag changes the language
         flagBtnFI = new Button(skin, "FlagbuttonFI");
         flagBtnEN = new Button(skin, "FlagbuttonEN");
         flagStack = new Stack();
@@ -72,9 +77,11 @@ public class newMainMenu implements Screen {
         flagStack.add(flagBtnEN);
 
         stg = new Stage(scrnView);
+        //Get the text for the buttons in the current language.
         btnPela = new TextButton(curLangBundle.get("pelaa"), skin, "Play");
         btnAsetukset = new TextButton(curLangBundle.get("asetukset"), skin);
         btnExit = new TextButton(curLangBundle.get("sammuta"), skin);
+        //Construct the table layout
         tbl.row();
         tbl.add(headerImg).expandY().height(250).width(350).top().padTop(15).padBottom(-5);
         tbl.row();
@@ -99,46 +106,48 @@ public class newMainMenu implements Screen {
 
         stg.addAction(Actions.alpha(0));
         stg.addAction(Actions.fadeIn(gme.getFadeIn()));
-        updateButtons();
+        updateButtons(); //Add the text to the buttons
 
 
         btnPela.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //This is the Play-button
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                     //   dispose();
-                        gme.setScreen(new Pelaa1(gme));
-                 //       gme.setScreen(new Goal(gme, gme.getBundle().getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
-
+                        gme.sounds.playPlopSound();
+                        gme.setScreen(new Play1(gme));
                     }
                 })));
             }
         });
         btnExit.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { //This is the Exit-button
+                gme.sounds.playPlopSound();
                 Gdx.app.exit();
             }
         });
 
         btnAsetukset.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) { // This is the Settings-button
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                             @Override
                             public void run() {
                             //    dispose();
-                                gme.setScreen(new Asetukset(gme));
+                                gme.sounds.playPlopSound();
+                                gme.setScreen(new Settings(gme));
                             }
                         })));
             }
         });
 
+        //When either of the flag buttons is pressed, run these two methods to change which one is visible and which language is in use.
         flagBtnFI.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }
@@ -146,6 +155,7 @@ public class newMainMenu implements Screen {
         flagBtnEN.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }
@@ -154,6 +164,9 @@ public class newMainMenu implements Screen {
     }
 
 
+    /**
+     * This method is used to change WHICH of the flags is currently visible. If the language is set to Finnish, show the English flag and vice versa.
+     */
     public void updateButtons() {
         if(gme.isFin()) {
             flagBtnEN.setVisible(true);
@@ -165,6 +178,9 @@ public class newMainMenu implements Screen {
 
     }
 
+    /**
+     * This method is used to update the Texts in the Main Menu when the language is changed. ALSO changes the {@link HUD} Language.;
+     */
     public void updateTexts() {
         gme.setFin();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
@@ -205,11 +221,11 @@ public class newMainMenu implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        stg.dispose();
     }
 }

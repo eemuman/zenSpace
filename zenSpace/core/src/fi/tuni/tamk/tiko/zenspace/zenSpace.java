@@ -10,6 +10,8 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Game;
 
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,7 +38,7 @@ public class zenSpace extends Game {
 	private float fadeIn = 0.25f;
 	private Fade fade;
 	public Prefs prefs;
-
+	public Sounds sounds; // Added by Petr H.
 
 
 	private String[] backGrounds = {"anger","anxiety","sadness","fear","shame","depression","joy"};
@@ -54,7 +56,6 @@ public class zenSpace extends Game {
 		curBackground = 0;
 		bundle = new BundleHandler();
 		bundle.loadAssets();
-		Sounds.loadSounds();
 		batch = new SpriteBatch();
 		textCam = new OrthographicCamera();
 		textCam.setToOrtho(false, wWidth, wHeight);
@@ -62,7 +63,8 @@ public class zenSpace extends Game {
 		fade = new Fade();
 		hud = new HUD(this);
 		este = new Obstacle(this);
-
+		sounds = new Sounds(this);
+		sounds.playMusic();
 		setScreen(new newMainMenu(this)); //Luontien jälkeen lähretää MainMenuun...
 	}
 
@@ -112,7 +114,7 @@ public class zenSpace extends Game {
 	public void setCurBackground(int curBackground) {
 		this.curBackground = curBackground;
 	}
-	public static BundleHandler getBundle() {
+	public BundleHandler getBundle() {
 		return bundle;
 	}
 

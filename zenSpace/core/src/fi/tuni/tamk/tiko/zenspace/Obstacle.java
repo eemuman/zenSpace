@@ -24,7 +24,7 @@ public class Obstacle {
     private boolean transition = false, result = false;
     private static String[] esteet =
             {"anteater", "bat", "bull", "butterfly", "crafts", "dragon", "elephant", "flamingo",
-                    "friend", "helium", "lizard", "octopus", "onion",
+                    "friend", "helium", "lizard", "map", "octopus", "onion",
                     "paint", "paper", "parrot", "penguin", "plant", "snake1",
                     "snake2", "snake3", "trex", "wall", "yoga", "zombie", "zombie2"}; //All the different obstacles, probably could've stored these somewhere else..
 

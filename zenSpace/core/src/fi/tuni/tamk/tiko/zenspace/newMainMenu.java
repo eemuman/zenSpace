@@ -9,8 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -47,9 +45,6 @@ public class newMainMenu implements Screen {
     private BundleHandler bundle;
     private I18NBundle curLangBundle;
 
-    private Music music; // Added by Petr H.
-    private Sound plop; // Added by Petr H.
-
     private Image headerImg;
     private Image sunImg;
     private Button flagBtnFI;
@@ -67,10 +62,6 @@ public class newMainMenu implements Screen {
         scrnView = gme.getScrnView();
         bundle = gme.getBundle();
         curLangBundle = bundle.getResourceBundle(gme.isFin());
-
-        music = Sounds.getMusic();
-        //music.setVolume(0.5f);
-        plop = Sounds.getPlopSound();
 
         headerImg = new Image(bundle.getUiAtlas().findRegion("Cloud_logohdpi"));
         sunImg = new Image(bundle.getUiAtlas().findRegion("Sunhdpi"));
@@ -124,7 +115,7 @@ public class newMainMenu implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setScreen(new Play1(gme));
                     }
                 })));
@@ -133,7 +124,7 @@ public class newMainMenu implements Screen {
         btnExit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) { //This is the Exit-button
-                plop.play(1f);
+                gme.sounds.playPlopSound();
                 Gdx.app.exit();
             }
         });
@@ -145,7 +136,7 @@ public class newMainMenu implements Screen {
                             @Override
                             public void run() {
                             //    dispose();
-                                plop.play(1f);
+                                gme.sounds.playPlopSound();
                                 gme.setScreen(new Settings(gme));
                             }
                         })));
@@ -156,7 +147,7 @@ public class newMainMenu implements Screen {
         flagBtnFI.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plop.play(1f);
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }
@@ -164,7 +155,7 @@ public class newMainMenu implements Screen {
         flagBtnEN.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plop.play(1f);
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }
@@ -210,7 +201,6 @@ public class newMainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stg.act(Gdx.graphics.getDeltaTime());
         stg.draw();
-        music.play();
     }
 
     @Override

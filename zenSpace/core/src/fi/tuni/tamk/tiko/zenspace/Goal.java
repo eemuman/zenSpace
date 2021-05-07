@@ -9,7 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -47,7 +46,6 @@ public class Goal implements Screen {
     private Table tbl;
     private Label lbl, lbl1, lbl2, lbl3;
     private float fadeInTime = 3f;
-    private Sound plop; // Added by Petr H.
 
 
     /**
@@ -75,15 +73,13 @@ public class Goal implements Screen {
         tbl = new Table();
         tbl.setFillParent(true);
 
-        plop = Sounds.getPlopSound();
-
         Gdx.input.setInputProcessor(stg);
 
         back = new TextButton(curLangBundle.get("menu"), skin, "TextButtonSmallWhite"); // Button to put at the BOTTOM TO GO BACK INTO THE MAIN MENU
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                plop.play(1f);
+                gme.sounds.playPlopSound();
                 gme.setCurLevelInt(1);
                 gme.getEste().initseenAlready();
                 gme.setScreen(new newMainMenu(gme));

@@ -21,6 +21,7 @@ public class Prefs {
     private int amountOfEste = Obstacle.getObstacleCount(), amountOfCompletions, amountOfBack = 7;
     private boolean[] amountOfBooleanEste = new boolean[amountOfEste], amountOfBooleanback = new boolean[amountOfBack];
     private boolean isFin;
+    private boolean musicValue;
     private float volume;
     private String este = "este", background = "background";
 
@@ -34,6 +35,7 @@ public class Prefs {
         getAmountOfBoolean(este);
         getAmountOfBoolean(background);
         isFin = pref.getBoolean("isFin", true);
+        musicValue = pref.getBoolean("music", true);
     }
 
 
@@ -64,6 +66,23 @@ public class Prefs {
     public boolean getFin() {
         return isFin;
     }
+
+    /**
+     * This method is used to save which music is in use (was last played).
+     * This is to help check what music to play next time.
+     * @param m boolean value that affects which music is going to be played
+     */
+    public void setMusicValue(boolean m) {
+        this.musicValue = m;
+        pref.putBoolean("music", m);
+        pref.flush();
+    }
+
+    /**
+     * This method returns the current boolean value for the music.
+     * @return music boolean
+     */
+    public boolean getMusicValue() { return this.musicValue; }
 
     /**
      * This method is used to save the amount of completions the player has done. This is called when the player finishes a playthrough

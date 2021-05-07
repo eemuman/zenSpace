@@ -5,7 +5,7 @@
  * Copyright (c) 2021.
  */
 
-package fi.tuni.tamk.tiko.zenspace;
+package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

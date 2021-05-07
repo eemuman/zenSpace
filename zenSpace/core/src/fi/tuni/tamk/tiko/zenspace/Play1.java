@@ -73,7 +73,7 @@ public class Play1 implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));
@@ -87,7 +87,7 @@ public class Play1 implements Screen {
                     stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            gme.plop.play(1f);
+                            gme.sounds.playPlopSound();
                             gme.setScreen(new Play2(gme, buttons.getCheckedIndex())); //We send the ButtonGroup-button that is checked as integer for later use.
                         }
                     })));

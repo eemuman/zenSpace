@@ -9,8 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -117,7 +115,7 @@ public class newMainMenu implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setScreen(new Play1(gme));
                     }
                 })));
@@ -126,7 +124,7 @@ public class newMainMenu implements Screen {
         btnExit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) { //This is the Exit-button
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 Gdx.app.exit();
             }
         });
@@ -138,7 +136,7 @@ public class newMainMenu implements Screen {
                             @Override
                             public void run() {
                             //    dispose();
-                                gme.plop.play(1f);
+                                gme.sounds.playPlopSound();
                                 gme.setScreen(new Settings(gme));
                             }
                         })));
@@ -149,7 +147,7 @@ public class newMainMenu implements Screen {
         flagBtnFI.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }
@@ -157,7 +155,7 @@ public class newMainMenu implements Screen {
         flagBtnEN.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 updateTexts();
                 updateButtons();
             }

@@ -9,7 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -78,7 +77,7 @@ public class Settings implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setScreen(new newMainMenu(gme));
                     }
                 })));
@@ -140,6 +139,7 @@ public class Settings implements Screen {
         //HERE we update it to the .preferences file
         if(!volSlider.isDragging() && isChanged) {
             gme.prefs.setVolume((int) volSlider.getValue());
+            gme.sounds.setVolume(volSlider.getValue()/100f);
             Gdx.app.log("HOWMANY", "HERE");
             lbl.setText(curLangBundle.get("volyymi")+(int)gme.prefs.getVolume());
             isChanged = false;

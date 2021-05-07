@@ -81,7 +81,7 @@ public class PlayMain implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeOut(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setScreen(new Play1(gme));
                     }
                 })));
@@ -95,7 +95,7 @@ public class PlayMain implements Screen {
                             @Override
                             public void run() {
                                 selectBackGround(); //First we choose what background to pick
-                                gme.plop.play(1f);
+                                gme.sounds.playPlopSound();
                                 gme.getEste().randomizeEste(); //Then we randomize the first Obstacle to the game.
                                 gme.setScreen(new Transition(gme, bundle.getBackground("Backgrounds/" + gme.getBackGrounds()[gme.getCurBackground()])));
                             }

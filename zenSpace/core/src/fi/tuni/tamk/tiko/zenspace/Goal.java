@@ -9,7 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -80,7 +79,7 @@ public class Goal implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 gme.setCurLevelInt(1);
                 gme.getEste().initseenAlready();
                 gme.setScreen(new newMainMenu(gme));

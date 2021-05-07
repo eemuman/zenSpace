@@ -9,7 +9,6 @@ package fi.tuni.tamk.tiko.zenspace;
 
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -55,7 +54,7 @@ public class HUD implements Screen {
         tButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 tButton.setVisible(false);
                 pause.setVisible(true);
                 paused = true;
@@ -65,7 +64,7 @@ public class HUD implements Screen {
         tButtonJatka.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gme.plop.play(1f);
+                gme.sounds.playPlopSound();
                 tButton.setVisible(true);
                 pause.setVisible(false);
                 paused = false;
@@ -78,7 +77,7 @@ public class HUD implements Screen {
                 stg.addAction(Actions.sequence(Actions.fadeIn(gme.getFadeIn()), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        gme.plop.play(1f);
+                        gme.sounds.playPlopSound();
                         gme.setCurLevelInt(1); // This is to make sure that the background starts from the first again
                         setBackMenu(); //Changes visibilities and booleans here at the HUD. (Prevents the next playthrough starting with menu open)
                         gme.getEste().initseenAlready();

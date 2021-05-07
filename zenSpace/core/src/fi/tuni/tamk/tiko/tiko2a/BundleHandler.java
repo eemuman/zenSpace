@@ -5,18 +5,16 @@
  * Copyright (c) 2021.
  */
 
-package fi.tuni.tamk.tiko.zenspace;
+package fi.tuni.tamk.tiko.tiko2a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  * This is our games asset manager. It handles loading all the assets in our game. (UISKIN.atlas, Languagebundles, Background atlases, obstacle atlases. Etc.

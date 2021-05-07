@@ -1,4 +1,4 @@
-package fi.tuni.tamk.tiko.zenspace;
+package fi.tuni.tamk.tiko.tiko2a;
 
 import android.os.Bundle;
 
